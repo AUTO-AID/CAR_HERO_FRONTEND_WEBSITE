@@ -1,0 +1,165 @@
+
+{
+  "home": "Home",
+  "features": "Features",
+  "screenshot": "Screenshot",
+  "team": "Team",
+  "contact": "Contact",
+  "download1": "Download",
+
+  "hero": {
+    "title": {
+      "line1": "Your assistance",
+      "line2": "when you are",
+      "line3": "on the Road"
+    },
+    "download": "Download"
+  },
+    "download": {
+    "title": "DOWNLOAD NOW",
+    "subtitle": "Click the icon below to Download Roadguru app from your favorite mobile store.",
+    "updates": "DON'T MISS OUR FUTURE UPDATES...",
+    "emailPlaceholder": "Enter your email here..."
+  },
+    "footer": {
+    "logoAlt": "CarHero Logo",
+    "privacy": "Privacy | Terms and Conditions",
+    "copyright": "© 2025 CarHero – All rights reserved."
+  },
+  
+  "service": {
+    "title": "Our Features",
+
+    "feature1_title": "24/7 Road Assistance",
+    "feature1_desc": "Our mechanics are available 24/7 to help you on the road and ensure you're never stranded.",
+
+    "feature2_title": "Complete Services",
+    "feature2_desc": "We offer all maintenance and repair services wherever you are — simple, fast, and reliable.",
+
+    "feature3_title": "Certified Mechanics",
+    "feature3_desc": "Our professional and certified mechanics provide trusted, high-quality service.",
+
+    "feature4_title": "Affordable Pricing",
+    "feature4_desc": "Get the same top-tier service at a lower cost. No hidden fees, just honest work.",
+
+    "feature5_title": "Support Guarantee",
+    "feature5_desc": "We ensure quality and safety with every service. Our support team is always ready."
+  },
+  
+  "why": {
+    "title": "WHY CHOOSE US?",
+    "subtitle": "We have enough reasons for you to choose our excellence services.",
+    "features": {
+      "assistance": {
+        "title": "24/7 Road Assistance",
+        "desc": "We provide our best assistance to your vehicle round the clock so that you don’t have to suffer due to your vehicular problems. We provide immediate on-road help, anywhere, anytime."
+      },
+      "pricing": {
+        "title": "Affordable Pricing",
+        "desc": "We provide our best assistance to your vehicle round the clock so that you don’t have to suffer due to your vehicular problems. We provide immediate on-road help, anywhere, anytime."
+      },
+      "come_to_you": {
+        "title": "We Come to You!",
+        "desc": "Whether you are in the office or gym or at watching movie with the family. You can schedule a call and we will come to work on your car. Whether you are in the vehicle or not, we facilitate real-time location, speed, and direction tracking to you."
+      },
+      "certified": {
+        "title": "Certified Mechanics",
+        "desc": "We have a number of certified experts, technicians, and mechanics that specialize in various on-road emergency and garage-type services. With them, you can be least worried about your vehicle and you can expect fine service deliverables quickly."
+      }
+    }
+  },
+  "salient_title": "SALIENT FEATURES",
+  "salient_description": "We understand that your vehicle is one of your prized possessions and you rely on it daily. Our perfect emergency on-road services are available anytime, anywhere so you never feel stranded.",
+
+  "left_features": [
+    {
+      "title": "Car Breakdown",
+      "text": "Your vehicle can ditch you anytime while you are on the roads..."
+    },
+    {
+      "title": "Flat Tire",
+      "text": "Flat tires are irritating and can occur even in unexpected situations..."
+    },
+    {
+      "title": "No Fuel",
+      "text": "Get on-demand fuel delivery anywhere, anytime..."
+    }
+  ],
+
+  "right_features": [
+    {
+      "title": "Locked Car",
+      "text": "Lost your keys or locked yourself outside? We unlock safely..."
+    },
+    {
+      "title": "Smoke from Car",
+      "text": "Seeing smoke? Park safely and request immediate help..."
+    },
+    {
+      "title": "Battery Jumpstart",
+      "text": "Dead battery? We provide jumpstart service quickly..."
+    }
+  ],
+  "faqData": [
+    { "q": "How can I contact support?", "a": "You can contact us through the contact form below or email us directly." },
+    { "q": "Do you offer refunds?", "a": "Yes, we offer refunds within 30 days of purchase." },
+    { "q": "Is my data safe with you?", "a": "Absolutely. We prioritize your privacy and data protection." },
+    { "q": "Can I change my subscription plan later?", "a": "Yes, you can upgrade or downgrade your plan anytime." },
+    { "q": "Do you provide 24/7 customer service?", "a": "Yes, our support team is available around the clock." }
+  ],
+
+ "contact1": {
+    "title": "Contact Us",
+    "subtitle": "Have questions or want to partner with us? Reach out!",
+    "faq_title": "Frequently Asked Questions",
+    "send_message": "Send Us a Message",
+    "full_name": "Full Name",
+    "email": "Email",
+    "message": "Your Message",
+    "submit_btn": "Send Message",
+    "partner_title": "Become a Service Partner",
+    "register_btn": "Click to Register"
+  },
+
+  "contact_faq": [
+    { "q": "How can I contact support?", "a": "You can contact us through the contact form below or email us directly." },
+    { "q": "Do you offer refunds?", "a": "Yes, we offer refunds within 30 days of purchase." },
+    { "q": "Is my data safe with you?", "a": "Absolutely. We prioritize your privacy and data protection." },
+    { "q": "Can I change my subscription plan later?", "a": "Yes, you can upgrade or downgrade your plan anytime." },
+    { "q": "Do you provide 24/7 customer service?", "a": "Yes, our support team is available around the clock." }
+  ],
+
+  "partner_cards": [
+    {
+      "title": "Sign-on with the App",
+      "desc": "Download the app from Google Store. We suggest using an Android 7'' tablet with SMS capability. Receive emergency service notifications within your region. Never pay for parts upfront—we handle payments after approval."
+    },
+    {
+      "title": "Make more money!",
+      "desc": "If you own a garage, spare parts shop, insurance agency, or are an accident assessor, you can partner with CarHero. Valid driver license and Aadhaar required. Must accept digital payments. Minimal startup cost."
+    },
+    {
+      "title": "Choose your schedule",
+      "desc": "You are the boss. Pick service calls based on your time and convenience. Attend calls once accepted. Customer ratings matter—maintain a good record. Payments are settled weekly."
+    }
+  ]
+,
+
+  "team1": {
+    "title": "Our Team",
+    "subtitle": "Professional Automotive Service Experts",
+
+    "name1": "David Wilson",
+    "role1": "Senior Auto Technician",
+    "desc1": "Expert in diagnostics & engine repairs, 10+ years in automotive industry.",
+
+    "name2": "Adam Collins",
+    "role2": "Mechanical Specialist",
+    "desc2": "Handling electrical systems, braking systems, tuning & ECU testing.",
+
+    "name3": "Maya Johnson",
+    "role3": "Field Rescue Technician",
+    "desc3": "On-site car emergency handling / tires / towing guidance / quick fix specialist."
+  }
+
+}

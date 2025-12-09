@@ -105,9 +105,13 @@ import { Box, Button, Typography, Container } from "@mui/material";
 import { motion } from "framer-motion";
 import AndroidIcon from "@mui/icons-material/Android";
 import roadBg from "../assets/header-bg.jpg";
-import sideImg from "../assets/hero-pg.png"; 
-import backImg from "../assets/hero-pg2.png"
+import sideImg from "../assets/hero-pg.png";
+import backImg from "../assets/hero-pg2.png";
+import { useTranslation } from "react-i18next"; 
+
 const HeroSection = () => {
+  const { t } = useTranslation(); 
+
   return (
     <Box
       id="home"
@@ -137,7 +141,7 @@ const HeroSection = () => {
           textAlign: { xs: "center", md: "left" },
         }}
       >
-        {/* Text Section */}
+        {/* TEXT */}
         <Box sx={{ maxWidth: 600 }}>
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -153,7 +157,9 @@ const HeroSection = () => {
                 fontWeight: 700,
               }}
             >
-              Your assistance <br /> when you are <br /> on the Road
+              {t("hero.title.line1")} <br />
+              {t("hero.title.line2")} <br />
+              {t("hero.title.line3")}
             </Typography>
           </motion.div>
 
@@ -191,67 +197,66 @@ const HeroSection = () => {
                   },
                 }}
               >
-                Download
+                {t("hero.download")}
               </Button>
             </Box>
           </motion.div>
         </Box>
 
-  {/* Image Section*/}
-<Box
-  sx={{
-    position: "relative",
-    width: "420px",
-    height: "500px",
-    display: { xs: "none", sm: "none", md: "none", lg: "block" },
-  }}
->
-       <motion.div
+        {/* IMAGES */}
+        <Box
+          sx={{
+            position: "relative",
+            width: "420px",
+            height: "500px",
+            display: { xs: "none", sm: "none", md: "none", lg: "block" },
+          }}
+        >
+          <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
           >
-  {/* BACK IMAGE */}
-  <Box
-    component="img"
-    src={backImg}
-    alt="Hero Back Phone"
-    sx={{
-      position: "absolute",
-      top: "40px",
-      left: "40px",
-      width: "70%",
-      opacity: 0.7,
-      transform: "rotate(-5deg)",
-      filter: "blur(1px)",
-    }}
-  />
-</motion.div>
-   <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-          >
-  {/* FRONT IMAGE  */}
-  <Box
-    component="img"
-    src={sideImg}
-    alt="Hero Front Phone"
-    sx={{
-      position: "absolute",
-      top: 0,
-      left: "100px",
-      width: "85%",
-      zIndex: 2,
-      transform: "rotate(2deg)",
-    }}
-  />
-  </motion.div>
-</Box>
+            <Box
+              component="img"
+              src={backImg}
+              alt="Hero Back Phone"
+              sx={{
+                position: "absolute",
+                top: "40px",
+                left: "40px",
+                width: "70%",
+                opacity: 0.7,
+                transform: "rotate(-5deg)",
+                filter: "blur(1px)",
+              }}
+            />
+          </motion.div>
 
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+          >
+            <Box
+              component="img"
+              src={sideImg}
+              alt="Hero Front Phone"
+              sx={{
+                position: "absolute",
+                top: 0,
+                left: "100px",
+                width: "85%",
+                zIndex: 2,
+                transform: "rotate(2deg)",
+              }}
+            />
+          </motion.div>
+        </Box>
       </Container>
     </Box>
   );
 };
 
 export default HeroSection;
+
