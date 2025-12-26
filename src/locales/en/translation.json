@@ -160,6 +160,45 @@
     "name3": "Maya Johnson",
     "role3": "Field Rescue Technician",
     "desc3": "On-site car emergency handling / tires / towing guidance / quick fix specialist."
-  }
+  },
+  "register": {
+  "notice": "Registration is currently available for service providers across Syria",
+  "title": "Partner Registration",
+  "subtitle": "Fill the form to join our professional network",
+
+  "account_info": "Account Info",
+  "owner_name": "Owner Name",
+  "workshop_name": "Workshop Name",
+  "email": "Email Address",
+  "phone": "9XXXXXXXX",
+  "password": "Password",
+
+  "location": "Location",
+  "select_region": "Select Region...",
+  "address": "Detailed Address Description",
+
+  "services": "Services",
+  "mechanics": "Mechanics",
+  "electrical": "Electrical",
+  "towing": "Towing",
+  "fuel": "Fuel",
+  "service_desc": "Service list and approximate prices...",
+
+  "documents": "Documents & Gallery",
+  "logo": "Workshop Logo",
+  "license": "License / Commercial Register",
+  "photos": "Work Photos",
+
+  "additional": "Additional Info",
+  "experience": "Years of Experience",
+  "work_hours": "Work Hours",
+  "from": "From",
+  "to": "To",
+  "about": "Brief about your workshop...",
+
+  "submit": "SUBMIT REGISTRATION",
+  "back": "← Back to Home"
+}
+
 
 }
