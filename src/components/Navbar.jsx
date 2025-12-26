@@ -235,9 +235,16 @@ import logo from "../assets/logo_carHero.png";
 
 import { useTranslation } from "react-i18next";
 import i18n from "../i18n";
+import { useTheme } from "@mui/material/styles";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
+import Brightness7Icon from "@mui/icons-material/Brightness7";
+import { ColorModeContext } from "../main";
+import { useContext } from "react";
 
 const Navbar = () => {
   const { t } = useTranslation();
+  const theme = useTheme();
+  const colorMode = useContext(ColorModeContext);
   const [open, setOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
 
@@ -355,18 +362,41 @@ const Navbar = () => {
             >
               {currentLang}
             </Button>
+
+            {/* Dark Mode Toggle Desktop */}
+            <IconButton
+              sx={{ ml: 1, color: "white" }}
+              onClick={colorMode.toggleColorMode}
+            >
+              {theme.palette.mode === "dark" ? (
+                <Brightness7Icon />
+              ) : (
+                <Brightness4Icon />
+              )}
+            </IconButton>
           </Box>
 
           {/* Mobile Menu */}
-          <IconButton
-            sx={{
-              color: "white",
-              display: { xs: "flex", md: "none" },
-            }}
-            onClick={() => setOpen(true)}
-          >
-            <MenuIcon sx={{ fontSize: 30 }} />
-          </IconButton>
+          <Box sx={{ display: { xs: "flex", md: "none" }, alignItems: "center" }}>
+            <IconButton
+              sx={{ color: "white", mr: 1 }}
+              onClick={colorMode.toggleColorMode}
+            >
+              {theme.palette.mode === "dark" ? (
+                <Brightness7Icon />
+              ) : (
+                <Brightness4Icon />
+              )}
+            </IconButton>
+            <IconButton
+              sx={{
+                color: "white",
+              }}
+              onClick={() => setOpen(true)}
+            >
+              <MenuIcon sx={{ fontSize: 30 }} />
+            </IconButton>
+          </Box>
         </Toolbar>
       </AppBar>
 

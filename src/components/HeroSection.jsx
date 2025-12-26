@@ -117,11 +117,11 @@ const HeroSection = () => {
       id="home"
       sx={{
         maxWidth: "100%",
-        backgroundImage: `linear-gradient(to right, #B57EDC, #111111), url(${roadBg})`,
+        backgroundImage: `linear-gradient(to right, var(--primary), var(--bg-light)), url(${roadBg})`,
         backgroundBlendMode: "overlay",
         backgroundSize: "cover",
         backgroundPosition: "center",
-        color: "#ffffff",
+        color: "var(--text-light)",
         minHeight: "100vh",
         display: "flex",
         alignItems: "center",
@@ -151,7 +151,7 @@ const HeroSection = () => {
             <Typography
               variant="h2"
               sx={{
-                color: "#ffffff",
+                color: "inherit",
                 fontSize: { xs: "34px", sm: "40px", md: "64px" },
                 lineHeight: { xs: "45px", sm: "55px", md: "85px" },
                 fontWeight: 700,
@@ -181,19 +181,19 @@ const HeroSection = () => {
                 startIcon={<AndroidIcon sx={{ fontSize: 26 }} />}
                 sx={{
                   padding: { xs: "12px 30px", md: "14px 40px" },
-                  color: "#fff",
+                  color: "var(--text-light)",
                   textTransform: "uppercase",
                   letterSpacing: "1.5px",
-                  borderColor: "#fff",
+                  borderColor: "var(--text-light)",
                   borderWidth: "2px",
                   borderRadius: "30px",
                   fontWeight: 500,
                   fontSize: { xs: "14px", md: "16px" },
                   transition: "all 0.3s ease",
                   "&:hover": {
-                    backgroundColor: "#fff",
-                    color: "#B57EDC",
-                    borderColor: "#fff",
+                    backgroundColor: "var(--text-light)",
+                    color: "var(--primary)",
+                    borderColor: "var(--text-light)",
                   },
                 }}
               >

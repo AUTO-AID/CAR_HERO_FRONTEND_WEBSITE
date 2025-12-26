@@ -14,7 +14,7 @@ const DownloadSection = () => {
         width: "100%",
         minHeight: { xs: "90vh", md: "100vh" },
         backgroundImage: `
-          linear-gradient(to right, rgba(181, 126, 220, 0.65), rgba(12, 12, 12, 0.65)),
+          linear-gradient(to right, var(--primary), var(--bg-light)),
           url(${downloadBg})
         `,
         backgroundBlendMode: "overlay",
@@ -25,7 +25,7 @@ const DownloadSection = () => {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        color: "#fff",
+        color: "var(--text-light)",
         textAlign: "center",
         padding: { xs: "40px 15px", sm: "60px 20px" },
       }}
@@ -89,7 +89,7 @@ const DownloadSection = () => {
         sx={{
           display: "flex",
           alignItems: "center",
-          backgroundColor: "rgba(255,255,255,0.25)",
+          backgroundColor: "rgba(255,255,255,0.15)",
           padding: { xs: "4px 8px", sm: "6px 12px" },
           borderRadius: "30px",
           width: { xs: "95%", sm: "400px", md: "450px" },
@@ -101,11 +101,11 @@ const DownloadSection = () => {
           variant="standard"
           InputProps={{
             disableUnderline: true,
-            sx: { color: "#fff", fontSize: { xs: "14px", sm: "16px" } },
+            sx: { color: "var(--text-light)", fontSize: { xs: "14px", sm: "16px" } },
           }}
           sx={{ flex: 1 }}
         />
-        <IconButton sx={{ color: "#fff" }}>
+        <IconButton sx={{ color: "var(--text-light)" }}>
           <SendIcon />
         </IconButton>
       </Box>

@@ -18,21 +18,21 @@ const iconWrapperStyle = {
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  background: "linear-gradient(45deg, #B57EDC, #000)",
+  background: "var(--gradient)",
 };
 
 const iconInnerCircle = {
   width: 66,
   height: 66,
   borderRadius: "50%",
-  background: "#fff",
+  background: "var(--bg-light)",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
 };
 
 const iconGradientText = {
-  background: "linear-gradient(45deg, #B57EDC, #000)",
+  background: "var(--gradient)",
   WebkitBackgroundClip: "text",
   WebkitTextFillColor: "transparent",
   fontSize: "28px",
@@ -58,10 +58,11 @@ const SalientFeatures = () => {
         sx={{
           py: 10,
           px: { xs: 2, md: 10 },
-          background: "linear-gradient(to bottom, #fff 70%, #B57EDC20 100%)",
+          background: "var(--bg-light)",
           width: "100%",
           direction: i18n.language === "ar" ? "rtl" : "ltr",
           textAlign: i18n.language === "ar" ? "right" : "left",
+          transition: "background-color 0.3s ease",
         }}
       >
         {/* SECTION TITLE */}
@@ -72,7 +73,7 @@ const SalientFeatures = () => {
               fontWeight: "bold",
               mb: 1,
               letterSpacing: "1px",
-              background: "linear-gradient(90deg, #B57EDC, #000000)",
+              background: "var(--gradient)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
             }}
@@ -80,7 +81,7 @@ const SalientFeatures = () => {
             {t("salient_title")}
           </Typography>
 
-          <Typography sx={{ maxWidth: 700, mx: "auto", color: "#444" }}>
+          <Typography sx={{ maxWidth: 700, mx: "auto", color: "var(--text-muted)" }}>
             {t("salient_description")}
           </Typography>
         </Box>
@@ -100,12 +101,15 @@ const SalientFeatures = () => {
                   maxWidth: "350px",
                   mx: "auto",
                   alignItems: "flex-start",
-                  transition: "0.3s",
+                  transition: "all 0.3s ease",
+                  backgroundColor: "var(--bg-section-alt)",
+                  borderRadius: "16px",
+                  border: "1px solid var(--border-color)",
                   "&:hover .innerCircle": {
-                    background: "linear-gradient(45deg, #B57EDC, #000)",
+                    background: "var(--gradient)",
                   },
                   "&:hover .innerIcon": {
-                    WebkitTextFillColor: "#fff",
+                    WebkitTextFillColor: "var(--text-light)",
                   },
                 }}
                 elevation={0}
@@ -123,10 +127,10 @@ const SalientFeatures = () => {
                 </Box>
 
                 <Box>
-                  <Typography sx={{ color: "#B57EDC", fontWeight: "bold", mb: 1 }}>
+                  <Typography sx={{ color: "var(--primary)", fontWeight: "bold", mb: 1 }}>
                     {item.title}
                   </Typography>
-                  <Typography sx={{ color: "#444" }}>{item.text}</Typography>
+                  <Typography sx={{ color: "var(--text-muted)" }}>{item.text}</Typography>
                 </Box>
               </Paper>
             ))}
@@ -162,12 +166,15 @@ const SalientFeatures = () => {
                   maxWidth: "350px",
                   mx: "auto",
                   alignItems: "flex-start",
-                  transition: "0.3s",
+                  transition: "all 0.3s ease",
+                  backgroundColor: "var(--bg-section-alt)",
+                  borderRadius: "16px",
+                  border: "1px solid var(--border-color)",
                   "&:hover .innerCircle": {
-                    background: "linear-gradient(45deg, #B57EDC, #000)",
+                    background: "var(--gradient)",
                   },
                   "&:hover .innerIcon": {
-                    WebkitTextFillColor: "#fff",
+                    WebkitTextFillColor: "var(--text-light)",
                   },
                 }}
                 elevation={0}
@@ -185,10 +192,10 @@ const SalientFeatures = () => {
                 </Box>
 
                 <Box>
-                  <Typography sx={{ color: "#B57EDC", fontWeight: "bold", mb: 1 }}>
+                  <Typography sx={{ color: "var(--primary)", fontWeight: "bold", mb: 1 }}>
                     {item.title}
                   </Typography>
-                  <Typography sx={{ color: "#444" }}>{item.text}</Typography>
+                  <Typography sx={{ color: "var(--text-muted)" }}>{item.text}</Typography>
                 </Box>
               </Paper>
             ))}

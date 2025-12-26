@@ -47,8 +47,9 @@ const ServiceSection = () => {
         py: { xs: 6, md: 10 },
         px: { xs: 2, sm: 4, md: 8 },
         overflowX: "hidden",
-        background: "linear-gradient(to bottom, #fff 70%, #B57EDC20 100%)",
+        background: "var(--bg-light)",
         width: "100%",
+        transition: "background-color 0.3s ease",
       }}
     >
       <Box sx={{ position: "relative", zIndex: 2 }}>
@@ -58,7 +59,7 @@ const ServiceSection = () => {
           sx={{
             textAlign: "center",
             fontWeight: 700,
-            color: "#111",
+            color: "var(--text-dark)",
             mb: { xs: 4, md: 6 },
             fontSize: { xs: "28px", sm: "36px", md: "42px" },
           }}
@@ -93,24 +94,26 @@ const ServiceSection = () => {
                     textAlign: "center",
                     padding: { xs: "30px 15px", md: "50px 20px" },
                     transition: "all 0.3s ease",
-                    color: "#111",
+                    color: "var(--text-dark)",
+                    backgroundColor: "var(--bg-section-alt)",
+                    border: "1px solid var(--border-color)",
                     height: "100%",
                     "&:hover": {
-                      background: "linear-gradient(to right, #B57EDC, #111111)",
-                      color: "#fff",
-                      "& svg": { color: "#fff" },
-                      "& .feature-title": { color: "#fff" },
+                      background: "var(--gradient)",
+                      color: "var(--text-light)",
+                      "& svg": { color: "var(--text-light)" },
+                      "& .feature-title": { color: "var(--text-light)" },
                     },
                   }}
                 >
-                  <Box sx={{ color: "#B57EDC", mb: 2 }}>{feature.icon}</Box>
+                  <Box sx={{ color: "var(--primary)", mb: 2, transition: "color 0.3s ease" }}>{feature.icon}</Box>
                   <Typography
                     variant="h6"
                     className="feature-title"
                     sx={{
                       fontWeight: 600,
                       mb: 1,
-                      color: "#B57EDC",
+                      color: "var(--primary)",
                       transition: "color 0.3s ease",
                       fontSize: { xs: "18px", md: "20px" },
                     }}

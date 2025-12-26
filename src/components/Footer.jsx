@@ -15,8 +15,9 @@ return (
 sx={{
 textAlign: "center",
 py: 6,
-background: "linear-gradient(to right, #B57EDC, #111111)",
-color: "white",
+background: "var(--gradient)",
+color: "var(--text-light)",
+transition: "all 0.3s ease",
 }}
 >
 {/* Logo */}
@@ -46,13 +47,13 @@ mb: 2,
       <IconButton
         key={i}
         sx={{
-          color: "white",
+          color: "var(--text-light)",
           width: 45,
           height: 45,
           transition: "0.3s",
           "&:hover": {
-            background: "linear-gradient(to right, #B57EDC, #111111)",
-            color: "white",
+            background: "var(--bg-light)",
+            color: "var(--primary)",
             transform: "translateY(-4px)",
           },
         }}

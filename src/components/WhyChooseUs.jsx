@@ -41,21 +41,21 @@ const WhyChooseUs = () => {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    background: "linear-gradient(45deg, #B57EDC, #000)",
+    background: "var(--gradient)",
   };
 
   const iconInnerCircle = {
     width: 66,
     height: 66,
     borderRadius: "50%",
-    background: "#fff",
+    background: "var(--bg-light)",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
   };
 
   const iconGradientText = {
-    background: "linear-gradient(45deg, #B57EDC, #000)",
+    background: "var(--gradient)",
     WebkitBackgroundClip: "text",
     WebkitTextFillColor: "transparent",
     fontSize: "28px",
@@ -68,8 +68,9 @@ const WhyChooseUs = () => {
         py: { xs: 6, md: 10 },
         px: { xs: 2, sm: 4, md: 8 },
         overflowX: "hidden",
-        backgroundColor: "#fff",
+        backgroundColor: "var(--bg-light)",
         textAlign: "center",
+        transition: "background-color 0.3s ease",
       }}
     >
       <Box sx={iconWrapperStyle} mx="auto" mb={1}>
@@ -85,7 +86,7 @@ const WhyChooseUs = () => {
           fontWeight: "bold",
           mb: 1,
           letterSpacing: "1px",
-          background: "linear-gradient(90deg, #B57EDC, #000000)",
+          background: "var(--gradient)",
           WebkitBackgroundClip: "text",
           WebkitTextFillColor: "transparent",
           fontSize: { xs: "24px", sm: "32px", md: "38px" },
@@ -95,7 +96,7 @@ const WhyChooseUs = () => {
       </Typography>
 
       {/* Subtitle */}
-      <Typography sx={{ color: "#444", mb: { xs: 4, md: 6 } }}>
+      <Typography sx={{ color: "var(--text-muted)", mb: { xs: 4, md: 6 } }}>
         {t("why.subtitle")}
       </Typography>
 
@@ -125,13 +126,15 @@ const WhyChooseUs = () => {
               sx={{
                 p: { xs: "20px", md: "25px 30px" },
                 borderRadius: "20px",
-                backgroundColor: "white",
-                boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.15)",
+                backgroundColor: "var(--bg-section-alt)",
+                boxShadow: "var(--shadow-sm)",
                 display: "flex",
                 alignItems: "flex-start",
                 position: "relative",
                 height: "100%",
                 textAlign: "left",
+                transition: "all 0.3s ease",
+                border: "1px solid var(--border-color)",
               }}
             >
               {/* Icon */}
@@ -156,7 +159,7 @@ const WhyChooseUs = () => {
                 sx={{
                   width: "2px",
                   minHeight: "100%",
-                  backgroundColor: "rgba(0, 0, 0, 0.3)",
+                  backgroundColor: "var(--border-color)",
                   mx: { xs: "15px", md: "20px" },
                 }}
               />
@@ -168,7 +171,7 @@ const WhyChooseUs = () => {
                   sx={{
                     fontWeight: 600,
                     mb: 1,
-                    background: "linear-gradient(90deg, #B57EDC, #000000)",
+                    background: "var(--gradient)",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
                     fontSize: { xs: "16px", md: "20px" },
@@ -179,7 +182,7 @@ const WhyChooseUs = () => {
 
                 <Typography
                   sx={{
-                    color: "#555",
+                    color: "var(--text-muted)",
                     lineHeight: 1.7,
                     fontSize: { xs: 14, md: 15 },
                   }}

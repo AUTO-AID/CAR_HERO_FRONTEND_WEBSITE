@@ -27,14 +27,14 @@
 //   </React.StrictMode>
 // );
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState, createContext, useContext } from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
 import "./i18n.js";
 import i18n from "./i18n";  
 
-import { CssBaseline, createTheme } from "@mui/material";
+import { CssBaseline } from "@mui/material";
 import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 
@@ -44,14 +44,29 @@ import createCache from "@emotion/cache";
 import { prefixer } from "stylis";
 import rtlPlugin from "stylis-plugin-rtl";
 
-import { themeLtr, themeRtl } from "./theme.js";
+import { getTheme } from "./theme.js";
 
-const theme = createTheme({
-  typography: { fontFamily: "Poppins, sans-serif" },
-});
+// Context for theme toggle
+export const ColorModeContext = createContext({ toggleColorMode: () => {} });
 
 function RootWrapper() {
   const [lang, setLang] = useState(i18n.language || "en");
+  const [mode, setMode] = useState(() => {
+    return localStorage.getItem("theme") || "light";
+  });
+
+  const colorMode = useMemo(
+    () => ({
+      toggleColorMode: () => {
+        setMode((prevMode) => {
+          const newMode = prevMode === "light" ? "dark" : "light";
+          localStorage.setItem("theme", newMode);
+          return newMode;
+        });
+      },
+    }),
+    []
+  );
 
   useEffect(() => {
     const handleChange = (lng) => setLang(lng);
@@ -64,6 +79,10 @@ function RootWrapper() {
     document.documentElement.lang = lang;
   }, [lang]);
 
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", mode);
+  }, [mode]);
+
   const cache = useMemo(() => {
     return lang === "ar"
       ? createCache({
@@ -73,16 +92,17 @@ function RootWrapper() {
       : createCache({ key: "mui" });
   }, [lang]);
 
-
-  const currentTheme = lang === "ar" ? themeRtl : theme;
+  const theme = useMemo(() => getTheme(mode, lang === "ar" ? "rtl" : "ltr"), [mode, lang]);
 
   return (
-    <CacheProvider value={cache}>
-      <ThemeProvider theme={currentTheme}>
-        <CssBaseline />
-        <App />
-      </ThemeProvider>
-    </CacheProvider>
+    <ColorModeContext.Provider value={colorMode}>
+      <CacheProvider value={cache}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <App />
+        </ThemeProvider>
+      </CacheProvider>
+    </ColorModeContext.Provider>
   );
 }
 
