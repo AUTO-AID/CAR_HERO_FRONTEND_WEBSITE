@@ -168,7 +168,40 @@ const HeroSection = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 1 }}
           >
-            {/* CTA button removed - primary action moved to Contact section */}
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: { xs: "center", md: "flex-start" },
+                mt: 5,
+              }}
+            >
+              <Button
+                variant="contained"
+                startIcon={<AndroidIcon sx={{ fontSize: 26 }} />}
+                sx={{
+                  padding: { xs: "14px 32px", md: "16px 40px" },
+                  background: "var(--gradient)",
+                  color: "var(--text-light)",
+                  textTransform: "uppercase",
+                  letterSpacing: "1.5px",
+                  borderRadius: "50px",
+                  fontWeight: 700,
+                  fontSize: { xs: "15px", md: "17px" },
+                  boxShadow: "0 8px 24px rgba(143, 92, 177, 0.4)",
+                  transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                  "&:hover": {
+                    background: "var(--gradient)",
+                    transform: "translateY(-4px) scale(1.02)",
+                    boxShadow: "0 12px 32px rgba(143, 92, 177, 0.5)",
+                  },
+                  "&:active": {
+                    transform: "translateY(-2px) scale(1)",
+                  },
+                }}
+              >
+                {t("hero.download")}
+              </Button>
+            </Box>
           </motion.div>
         </Box>
 
@@ -181,10 +214,21 @@ const HeroSection = () => {
             display: { xs: "none", sm: "none", md: "none", lg: "block" },
           }}
         >
+          {/* Back Phone */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
+            animate={{ 
+              opacity: 1, 
+              y: [0, -20, 0] // Floating effect
+            }}
+            transition={{ 
+              opacity: { duration: 1 },
+              y: { 
+                duration: 5, 
+                repeat: Infinity, 
+                ease: "easeInOut" 
+              }
+            }}
           >
             <Box
               component="img"
@@ -202,10 +246,22 @@ const HeroSection = () => {
             />
           </motion.div>
 
+          {/* Front Phone */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
+            animate={{ 
+              opacity: 1, 
+              y: [0, -15, 0] // Floating effect
+            }}
+            transition={{ 
+              opacity: { duration: 1, delay: 0.2 },
+              y: { 
+                duration: 4, 
+                repeat: Infinity, 
+                ease: "easeInOut",
+                delay: 0.2
+              }
+            }}
           >
             <Box
               component="img"

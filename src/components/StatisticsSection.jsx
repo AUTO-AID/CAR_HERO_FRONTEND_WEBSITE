@@ -14,13 +14,14 @@ const StatisticItem = ({ icon: Icon, value, label, index }) => (
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
     transition={{ duration: 0.6, delay: index * 0.15 }}
+    style={{ height: "100%", width: "100%" }}
   >
     <Paper
       elevation={0}
       sx={{
-        p: 4,
+        p: { xs: "35px 20px", md: "50px 25px" },
         textAlign: "center",
-        borderRadius: "24px",
+        borderRadius: "20px",
         background: "var(--card-bg)",
         border: "1px solid var(--border-color)",
         transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
@@ -32,13 +33,12 @@ const StatisticItem = ({ icon: Icon, value, label, index }) => (
         position: "relative",
         overflow: "hidden",
         "&:hover": {
-          transform: "translateY(-10px)",
-          boxShadow: "0 20px 40px rgba(0,0,0,0.1)",
-          borderColor: "#8f5cb1",
+          transform: "translateY(-8px)",
+          boxShadow: "var(--shadow-hover)",
+          borderColor: "var(--primary)",
           "& .stat-icon": {
             transform: "scale(1.1) rotate(5deg)",
-            color: "#8f5cb1",
-            background: "rgba(143, 92, 177, 0.15)",
+            color: "var(--primary)",
           },
         },
       }}
@@ -46,16 +46,16 @@ const StatisticItem = ({ icon: Icon, value, label, index }) => (
       <Box
         className="stat-icon"
         sx={{
-          mb: 2.5,
+          mb: 3,
           p: 2,
-          borderRadius: "18px",
+          borderRadius: "16px",
           background: "var(--input-bg)",
           color: "var(--primary)",
           display: "inline-flex",
           transition: "all 0.4s ease",
         }}
       >
-        <Icon sx={{ fontSize: 40 }} />
+        <Icon sx={{ fontSize: 36 }} />
       </Box>
 
       <Typography
@@ -67,16 +67,17 @@ const StatisticItem = ({ icon: Icon, value, label, index }) => (
           WebkitTextFillColor: "transparent",
           mb: 1,
           fontFamily: "'Inter', sans-serif",
+          fontSize: { xs: "2.2rem", sm: "2.5rem", md: "2.8rem" },
         }}
       >
-        <CountUp end={value} duration={2.5} separator="," prefix="+" />
+        <CountUp end={value} duration={2.5} separator="," prefix="+" enableScrollSpy scrollSpyOnce />
       </Typography>
 
       <Typography
         variant="body1"
         sx={{
-          fontSize: "1.1rem",
-          fontWeight: 600,
+          fontSize: { xs: "1rem", md: "1.1rem" },
+          fontWeight: 700,
           color: "var(--text-muted)",
           textTransform: "uppercase",
           letterSpacing: "1px",
@@ -132,9 +133,9 @@ const StatisticsSection = () => {
          </motion.div>
       </Box>
 
-      <Grid container spacing={3} justifyContent="center">
+      <Grid container spacing={4} justifyContent="center" alignItems="stretch">
         {stats.map((stat, i) => (
-          <Grid item xs={12} sm={6} md={3} key={i}>
+          <Grid size={{ xs: 12, sm: 6, md: 3 }} key={i} sx={{ display: "flex" }}>
             <StatisticItem {...stat} index={i} />
           </Grid>
         ))}

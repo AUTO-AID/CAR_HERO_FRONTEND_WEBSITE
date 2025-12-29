@@ -47,15 +47,15 @@ const SalientFeatures = () => {
           cursor: "pointer",
           "&:hover": {
             boxShadow: "var(--shadow-hover)",
-            borderColor: "var(--primary-light)",
+            borderColor: "var(--primary)",
             "& .icon-wrapper": {
-              background: "var(--gradient)",
+              transform: "scale(1.1)",
             },
             "& .icon-inner": {
-              background: "transparent",
+              background: "rgba(143, 92, 177, 0.1)",
             },
             "& .feature-icon-text": {
-              WebkitTextFillColor: "#fff",
+              WebkitTextFillColor: "var(--primary)",
             },
           },
         }}
@@ -192,7 +192,7 @@ const SalientFeatures = () => {
         {/* CONTENT GRID */}
         <Grid container spacing={4} justifyContent="center" alignItems="center">
           {/* LEFT SIDE CARDS */}
-          <Grid item xs={12} md={4}>
+          <Grid size={{ xs: 12, md: 4 }}>
             {Array.isArray(featuresLeft) && featuresLeft.map((item, i) => (
               <FeatureCard
                 key={i}
@@ -206,31 +206,46 @@ const SalientFeatures = () => {
 
           {/* CENTER IMAGE */}
           <Grid
-            item
-            xs={12}
-            md={4}
-            textAlign="center"
+            size={{ xs: 12, md: 4 }}
             sx={{
-              display: { xs: "none", md: "block" },
+              display: { xs: "none", md: "flex" },
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
+              animate={{ 
+                y: [0, -20, 0] // Continuous floating effect
+              }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
+              transition={{ 
+                duration: 0.6,
+                y: {
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }
+              }}
+              style={{ display: "flex", justifyContent: "center" }}
             >
               <Box
                 component="img"
                 src={mockImg}
                 alt="App Preview"
                 sx={{
-                  width: "280px",
-                  borderRadius: "24px",
-                  boxShadow: "0 20px 60px rgba(143, 92, 177, 0.25)",
+                  width: "100%",
+                  maxWidth: "340px",
+                  height: "auto",
+                  // Removed borderRadius as it might be causing the "frame" look
+                  // Using a soft lighting glow instead of a dark heavy shadow
+                  filter: "drop-shadow(0 0 30px rgba(143, 92, 177, 0.4))",
                   transition: "transform 0.4s ease",
+                  display: "block",
+                  mx: "auto",
                   "&:hover": {
-                    transform: "scale(1.03)",
+                    transform: "scale(1.05)",
                   },
                 }}
               />
@@ -238,7 +253,7 @@ const SalientFeatures = () => {
           </Grid>
 
           {/* RIGHT SIDE CARDS */}
-          <Grid item xs={12} md={4}>
+          <Grid size={{ xs: 12, md: 4 }}>
             {Array.isArray(featuresRight) && featuresRight.map((item, i) => (
               <FeatureCard
                 key={i}

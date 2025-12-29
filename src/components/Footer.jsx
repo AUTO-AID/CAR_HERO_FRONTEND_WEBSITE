@@ -7,21 +7,30 @@ import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 
 const Footer = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
-  const socialIcons = [Facebook, Twitter, YouTube, GoogleIcon, Instagram];
+  const socialIcons = [
+    { Icon: Facebook, label: "Facebook" },
+    { Icon: Twitter, label: "Twitter" },
+    { Icon: YouTube, label: "YouTube" },
+    { Icon: GoogleIcon, label: "Google" },
+    { Icon: Instagram, label: "Instagram" }
+  ];
 
   return (
     <Box
+      component="footer"
       sx={{
         textAlign: "center",
-        py: 8,
-        background: "var(--gradient)",
-        color: "var(--text-light)",
-        transition: "all 0.3s ease",
+        py: { xs: 6, md: 8 },
+        px: { xs: 2, md: 4 },
+        background: "var(--bg-section-alt)",
+        borderTop: "1px solid var(--border-color)",
+        transition: "all 0.4s ease",
+        direction: i18n.language === "ar" ? "rtl" : "ltr",
       }}
     >
-      {/* Logo - Moved from Navbar */}
+      {/* Logo */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -36,13 +45,14 @@ const Footer = () => {
             display: "block",
             mx: "auto",
             width: "100%",
-            maxWidth: 320,
+            maxWidth: { xs: 240, sm: 280, md: 320 },
             height: "auto",
             mb: 3,
-            filter: "drop-shadow(0 4px 20px rgba(0,0,0,0.2))",
-            transition: "transform 0.3s ease",
+            filter: "drop-shadow(0 4px 16px rgba(143, 92, 177, 0.15))",
+            transition: "all 0.3s ease",
             "&:hover": {
-              transform: "scale(1.03)",
+              transform: "scale(1.02)",
+              filter: "drop-shadow(0 6px 20px rgba(143, 92, 177, 0.25))",
             },
           }}
         />
@@ -51,12 +61,12 @@ const Footer = () => {
       {/* Tagline */}
       <Typography
         sx={{
-          fontSize: { xs: "1rem", sm: "1.15rem" },
-          mb: 4,
-          opacity: 0.9,
-          maxWidth: 400,
+          fontSize: { xs: "1rem", sm: "1.1rem" },
+          color: "var(--text-muted)",
+          maxWidth: 500,
           mx: "auto",
-          lineHeight: 1.6,
+          lineHeight: 1.7,
+          mb: 4,
         }}
       >
         {t("footer.tagline") || "Your trusted roadside assistance partner"}
@@ -66,41 +76,49 @@ const Footer = () => {
       <Box
         sx={{
           display: "flex",
-          gap: 2,
+          gap: { xs: 1.5, sm: 2 },
           justifyContent: "center",
-          mb: 4,
+          mb: 5,
           flexWrap: "wrap",
         }}
       >
-        {socialIcons.map((Icon, i) => (
-          <IconButton
+        {socialIcons.map(({ Icon, label }, i) => (
+          <motion.div
             key={i}
-            sx={{
-              color: "var(--text-light)",
-              width: 48,
-              height: 48,
-              border: "1px solid rgba(255,255,255,0.2)",
-              borderRadius: "50%",
-              transition: "all 0.3s ease",
-              "&:hover": {
-                background: "rgba(255,255,255,0.15)",
-                transform: "translateY(-4px)",
-                borderColor: "rgba(255,255,255,0.4)",
-              },
-            }}
+            whileHover={{ y: -4, scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
-            <Icon />
-          </IconButton>
+            <IconButton
+              aria-label={label}
+              sx={{
+                width: { xs: 44, sm: 50 },
+                height: { xs: 44, sm: 50 },
+                background: "var(--card-bg)",
+                border: "1px solid var(--border-color)",
+                borderRadius: "50%",
+                color: "var(--primary)",
+                transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+                "&:hover": {
+                  background: "var(--gradient)",
+                  color: "var(--text-light)",
+                  borderColor: "transparent",
+                  boxShadow: "var(--shadow-hover)",
+                },
+              }}
+            >
+              <Icon sx={{ fontSize: { xs: 20, sm: 22 } }} />
+            </IconButton>
+          </motion.div>
         ))}
       </Box>
 
       {/* Divider */}
       <Box
         sx={{
-          width: "60%",
-          maxWidth: 400,
+          width: "100%",
+          maxWidth: 600,
           height: 1,
-          background: "rgba(255,255,255,0.15)",
+          background: "var(--border-color)",
           mx: "auto",
           mb: 3,
         }}
@@ -109,26 +127,29 @@ const Footer = () => {
       {/* Privacy / Terms */}
       <Typography
         sx={{
-          mb: 1.5,
-          fontSize: { xs: "0.85rem", sm: "0.95rem" },
-          opacity: 0.85,
+          mb: 2,
+          fontSize: { xs: "0.9rem", sm: "1rem" },
+          color: "var(--text-muted)",
           "& a": {
-            color: "inherit",
+            color: "var(--primary)",
             textDecoration: "none",
+            transition: "all 0.2s ease",
             "&:hover": {
+              color: "var(--primary-light)",
               textDecoration: "underline",
             },
           },
         }}
       >
-        {t("footer.privacy") || "Privacy | Terms and Conditions"}
+        {t("footer.privacy") || "Privacy Policy | Terms & Conditions"}
       </Typography>
 
       {/* Copyright */}
       <Typography
         sx={{
-          fontSize: { xs: "0.8rem", sm: "0.9rem" },
-          opacity: 0.7,
+          fontSize: { xs: "0.85rem", sm: "0.95rem" },
+          color: "var(--text-muted)",
+          fontWeight: 500,
         }}
       >
         {t("footer.copyright") || "© 2025 CarHero – All rights reserved."}

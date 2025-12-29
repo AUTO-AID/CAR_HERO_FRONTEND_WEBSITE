@@ -95,10 +95,7 @@ const ServiceSection = () => {
         >
           {features.map((feature, index) => (
             <Grid
-              item
-              xs={12}
-              sm={6}
-              md={4}
+              size={{ xs: 12, sm: 6, md: 4 }}
               key={index}
               sx={{ display: "flex", justifyContent: "center" }}
             >
@@ -123,16 +120,12 @@ const ServiceSection = () => {
                     height: "100%",
                     cursor: "pointer",
                     "&:hover": {
-                      background: "var(--gradient)",
-                      color: "var(--text-light)",
                       boxShadow: "var(--shadow-hover)",
-                      borderColor: "transparent",
+                      borderColor: "var(--primary-light)",
+                      transform: "translateY(-6px)",
                       "& .feature-icon": { 
-                        color: "var(--text-light)",
                         transform: "scale(1.1)",
                       },
-                      "& .feature-title": { color: "var(--text-light)" },
-                      "& .feature-desc": { color: "rgba(255,255,255,0.9)" },
                     },
                   }}
                 >

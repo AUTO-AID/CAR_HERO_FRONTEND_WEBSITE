@@ -30,10 +30,16 @@ const TestimonialCard = ({ name, role, feedback, avatar, rating, index }) => (
           borderColor: "#8f5cb1",
           background: "var(--card-bg)",
           boxShadow: "0 15px 30px rgba(0,0,0,0.1)",
+          "& .quote-icon": {
+            color: "var(--primary)",
+            opacity: 0.8,
+            transform: "rotate(180deg) scale(1.1)",
+          },
         },
       }}
     >
       <FormatQuoteIcon
+        className="quote-icon"
         sx={{
           position: "absolute",
           top: 20,
@@ -41,6 +47,7 @@ const TestimonialCard = ({ name, role, feedback, avatar, rating, index }) => (
           fontSize: 60,
           color: "rgba(143, 92, 177, 0.1)",
           transform: "rotate(180deg)",
+          transition: "all 0.4s ease",
         }}
       />
       
@@ -142,7 +149,7 @@ const TestimonialsSection = () => {
 
       <Grid container spacing={3} justifyContent="center">
         {items.map((item, i) => (
-          <Grid item xs={12} md={4} key={i}>
+          <Grid size={{ xs: 12, md: 4 }} key={i}>
             <TestimonialCard {...item} index={i} />
           </Grid>
         ))}
