@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-import Input from '../ui/Input';
+import Input from '@/presentation/components/register/Input';
 import { User, Lock, ArrowLeft, ArrowRight, ShieldCheck, Fingerprint, CheckCircle2, RotateCw, Smartphone } from 'lucide-react';
+import { registerProvider, resendOtp, verifyOtp as verifyOtpService } from '@/infrastructure/services/auth.service';
 
 const StepAccount = ({ formData, updateFormData, nextStep, isVerified, setIsVerified, lang, t }) => {
   const [errors, setErrors] = useState({});
@@ -68,51 +69,28 @@ const StepAccount = ({ formData, updateFormData, nextStep, isVerified, setIsVeri
     setError(null);
     setIsVerifying(true);
     try {
-      const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001/api/v1';
       const formattedPhone = `+963${formData.phone.slice(1)}`;
 
-      const res = await fetch(`${apiBaseUrl}/auth/register`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          fullName: formData.fullName,
-          phoneNumber: formattedPhone,
-          password: formData.password,
-          accountType: 'provider',
-          isTermsAccepted: true,
-        }),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        const msg = data.message || 'Registration failed';
-        if (msg.includes('already exists')) {
+      try {
+        await registerProvider(formData.fullName, formattedPhone, formData.password);
+      } catch (err) {
+        const msg = err.message || 'Registration failed';
+        if (msg.includes('already exists') || err.status === 409) {
           try {
-            const resendRes = await fetch(`${apiBaseUrl}/auth/resend-otp`, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({ phoneNumber: formattedPhone }),
-            });
-            if (resendRes.ok) {
-              setIsOtpSent(true);
-              setTimer(60);
-              setOtpValues(['', '', '', '', '', '']);
-              setTimeout(() => {
-                otpInputs.current[0]?.focus();
-              }, 100);
-              return;
-            }
+            await resendOtp(formattedPhone);
+            setIsOtpSent(true);
+            setTimer(60);
+            setOtpValues(['', '', '', '', '', '']);
+            setTimeout(() => {
+              otpInputs.current[0]?.focus();
+            }, 100);
+            return;
           } catch (e) {
             // Ignore fallback resend error, throw original conflict
           }
           throw new Error(lang === 'ar' ? 'هذا الرقم مسجل بالفعل. يرجى تسجيل الدخول أو استخدام رقم آخر.' : 'This phone number is already registered. Please log in or use another number.');
         }
-        throw new Error(msg);
+        throw err;
       }
 
       setIsOtpSent(true);
@@ -133,22 +111,8 @@ const StepAccount = ({ formData, updateFormData, nextStep, isVerified, setIsVeri
     setError(null);
     setIsVerifying(true);
     try {
-      const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001/api/v1';
       const formattedPhone = `+963${formData.phone.slice(1)}`;
-
-      const res = await fetch(`${apiBaseUrl}/auth/resend-otp`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ phoneNumber: formattedPhone }),
-      });
-
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(data.message || 'Failed to resend OTP');
-      }
-
+      await resendOtp(formattedPhone);
       setTimer(60);
       setOtpValues(['', '', '', '', '', '']);
       setTimeout(() => {
@@ -187,29 +151,12 @@ const StepAccount = ({ formData, updateFormData, nextStep, isVerified, setIsVeri
     setIsVerifying(true);
     setError(null);
     try {
-      const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001/api/v1';
       const formattedPhone = `+963${formData.phone.slice(1)}`;
-
-      const res = await fetch(`${apiBaseUrl}/auth/verify-otp`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          phoneNumber: formattedPhone,
-          otpCode: code,
-        }),
-      });
-
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(data.message || (lang === 'ar' ? 'رمز التحقق غير صحيح' : 'Invalid OTP code'));
-      }
-
+      await verifyOtpService(formattedPhone, code);
       setIsVerified(true);
     } catch (err) {
       console.error(err);
-      setError(err.message || (lang === 'ar' ? 'حدث خطأ أثناء التحقق من الرمز' : 'Failed to verify OTP code'));
+      setError(err.message || (lang === 'ar' ? 'رمز التحقق غير صحيح' : 'Invalid OTP code'));
       setOtpValues(['', '', '', '', '', '']);
       setTimeout(() => {
         otpInputs.current[0]?.focus();

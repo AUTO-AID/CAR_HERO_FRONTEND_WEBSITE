@@ -104,9 +104,9 @@ import React from "react";
 import { Box, Button, Typography, Container } from "@mui/material";
 import { motion } from "framer-motion";
 import AndroidIcon from "@mui/icons-material/Android";
-import roadBg from "../assets/header-bg.jpg";
-import sideImg from "../assets/hero-pg.png";
-import backImg from "../assets/hero-pg2.png";
+import roadBg from "@/assets/header-bg.jpg";
+import sideImg from "@/assets/hero-pg.png";
+import backImg from "@/assets/hero-pg2.png";
 import { useTranslation } from "react-i18next"; 
 
 const HeroSection = () => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { teamData } from '../contacts';
+import { teamData } from '@/contacts';
 import { useTranslation } from "react-i18next";
 import { motion } from 'framer-motion';
 

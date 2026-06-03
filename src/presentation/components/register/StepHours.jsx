@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Clock, Loader2 } from 'lucide-react';
+import { applyProvider } from '@/infrastructure/services/providers.service';
 
 const StepHours = ({ formData, updateFormData, nextStep, prevStep, lang, t }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -132,19 +133,7 @@ const StepHours = ({ formData, updateFormData, nextStep, prevStep, lang, t }) =>
         experienceYears: formData.experienceYears,
       };
 
-      const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001/api/v1';
-      const res = await fetch(`${apiBaseUrl}/providers/apply`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload)
-      });
-
-      if (!res.ok) {
-        throw new Error('Failed to submit application');
-      }
-      
+      await applyProvider(payload);
       nextStep();
     } catch (err) {
       console.error(err);

@@ -1,5 +1,5 @@
 import React from 'react';
-import RegisterFlow from './Register/RegisterFlow';
+import RegisterFlow from '@/presentation/components/register/RegisterFlow';
 import './RegisterPage.css';
 
 const RegisterPage = () => {

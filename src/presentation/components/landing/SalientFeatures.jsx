@@ -8,7 +8,7 @@ import SwapVertIcon from "@mui/icons-material/SwapVert";
 import LinkIcon from "@mui/icons-material/Link";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import { motion, useInView } from "framer-motion";
-import mockImg from "../assets/hero-pg.png";
+import mockImg from "@/assets/hero-pg.png";
 import { useTranslation } from "react-i18next";
 
 const SalientFeatures = () => {

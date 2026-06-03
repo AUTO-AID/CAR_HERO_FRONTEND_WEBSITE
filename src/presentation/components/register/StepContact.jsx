@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import Input from '../ui/Input';
-import CustomSelect from '../ui/CustomSelect';
+import Input from '@/presentation/components/register/Input';
+import CustomSelect from '@/presentation/components/register/CustomSelect';
 import { MapPin, ChevronDown, Plus, X, Briefcase, Store, CheckCircle2, Crosshair, Map as MapIcon, ArrowLeft, ArrowRight } from 'lucide-react';
 
 const StepContact = ({ formData, updateFormData, nextStep, prevStep, lang, t }) => {

@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { translations } from './translations';
 import { StepId } from './types';
-import Stepper from './components/Stepper';
-import StepAccount from './components/StepAccount';
-import StepContact from './components/StepContact';
-import StepServices from './components/StepServices';
-import StepHours from './components/StepHours';
-import StepSuccess from './components/StepSuccess';
-import Navbar from '../../components/Navbar';
+import Stepper from './Stepper';
+import StepAccount from './StepAccount';
+import StepContact from './StepContact';
+import StepServices from './StepServices';
+import StepHours from './StepHours';
+import StepSuccess from './StepSuccess';
+import Navbar from '@/presentation/components/layout/Navbar';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 
 import { useTranslation } from 'react-i18next';
-import i18n from '../../i18n';
+import i18n from '@/infrastructure/i18n';
 import { useTheme } from '@mui/material/styles';
 
 const RegisterFlow = () => {

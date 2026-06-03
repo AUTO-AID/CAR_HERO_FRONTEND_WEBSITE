@@ -36,8 +36,8 @@ import React, {
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
-import "./i18n.js";
-import i18n from "./i18n";
+import "@/infrastructure/i18n";
+import i18n from "@/infrastructure/i18n";
 
 import { CssBaseline } from "@mui/material";
 import { BrowserRouter } from "react-router-dom";
@@ -49,8 +49,8 @@ import createCache from "@emotion/cache";
 import { prefixer } from "stylis";
 import rtlPlugin from "stylis-plugin-rtl";
 
-import { getTheme } from "./theme.js";
-import { ColorModeContext } from "./ColorModeContext";
+import { getTheme } from "@/presentation/theme/index.js";
+import { ColorModeContext } from "@/application/contexts/color-mode.context";
 
 // Context for theme toggle
 // export const ColorModeContext = createContext({ toggleColorMode: () => {} });

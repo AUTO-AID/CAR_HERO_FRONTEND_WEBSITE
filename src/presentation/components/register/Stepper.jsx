@@ -1,5 +1,5 @@
 import React from 'react';
-import { translations } from '../translations';
+import { translations } from './translations';
 
 const Stepper = ({ currentStep, lang }) => {
   const steps = translations[lang].stepper;

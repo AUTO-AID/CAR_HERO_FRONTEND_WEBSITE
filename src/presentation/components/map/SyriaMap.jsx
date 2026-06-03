@@ -86,7 +86,7 @@ const ActivePanel = ({ govName, value, isArabic }) => (
   </Box>
 );
 
-const ComingSoonPanel = ({ govName, isArabic, email, setEmail, onNotify }) => (
+const ComingSoonPanel = ({ govName, isArabic, email, setEmail, onNotify, isSubmitting, isSuccess }) => (
   <Box
     sx={{
       background: 'rgba(30, 30, 45, 0.95)',
@@ -123,6 +123,7 @@ const ComingSoonPanel = ({ govName, isArabic, email, setEmail, onNotify }) => (
       placeholder={isArabic ? 'بريدك الإلكتروني' : 'Your email address'}
       value={email}
       onChange={(e) => setEmail(e.target.value)}
+      disabled={isSubmitting || isSuccess}
       size="small"
       sx={{
         mb: 2,
@@ -161,18 +162,18 @@ const ComingSoonPanel = ({ govName, isArabic, email, setEmail, onNotify }) => (
       fullWidth
       variant="contained"
       onClick={onNotify}
-      disabled={!email}
+      disabled={!email || isSubmitting || isSuccess}
       sx={{
-        background: email ? 'linear-gradient(135deg, #6a1b9a, #8b6fc0)' : 'rgba(100,100,120,0.3)',
+        background: (email && !isSuccess) ? 'linear-gradient(135deg, #6a1b9a, #8b6fc0)' : (isSuccess ? '#10b981' : 'rgba(100,100,120,0.3)'),
         borderRadius: '10px',
         py: 1.5,
         fontWeight: 600,
         textTransform: 'none',
         fontSize: '15px',
-        color: email ? '#fff' : 'rgba(255,255,255,0.3)'
+        color: (email && !isSuccess) || isSuccess ? '#fff' : 'rgba(255,255,255,0.3)'
       }}
     >
-      {isArabic ? 'أعلمني عند الإطلاق' : 'Notify Me'}
+      {isSubmitting ? (isArabic ? 'جاري التسجيل...' : 'Registering...') : isSuccess ? (isArabic ? 'تم التسجيل بنجاح ✓' : 'Registered Successfully ✓') : (isArabic ? 'أعلمني عند الإطلاق' : 'Notify Me')}
     </Button>
   </Box>
 );
@@ -201,25 +202,25 @@ const DefaultPanel = ({ isArabic }) => (
   </Box>
 );
 
+import { getGovernorates } from '@/infrastructure/services/providers.service';
+
 const SyriaMap = () => {
   const { i18n } = useTranslation();
   const iframeRef = useRef(null);
   const [selectedGov, setSelectedGov] = useState(null);
   const [previewGov, setPreviewGov] = useState(null);
   const [email, setEmail] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const [govData, setGovData] = useState([]);
   const isArabic = i18n.language === 'ar';
 
   useEffect(() => {
     const fetchGovData = async () => {
       try {
-        const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001/api/v1';
-        const res = await fetch(`${apiBaseUrl}/providers/public/governorates`);
-        if (res.ok) {
-          const json = await res.json();
-          if (json.success && Array.isArray(json.data)) {
-            setGovData(json.data);
-          }
+        const json = await getGovernorates();
+        if (json.success && Array.isArray(json.data)) {
+          setGovData(json.data);
         }
       } catch (err) {
         console.error('Failed to fetch governorate data:', err);
@@ -284,9 +285,13 @@ const SyriaMap = () => {
 
   const handleNotify = () => {
     if (email && displayGov) {
-      console.log('Notify:', email, 'for:', displayGov.governorate);
-      setEmail('');
-      alert(isArabic ? 'تم تسجيل بريدك بنجاح!' : 'Your email has been registered!');
+      setIsSubmitting(true);
+      setTimeout(() => {
+        setIsSubmitting(false);
+        setIsSuccess(true);
+        setEmail('');
+        setTimeout(() => setIsSuccess(false), 3000);
+      }, 1500);
     }
   };
 
@@ -333,6 +338,8 @@ const SyriaMap = () => {
                   email={email}
                   setEmail={setEmail}
                   onNotify={handleNotify}
+                  isSubmitting={isSubmitting}
+                  isSuccess={isSuccess}
                 />
               )}
             </motion.div>

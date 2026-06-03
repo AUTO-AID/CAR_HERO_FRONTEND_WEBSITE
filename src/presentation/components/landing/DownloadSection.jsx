@@ -1,11 +1,26 @@
-import React from "react";
-import { Box, Typography, TextField, IconButton } from "@mui/material";
+import React, { useState } from "react";
+import { Box, Typography, TextField, IconButton, CircularProgress } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
-import downloadBg from "../assets/header-bg.jpg";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import downloadBg from "@/assets/header-bg.jpg";
 import { useTranslation } from "react-i18next";
 
 const DownloadSection = () => {
   const { t } = useTranslation();
+  const [email, setEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  const handleSubmit = () => {
+    if (!email) return;
+    setIsSubmitting(true);
+    setTimeout(() => {
+      setIsSubmitting(false);
+      setIsSuccess(true);
+      setEmail("");
+      setTimeout(() => setIsSuccess(false), 3000);
+    }, 1500);
+  };
 
   return (
     <Box
@@ -113,6 +128,10 @@ const DownloadSection = () => {
       >
         <TextField
           placeholder={t("download.emailPlaceholder")}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          disabled={isSubmitting || isSuccess}
+          onKeyPress={(e) => e.key === 'Enter' && handleSubmit()}
           variant="standard"
           InputProps={{
             disableUnderline: true,
@@ -120,8 +139,8 @@ const DownloadSection = () => {
           }}
           sx={{ flex: 1 }}
         />
-        <IconButton sx={{ color: "var(--text-light)" }}>
-          <SendIcon />
+        <IconButton onClick={handleSubmit} disabled={!email || isSubmitting || isSuccess} sx={{ color: isSuccess ? "#4ade80" : "var(--text-light)" }}>
+          {isSubmitting ? <CircularProgress size={24} color="inherit" /> : isSuccess ? <CheckCircleIcon /> : <SendIcon />}
         </IconButton>
       </Box>
     </Box>

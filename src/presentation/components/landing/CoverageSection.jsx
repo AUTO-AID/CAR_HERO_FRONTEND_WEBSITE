@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Container, Typography } from '@mui/material';
 import { motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import SyriaMap from './SyriaMap';
+import SyriaMap from '@/presentation/components/map/SyriaMap';
 import { Explore } from '@mui/icons-material';
 
 const CoverageSection = () => {

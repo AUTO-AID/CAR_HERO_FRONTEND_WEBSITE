@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import FileUpload from '../ui/FileUpload';
+import FileUpload from '@/presentation/components/register/FileUpload';
 import { 
   Wrench, Check, Zap, Truck, Settings, Layout, Wifi, Coffee, Package, 
   Droplet, Plus, Minus, Thermometer, Sparkles, Disc, 

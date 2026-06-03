@@ -1,13 +1,28 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
-import { LoginIcon, DollarSignIcon, CalendarIcon } from './icons';
+import { LoginIcon, DollarSignIcon, CalendarIcon } from '@/presentation/components/ui/icons';
 import { motion } from 'framer-motion';
 
 const ContactSection = () => {
     const [activeQuestion, setActiveQuestion] = useState(null);
+    const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isSuccess, setIsSuccess] = useState(false);
+    
     const navigate = useNavigate();
     const { t } = useTranslation();
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setIsSubmitting(true);
+        setTimeout(() => {
+            setIsSubmitting(false);
+            setIsSuccess(true);
+            setFormData({ name: '', email: '', message: '' });
+            setTimeout(() => setIsSuccess(false), 3000);
+        }, 1500);
+    };
 
     const faqData = t("contact_faq", { returnObjects: true });
     const partnerCards = t("partner_cards", { returnObjects: true });
@@ -77,27 +92,36 @@ const ContactSection = () => {
                     >
                         <h3>{t("contact1.send_message")}</h3>
 
-                        <form className="contact-form" onSubmit={(e) => e.preventDefault()}>
+                        <form className="contact-form" onSubmit={handleSubmit}>
                             <input 
                                 type="text" 
                                 placeholder={t("contact1.full_name")} 
                                 required 
+                                value={formData.name}
+                                onChange={(e) => setFormData({...formData, name: e.target.value})}
+                                disabled={isSubmitting || isSuccess}
                                 className="input-enhanced"
                             />
                             <input 
                                 type="email" 
                                 placeholder={t("contact1.email")} 
                                 required 
+                                value={formData.email}
+                                onChange={(e) => setFormData({...formData, email: e.target.value})}
+                                disabled={isSubmitting || isSuccess}
                                 className="input-enhanced"
                             />
                             <textarea 
                                 placeholder={t("contact1.message")} 
                                 rows={4} 
                                 required
+                                value={formData.message}
+                                onChange={(e) => setFormData({...formData, message: e.target.value})}
+                                disabled={isSubmitting || isSuccess}
                                 className="input-enhanced"
                             ></textarea>
-                            <button type="submit" className="form-submit-btn pulse">
-                                {t("contact1.submit_btn")}
+                            <button type="submit" disabled={isSubmitting || isSuccess} className={`form-submit-btn ${!isSubmitting && !isSuccess ? 'pulse' : ''}`} style={{ backgroundColor: isSuccess ? '#10b981' : '' }}>
+                                {isSubmitting ? t("common.loading", "جاري الإرسال...") : isSuccess ? t("common.success", "تم الإرسال بنجاح ✓") : t("contact1.submit_btn")}
                             </button>
                         </form>
                     </motion.div>

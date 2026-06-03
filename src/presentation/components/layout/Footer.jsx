@@ -21,7 +21,7 @@ import {
   LocationOn,
   Send,
 } from "@mui/icons-material";
-import logo from "../assets/logo_carHero.png";
+import logo from "@/assets/logo_carHero.png";
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 
