@@ -104,9 +104,9 @@ const StepContact = ({ formData, updateFormData, nextStep, prevStep, lang, t }) 
   };
 
   return (
-    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 font-primary">
-      <div className="flex items-center gap-4 border-b border-slate-200 dark:border-white/10 pb-6">
-        <div className="p-3 bg-violet-600/10 dark:bg-[#8f5cb1]/10 rounded-2xl text-violet-600 dark:text-[#8f5cb1]">
+    <div className="space-y-5 lg:space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500 font-primary">
+      <div className="flex items-center gap-3 border-b border-slate-200 dark:border-white/10 pb-4">
+        <div className="p-2.5 bg-violet-600/10 dark:bg-[#8f5cb1]/10 rounded-xl text-violet-600 dark:text-[#8f5cb1]">
           <Store size={28} />
         </div>
         <div>
@@ -115,7 +115,7 @@ const StepContact = ({ formData, updateFormData, nextStep, prevStep, lang, t }) 
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-4">
         <div className="md:col-span-1">
           <Input 
             lang={lang} 
@@ -184,11 +184,11 @@ const StepContact = ({ formData, updateFormData, nextStep, prevStep, lang, t }) 
           />
         </div>
 
-        <div className="md:col-span-2 space-y-4">
+        <div className="md:col-span-2 space-y-2.5">
           <label className={`block text-sm font-bold uppercase px-1 ${errors.coverageAreas && touched.coverageAreas ? 'text-rose-500' : 'text-slate-500 dark:text-[#c9a7e3]'}`}>
             {t.contact.coverage} <span className="text-rose-500">*</span>
           </label>
-          <div className="relative h-[56px]">
+          <div className="relative h-[50px]">
             <input
               type="text"
               value={coverageInput}
@@ -216,16 +216,16 @@ const StepContact = ({ formData, updateFormData, nextStep, prevStep, lang, t }) 
         </div>
 
         <div className="md:col-span-2">
-           <div className="relative group overflow-hidden rounded-[24px] border border-black/10 dark:border-white/10 shadow-2xl h-[300px] sm:h-[350px]">
+           <div className="relative group overflow-hidden rounded-[20px] border border-black/10 dark:border-white/10 shadow-2xl h-[220px] lg:h-[240px]">
               <div className="absolute inset-0 z-0 bg-cover bg-center transition-transform duration-[2000ms] group-hover:scale-105" style={{backgroundImage: 'url("https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&q=80&w=1200")'}}>
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 dark:from-[#1a0f2e]/90 via-slate-900/40 to-transparent"></div>
               </div>
-              <div className="relative z-10 h-full flex flex-col items-center justify-center p-6 text-center space-y-5">
-                 <div className={`p-5 rounded-full shadow-[0_0_50px_rgba(143,92,177,0.4)] transition-all duration-500 ${formData.location ? 'bg-emerald-500 text-white scale-110' : 'bg-violet-600 dark:bg-[#8f5cb1] text-white animate-bounce'}`}>
+              <div className="relative z-10 h-full flex flex-col items-center justify-center p-4 text-center space-y-3">
+                 <div className={`p-3.5 rounded-full shadow-[0_0_50px_rgba(143,92,177,0.4)] transition-all duration-500 ${formData.location ? 'bg-emerald-500 text-white scale-110' : 'bg-violet-600 dark:bg-[#8f5cb1] text-white animate-bounce'}`}>
                     {formData.location ? <CheckCircle2 size={42} strokeWidth={2.5} /> : <MapPin size={42} strokeWidth={2.5} />}
                  </div>
                  <div className="space-y-1 max-w-md">
-                    <h3 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+                    <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight">
                       {formData.location ? t.contact.locationSuccess : t.contact.pinMap}
                     </h3>
                     <p className="text-white/70 text-[11px] sm:text-xs font-bold leading-relaxed">{t.contact.pinMapDesc}</p>
@@ -234,7 +234,7 @@ const StepContact = ({ formData, updateFormData, nextStep, prevStep, lang, t }) 
                     type="button"
                     onClick={handleGetLocation}
                     disabled={isLocating}
-                    className={`px-14 py-4 font-black rounded-[12px] transition-all shadow-2xl flex items-center gap-3 active:scale-95 group/btn ${formData.location ? 'bg-emerald-500/20 backdrop-blur-xl border border-emerald-500/40 text-emerald-400' : 'bg-white text-slate-950 hover:bg-violet-600 dark:hover:bg-[#a56dcc] hover:text-white'}`}
+                    className={`px-10 py-2.5 font-black rounded-[12px] transition-all shadow-2xl flex items-center gap-3 active:scale-95 group/btn ${formData.location ? 'bg-emerald-500/20 backdrop-blur-xl border border-emerald-500/40 text-emerald-400' : 'bg-white text-slate-950 hover:bg-violet-600 dark:hover:bg-[#a56dcc] hover:text-white'}`}
                  >
                     {isLocating ? <div className="animate-spin rounded-full h-5 w-5 border-2 border-current border-t-transparent"></div> : <Crosshair size={22} />}
                     <span className="text-sm">{isLocating ? t.common.loading : t.contact.openMaps}</span>
@@ -244,11 +244,11 @@ const StepContact = ({ formData, updateFormData, nextStep, prevStep, lang, t }) 
         </div>
       </div>
 
-      <div className="flex flex-col sm:flex-row gap-4 pt-8">
+      <div className="flex flex-col sm:flex-row gap-4 pt-3">
         <button 
           onClick={nextStep}
           disabled={!isFormValid()}
-          className={`order-1 flex-1 group relative inline-flex items-center justify-center gap-3 px-12 py-5 font-black rounded-[12px] shadow-xl transition-all active:scale-[0.98]
+          className={`order-1 flex-1 group relative inline-flex items-center justify-center gap-3 px-12 py-3.5 font-black rounded-[12px] shadow-xl transition-all active:scale-[0.98]
           ${isFormValid() ? 'bg-violet-600 dark:bg-[#8f5cb1] hover:bg-violet-700 dark:hover:bg-[#a56dcc] text-white shadow-violet-600/30 dark:shadow-[#8f5cb1]/30' : 'bg-slate-200 dark:bg-[#1a1425] text-slate-400 dark:text-[#c9a7e3]/30 cursor-not-allowed opacity-60'}`}
         >
           <span className="text-base">{t.common.next}</span>
@@ -256,7 +256,7 @@ const StepContact = ({ formData, updateFormData, nextStep, prevStep, lang, t }) 
         </button>
         <button 
           onClick={prevStep}
-          className="order-2 px-10 py-5 bg-slate-200/50 dark:bg-[#1a1425] hover:bg-slate-200 dark:hover:bg-[#251b36] border border-slate-200 dark:border-[#8f5cb1]/10 text-slate-600 dark:text-white/40 font-black rounded-[12px] transition-all text-base"
+          className="order-2 px-10 py-3.5 bg-slate-200/50 dark:bg-[#1a1425] hover:bg-slate-200 dark:hover:bg-[#251b36] border border-slate-200 dark:border-[#8f5cb1]/10 text-slate-600 dark:text-white/40 font-black rounded-[12px] transition-all text-base"
         >
           {t.common.prev}
         </button>

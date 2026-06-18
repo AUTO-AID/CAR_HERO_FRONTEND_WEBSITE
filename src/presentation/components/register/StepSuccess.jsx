@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { CheckCircle, ArrowRight, ArrowLeft, Download, Loader2, Award, ShieldCheck, Briefcase } from 'lucide-react';
+import RegistrationReceipt from './RegistrationReceipt';
 
 const StepSuccess = ({ lang, t, formData }) => {
   const [isDownloading, setIsDownloading] = useState(false);
+  const receiptRef = useRef(null);
 
-  const handleDownload = async () => {
+  const HandleLegacyDownload = async () => {
     setIsDownloading(true);
     await new Promise(resolve => setTimeout(resolve, 2000));
 
-    const timestamp = new Date().toLocaleString(lang === 'ar' ? 'ar-SY' : 'en-US');
     const fileName = `CarHero_Registration_${formData.businessName.replace(/\s+/g, '_')}.html`;
 
     const providerType = t.contact.categoryOptions?.[formData.category] || formData.category;
@@ -130,8 +131,78 @@ const StepSuccess = ({ lang, t, formData }) => {
     setIsDownloading(false);
   };
 
+  const handleDownload = async () => {
+    if (!receiptRef.current || isDownloading) return;
+
+    setIsDownloading(true);
+    try {
+      const [{ default: html2canvas }, { jsPDF }] = await Promise.all([
+        import('html2canvas'),
+        import('jspdf'),
+      ]);
+      await document.fonts?.ready;
+      await Promise.all(
+        Array.from(receiptRef.current.querySelectorAll('img')).map((image) => image.decode?.().catch(() => undefined))
+      );
+      const pdf = new jsPDF({
+        orientation: 'portrait',
+        unit: 'mm',
+        format: 'a4',
+        compress: true,
+      });
+      const pageWidth = pdf.internal.pageSize.getWidth();
+      const pageHeight = pdf.internal.pageSize.getHeight();
+      const margin = 8;
+      const contentWidth = pageWidth - (margin * 2);
+      const contentHeight = pageHeight - (margin * 2);
+      const pages = Array.from(receiptRef.current.querySelectorAll('[data-pdf-page]'));
+
+      for (let pageIndex = 0; pageIndex < pages.length; pageIndex += 1) {
+        const pageElement = pages[pageIndex];
+        const canvas = await html2canvas(pageElement, {
+          scale: 2,
+          backgroundColor: '#f7f3fa',
+          useCORS: true,
+          logging: false,
+          width: pageElement.scrollWidth,
+          height: pageElement.scrollHeight,
+          windowWidth: pageElement.scrollWidth,
+          windowHeight: pageElement.scrollHeight,
+        });
+
+        if (pageIndex > 0) pdf.addPage();
+        pdf.addImage(
+          canvas.toDataURL('image/jpeg', 0.96),
+          'JPEG',
+          margin,
+          margin,
+          contentWidth,
+          contentHeight,
+          undefined,
+          'FAST',
+        );
+      }
+
+      pdf.setProperties({
+        title: `Car Hero - ${formData.businessName || 'Provider Registration'}`,
+        subject: 'Service Provider Registration Request',
+        author: 'Car Hero',
+        creator: 'Car Hero Website',
+      });
+      const safeBusinessName = (formData.businessName || 'Provider').replace(/[\\/:*?"<>|]+/g, '-').replace(/\s+/g, '_');
+      pdf.save(`Car_Hero_Registration_${safeBusinessName}.pdf`);
+    } catch (error) {
+      console.error('Failed to generate registration PDF', error);
+    } finally {
+      setIsDownloading(false);
+    }
+  };
+
   return (
     <div className="flex flex-col items-center justify-center py-10 px-4 text-center animate-in zoom-in-95 fade-in duration-1000">
+      <div style={{ position: 'fixed', left: '-12000px', top: 0, pointerEvents: 'none' }}>
+        <RegistrationReceipt ref={receiptRef} lang={lang} t={t} formData={formData} />
+      </div>
       <div className="relative mb-12">
         <div className="absolute inset-0 bg-[#8f5cb1]/20 dark:bg-[#8f5cb1]/20 blur-[100px] rounded-full animate-pulse"></div>
         <div className="relative z-10 w-40 h-40 bg-[#8f5cb1] text-white rounded-[3rem] flex items-center justify-center shadow-[0_25px_60px_rgba(143,92,177,0.4)] rotate-3 animate-bounce-slow">

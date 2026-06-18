@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Grid, Typography, Paper } from "@mui/material";
-import { motion } from "framer-motion";
+import { motion as Motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
@@ -42,6 +42,8 @@ const ServiceSection = () => {
 
   return (
     <Box
+      component="section"
+      id="services"
       sx={{
         position: "relative",
         py: { xs: 8, md: 12 },
@@ -54,7 +56,7 @@ const ServiceSection = () => {
     >
       <Box sx={{ position: "relative", zIndex: 2 }}>
         {/* Title */}
-        <motion.div
+        <Motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -85,7 +87,7 @@ const ServiceSection = () => {
           >
             {t("service.subtitle") || "Professional services to keep you moving"}
           </Typography>
-        </motion.div>
+        </Motion.div>
 
         <Grid
           container
@@ -99,7 +101,7 @@ const ServiceSection = () => {
               key={index}
               sx={{ display: "flex", justifyContent: "center" }}
             >
-              <motion.div
+              <Motion.div
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -183,7 +185,7 @@ const ServiceSection = () => {
                     {feature.description}
                   </Typography>
                 </Paper>
-              </motion.div>
+              </Motion.div>
             </Grid>
           ))}
         </Grid>

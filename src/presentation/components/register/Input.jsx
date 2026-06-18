@@ -9,7 +9,7 @@ const Input = ({ label, icon, lang = 'ar', error, isValid, className, type, ...p
   const inputType = isPassword ? (showPassword ? 'text' : 'password') : type;
 
   return (
-    <div className={`w-full space-y-2.5 ${lang === 'ar' ? 'text-right' : 'text-left'}`}>
+    <div className={`w-full space-y-1.5 ${lang === 'ar' ? 'text-right' : 'text-left'}`}>
       <div className="flex items-center justify-between px-1">
         <label className={`block text-[14px] font-bold uppercase transition-colors ${
           error ? 'text-rose-500' : isFocused ? 'text-[#8f5cb1] dark:text-[#a57ed8]' : 'text-[var(--text-muted)]'
@@ -19,14 +19,14 @@ const Input = ({ label, icon, lang = 'ar', error, isValid, className, type, ...p
         {isValid && !error && <CheckCircle2 size={16} className="text-emerald-500 animate-in zoom-in" />}
       </div>
 
-      <div className="relative h-[58px]">
+      <div className="relative h-[52px]">
         <input
           {...props}
           type={inputType}
           onFocus={(e) => { setIsFocused(true); props.onFocus?.(e); }}
           onBlur={(e) => { setIsFocused(false); props.onBlur?.(e); }}
           className={`
-            w-full h-full transition-all duration-300 font-medium text-base
+            w-full h-full transition-all duration-300 font-medium text-sm
             bg-[var(--input-bg)] border rounded-[12px]
             ${lang === 'ar' ? 'pr-12 pl-12' : 'pl-12 pr-12'}
             text-[var(--text-dark)] placeholder:text-slate-400 dark:placeholder:text-[#a8a8b3]/40 outline-none

@@ -122,7 +122,11 @@ const HeroSection = () => {
         backgroundSize: "cover",
         backgroundPosition: "center",
         color: "var(--text-light)",
-        minHeight: "100vh",
+        minHeight: "100dvh",
+        "@media (min-width: 1280px)": {
+          height: "calc(100dvh / 0.85)",
+          minHeight: "calc(100dvh / 0.85)",
+        },
         display: "flex",
         alignItems: "center",
         position: "relative",

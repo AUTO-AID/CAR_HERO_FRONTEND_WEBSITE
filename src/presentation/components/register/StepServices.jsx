@@ -58,9 +58,9 @@ const StepServices = ({ formData, updateFormData, nextStep, prevStep, lang, t })
     && formData.serviceType.every((id) => isValidPrice(formData.servicePrices[id]));
 
   return (
-    <div className="space-y-12 animate-in fade-in slide-in-from-bottom-8 duration-700">
-      <div className="flex items-center gap-4 border-b border-slate-200 dark:border-white/10 pb-6">
-        <div className="p-3 bg-violet-600/10 dark:bg-[#8f5cb1]/10 rounded-2xl text-violet-600 dark:text-[#8f5cb1]">
+    <div className="space-y-6 lg:space-y-7 animate-in fade-in slide-in-from-bottom-8 duration-700">
+      <div className="flex items-center gap-3 border-b border-slate-200 dark:border-white/10 pb-4">
+        <div className="p-2.5 bg-violet-600/10 dark:bg-[#8f5cb1]/10 rounded-xl text-violet-600 dark:text-[#8f5cb1]">
           <Settings size={26} />
         </div>
         <h2 className="text-2xl font-black text-violet-700 dark:!text-white tracking-tight">{t.services.title}</h2>
@@ -69,7 +69,7 @@ const StepServices = ({ formData, updateFormData, nextStep, prevStep, lang, t })
       {/* Emergency Toggle */}
       <button 
         onClick={() => updateFormData({ is_emergency: !formData.is_emergency })}
-        className={`w-full flex items-center justify-between p-7 rounded-[24px] border-2 transition-all duration-500 group/emergency ${
+        className={`w-full flex items-center justify-between p-4 rounded-[18px] border-2 transition-all duration-500 group/emergency ${
           formData.is_emergency 
             ? 'bg-[#8f5cb1] border-[#8f5cb1] text-white shadow-[0_20px_40px_-10px_rgba(143,92,177,0.4)]' 
             : 'bg-[var(--input-bg)] border-[var(--border-color)] text-[var(--text-muted)] hover:border-[#8f5cb1]/60 hover:bg-[var(--bg-section-alt)]'
@@ -79,7 +79,7 @@ const StepServices = ({ formData, updateFormData, nextStep, prevStep, lang, t })
             <div className={`p-2.5 rounded-xl transition-all duration-300 ${formData.is_emergency ? 'bg-white/20 scale-110 shadow-[0_0_15px_rgba(255,255,255,0.2)]' : 'bg-[var(--bg-section-alt)] border border-[var(--border-color)] group-hover/emergency:scale-110 group-hover/emergency:border-[#8f5cb1]/60'}`}>
                 <Zap size={24} className={`${formData.is_emergency ? 'animate-pulse text-white' : 'text-[#8f5cb1] dark:text-[#a57ed8] group-hover/emergency:text-[#8f5cb1] dark:group-hover/emergency:text-[#d1b3ff] transition-colors'}`} />
             </div>
-            <span className="font-black text-xl">{t.services.emergency}</span>
+            <span className="font-black text-base lg:text-lg">{t.services.emergency}</span>
         </div>
         <div className={`w-14 h-8 rounded-full p-1 transition-colors ${formData.is_emergency ? 'bg-white/30' : 'bg-[var(--bg-section-alt)] border border-[var(--border-color)] group-hover/emergency:border-[#8f5cb1]/40'}`}>
           <div className={`w-6 h-6 rounded-full shadow-sm transition-all duration-300 ${formData.is_emergency ? 'bg-white ' + (lang === 'ar' ? '-translate-x-6' : 'translate-x-6') : 'bg-slate-400 dark:bg-[#8f5cb1]/60'}`}></div>
@@ -87,7 +87,7 @@ const StepServices = ({ formData, updateFormData, nextStep, prevStep, lang, t })
       </button>
 
       {/* Services Grid with Prices */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-4">
         {mainServices.map((service) => {
           const isSelected = formData.serviceType.includes(service.id);
           return (
@@ -95,21 +95,21 @@ const StepServices = ({ formData, updateFormData, nextStep, prevStep, lang, t })
               <div
                 onClick={() => toggleService(service.id)}
                 className={`
-                  relative flex flex-col items-center justify-center p-8 rounded-[24px] border-2 transition-all duration-300 cursor-pointer
+                  relative flex flex-col items-center justify-center p-4 lg:p-5 rounded-[18px] border-2 transition-all duration-300 cursor-pointer
                   hover:-translate-y-1.5 active:scale-95
                   ${isSelected 
                     ? 'bg-[#8f5cb1]/10 border-[#8f5cb1] shadow-xl ring-2 ring-[#8f5cb1]/30 scale-[1.02]' 
                     : 'bg-[var(--card-bg)] border-[var(--border-color)] hover:border-[#8f5cb1]/40 hover:bg-[var(--bg-section-alt)] shadow-sm'}
                 `}
               >
-                <div className={`p-5 rounded-2xl mb-4 transition-all duration-300 border ${
+                <div className={`p-3 rounded-xl mb-2.5 transition-all duration-300 border ${
                   isSelected 
                     ? 'bg-[#8f5cb1] text-white border-[#8f5cb1] scale-110 shadow-lg' 
                     : 'bg-[var(--input-bg)] border-[var(--border-color)] text-[#8f5cb1]/60 group-hover:scale-110 group-hover:text-[#8f5cb1] group-hover:border-[#8f5cb1]/30'
                 }`}>
                   {service.icon}
                 </div>
-                <span className={`font-bold text-[14px] uppercase transition-colors duration-300 text-center ${isSelected ? 'text-[#8f5cb1] dark:text-[#d1b3ff] drop-shadow-sm' : 'text-[var(--text-muted)] group-hover:text-[#8f5cb1] dark:group-hover:text-[#d1b3ff]'}`}>
+                <span className={`font-bold text-[11px] lg:text-xs uppercase transition-colors duration-300 text-center ${isSelected ? 'text-[#8f5cb1] dark:text-[#d1b3ff] drop-shadow-sm' : 'text-[var(--text-muted)] group-hover:text-[#8f5cb1] dark:group-hover:text-[#d1b3ff]'}`}>
                   {service.name}
                 </span>
                 {isSelected && <Check size={16} className="absolute top-5 right-5 text-emerald-500 animate-in zoom-in" />}
@@ -135,7 +135,7 @@ const StepServices = ({ formData, updateFormData, nextStep, prevStep, lang, t })
       </div>
 
       {/* Facilities Selection */}
-      <div className="space-y-6">
+      <div className="space-y-3">
         <h3 className="text-[15px] font-bold text-[var(--text-dark)] opacity-90 uppercase px-1">{t.services.facilitiesTitle}</h3>
         <div className="flex flex-wrap gap-4">
           {facilities.map((f) => {
@@ -144,7 +144,7 @@ const StepServices = ({ formData, updateFormData, nextStep, prevStep, lang, t })
               <button
                 key={f.id}
                 onClick={() => toggleFacility(f.id)}
-                className={`flex items-center gap-3 px-6 py-4 rounded-2xl border-2 transition-all duration-300 active:scale-95 group/fac ${
+                className={`flex items-center gap-2.5 px-4 py-2.5 rounded-xl border-2 transition-all duration-300 active:scale-95 group/fac ${
                   isSelected 
                     ? 'bg-[#8f5cb1] border-[#8f5cb1] text-white shadow-lg scale-105' 
                     : 'bg-[var(--input-bg)] border-[var(--border-color)] text-[var(--text-muted)] hover:border-[#8f5cb1] hover:bg-[var(--bg-section-alt)] hover:text-[#8f5cb1]'
@@ -163,7 +163,7 @@ const StepServices = ({ formData, updateFormData, nextStep, prevStep, lang, t })
       </div>
 
       {/* Experience & Tech Count Counters */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <Counter 
           label={t.services.experience} 
           value={formData.experienceYears} 
@@ -181,18 +181,18 @@ const StepServices = ({ formData, updateFormData, nextStep, prevStep, lang, t })
       </div>
 
       {/* Bio / Additional Info */}
-      <div className="space-y-4">
+      <div className="space-y-2.5">
         <h3 className="text-[15px] font-bold text-[var(--text-dark)] opacity-90 uppercase px-1">{lang === 'ar' ? 'نبذة عن الورشة' : 'About the Workshop'}</h3>
         <textarea
           value={formData.additionalInfo}
           onChange={(e) => updateFormData({ additionalInfo: e.target.value })}
           placeholder={t.services.bioPlac}
-          className="w-full h-32 bg-[var(--input-bg)] border border-[var(--border-color)] rounded-[12px] p-5 text-sm font-medium text-[var(--text-dark)] placeholder:text-slate-400 dark:placeholder:text-white/20 outline-none focus:border-[#8f5cb1] focus:ring-4 focus:ring-[#8f5cb1]/10 transition-all resize-none"
+          className="w-full h-24 bg-[var(--input-bg)] border border-[var(--border-color)] rounded-[12px] p-4 text-sm font-medium text-[var(--text-dark)] placeholder:text-slate-400 dark:placeholder:text-white/20 outline-none focus:border-[#8f5cb1] focus:ring-4 focus:ring-[#8f5cb1]/10 transition-all resize-none"
         />
       </div>
 
       {/* File Upload Section */}
-      <div className="space-y-6 pt-4">
+      <div className="space-y-3 pt-1">
         <h3 className="text-[15px] font-bold text-[var(--text-dark)] opacity-90 uppercase px-1">{lang === 'ar' ? 'الوثائق والصور' : 'Documents & Photos'}</h3>
         <FileUpload 
           t={t} 
@@ -226,11 +226,11 @@ const StepServices = ({ formData, updateFormData, nextStep, prevStep, lang, t })
       </div>
 
       {/* Navigation Buttons */}
-      <div className="flex flex-col sm:flex-row gap-5 pt-10">
+      <div className="flex flex-col sm:flex-row gap-4 pt-4">
         <button 
           onClick={nextStep}
           disabled={!isStepValid}
-          className={`order-1 flex-1 group relative inline-flex items-center justify-center gap-3 px-14 py-5 font-black rounded-[12px] shadow-2xl transition-all active:scale-[0.98]
+          className={`order-1 flex-1 group relative inline-flex items-center justify-center gap-3 px-12 py-3.5 font-black rounded-[12px] shadow-2xl transition-all active:scale-[0.98]
           ${isStepValid ? 'bg-[#8f5cb1] hover:bg-[#a57ed8] text-white shadow-[#8f5cb1]/40' : 'bg-[var(--input-bg)] text-[var(--text-muted)] opacity-40 cursor-not-allowed'}`}
         >
           <span className="relative z-10">{t.common.next}</span>
@@ -238,7 +238,7 @@ const StepServices = ({ formData, updateFormData, nextStep, prevStep, lang, t })
         </button>
         <button 
           onClick={prevStep}
-          className="order-2 px-10 py-5 bg-[var(--input-bg)] border-2 border-[var(--border-color)] text-[var(--text-muted)] font-black rounded-[12px] transition-all hover:bg-[var(--bg-section-alt)] hover:text-[var(--text-dark)]"
+          className="order-2 px-10 py-3.5 bg-[var(--input-bg)] border-2 border-[var(--border-color)] text-[var(--text-muted)] font-black rounded-[12px] transition-all hover:bg-[var(--bg-section-alt)] hover:text-[var(--text-dark)]"
         >
           {t.common.prev}
         </button>
@@ -248,12 +248,12 @@ const StepServices = ({ formData, updateFormData, nextStep, prevStep, lang, t })
 };
 
 const Counter = ({ label, value, icon, onIncrement, onDecrement }) => (
-    <div className="flex-1 bg-[var(--input-bg)] border border-[var(--border-color)] rounded-[24px] p-6 flex items-center justify-between shadow-sm group/counter hover:border-[#8f5cb1]/30 transition-all duration-300">
+    <div className="flex-1 bg-[var(--input-bg)] border border-[var(--border-color)] rounded-[18px] p-4 flex items-center justify-between shadow-sm group/counter hover:border-[#8f5cb1]/30 transition-all duration-300">
       <div className="flex items-center gap-3">
         <div className="bg-[#8f5cb1]/10 p-3 rounded-xl transition-all duration-300 group-hover/counter:scale-110 group-hover/counter:bg-[#8f5cb1]/20">{icon}</div>
         <span className="text-[13px] font-bold uppercase text-[var(--text-muted)] group-hover/counter:text-[#8f5cb1] dark:group-hover/counter:text-[#a57ed8]">{label}</span>
       </div>
-      <div className="flex items-center gap-5">
+      <div className="flex items-center gap-3">
         <button 
           onClick={onDecrement}
           className="w-10 h-10 rounded-xl bg-[var(--card-bg)] border border-[var(--border-color)] flex items-center justify-center text-[var(--text-muted)] hover:border-rose-500/50 hover:text-rose-500 transition-all active:scale-90"

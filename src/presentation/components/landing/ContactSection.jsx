@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
 import { LoginIcon, DollarSignIcon, CalendarIcon } from '@/presentation/components/ui/icons';
-import { motion } from 'framer-motion';
+import { motion as Motion } from 'framer-motion';
 
 const ContactSection = () => {
     const [activeQuestion, setActiveQuestion] = useState(null);
@@ -11,7 +11,8 @@ const ContactSection = () => {
     const [isSuccess, setIsSuccess] = useState(false);
     
     const navigate = useNavigate();
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
+    const isArabic = i18n.language === "ar";
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -37,7 +38,7 @@ const ContactSection = () => {
         <section id="contact" className="section">
             <div className="app-container">
                 {/* Section Header */}
-                <motion.div
+                <Motion.div
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
@@ -45,11 +46,11 @@ const ContactSection = () => {
                 >
                     <h2 className="section-title">{t("contact1.title")}</h2>
                     <p className="section-subtitle"><b>{t("contact1.subtitle")}</b></p>
-                </motion.div>
+                </Motion.div>
 
                 <div className="contact-grid">
                     {/* FAQ */}
-                    <motion.div
+                    <Motion.div
                         className="faq"
                         initial={{ opacity: 0, x: -30 }}
                         whileInView={{ opacity: 1, x: 0 }}
@@ -59,7 +60,7 @@ const ContactSection = () => {
                         <h3>{t("contact1.faq_title")}</h3>
 
                         {Array.isArray(faqData) && faqData.map((item, index) => (
-                            <motion.div
+                            <Motion.div
                                 key={index}
                                 initial={{ opacity: 0, y: 10 }}
                                 whileInView={{ opacity: 1, y: 0 }}
@@ -78,12 +79,12 @@ const ContactSection = () => {
                                         <p className="faq-answer">{item.a}</p>
                                     </div>
                                 </div>
-                            </motion.div>
+                            </Motion.div>
                         ))}
-                    </motion.div>
+                    </Motion.div>
 
                     {/* Contact Form */}
-                    <motion.div
+                    <Motion.div
                         className="contact-form-container"
                         initial={{ opacity: 0, x: 30 }}
                         whileInView={{ opacity: 1, x: 0 }}
@@ -124,23 +125,23 @@ const ContactSection = () => {
                                 {isSubmitting ? t("common.loading", "جاري الإرسال...") : isSuccess ? t("common.success", "تم الإرسال بنجاح ✓") : t("contact1.submit_btn")}
                             </button>
                         </form>
-                    </motion.div>
+                    </Motion.div>
                 </div>
 
                 {/* Partner Section */}
-                <div className="partner-section">
-                    <motion.div
+                <div className="partner-section" id="partner-section">
+                    <Motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.5 }}
                     >
                         <h2 className="section-title">{t("contact1.partner_title")}</h2>
-                    </motion.div>
+                    </Motion.div>
 
                     <div className="partner-cards">
                         {Array.isArray(partnerCards) && partnerCards.map((card, index) => (
-                            <motion.div
+                            <Motion.div
                                 key={index}
                                 className="partner-card"
                                 initial={{ opacity: 0, y: 30 }}
@@ -152,26 +153,39 @@ const ContactSection = () => {
                                 <div className="card-icon">
                                     {cardIcons[index]}
                                 </div>
-                                <h4>{card.title}</h4>
+                                <h4 className="partner-card-title">{card.title}</h4>
                                 <p>{card.desc}</p>
-                            </motion.div>
+                            </Motion.div>
                         ))}
                     </div>
 
-                    {/* Primary CTA Button */}
-                    <motion.div
+                    <Motion.div
+                        className="partner-cta-panel"
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.5, delay: 0.3 }}
                     >
-                        <button
-                            className="register-btn"
-                            onClick={() => navigate("/register")}
-                        >
+                        <div className="partner-cta-copy">
+                            <span className="partner-cta-eyebrow">
+                                {isArabic ? "انضم كمزوّد خدمة معتمد" : "Join as a verified service provider"}
+                            </span>
+                            <h3>
+                                {isArabic
+                                    ? "هل تدير ورشة أو مركزًا لخدمات السيارات؟"
+                                    : "Do you run a workshop or automotive service center?"}
+                            </h3>
+                            <p>
+                                {isArabic
+                                    ? "سجّل نشاطك كمزوّد خدمة في Car Hero، واعرض خدماتك للعملاء القريبين منك واستقبل طلبات جديدة. املأ نموذج التسجيل، وسيراجع فريقنا بياناتك للتواصل معك واستكمال الاعتماد."
+                                    : "Register your business as a Car Hero service provider, showcase your services to nearby customers, and receive new requests. Complete the application form and our team will review your details to finish the verification process."}
+                            </p>
+                        </div>
+                        <button className="register-btn partner-primary-cta" onClick={() => navigate("/register")}>
                             {t("contact1.register_btn")}
+                            <span aria-hidden="true">{isArabic ? "←" : "→"}</span>
                         </button>
-                    </motion.div>
+                    </Motion.div>
                 </div>
             </div>
         </section>

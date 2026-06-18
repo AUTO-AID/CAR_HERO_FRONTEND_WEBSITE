@@ -22,7 +22,7 @@ const CoverageSection = () => {
         overflow: "hidden"
       }}
     >
-      <Container maxWidth="lg">
+      <Container maxWidth="xl">
         {/* Section Header */}
         <Box sx={{ textAlign: 'center', mb: 8 }}>
           <motion.div

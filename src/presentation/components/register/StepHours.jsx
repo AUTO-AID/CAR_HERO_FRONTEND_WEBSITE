@@ -36,6 +36,8 @@ const StepHours = ({ formData, updateFormData, nextStep, prevStep, lang, t }) =>
     suspension: { name: 'دوزان وهيدروليك', unit: 'خدمة' },
   };
 
+  const canonicalDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
   const parseLocation = (location) => {
     if (!location) return null;
     const [lat, lng] = String(location).split(',').map((part) => Number(part.trim()));
@@ -86,8 +88,8 @@ const StepHours = ({ formData, updateFormData, nextStep, prevStep, lang, t }) =>
     setError(null);
     try {
       // Map frontend data to backend CreateProviderDto
-      const workingHoursArray = Object.entries(formData.workingHours).map(([day, conf]) => ({
-        day,
+      const workingHoursArray = Object.values(formData.workingHours).map((conf, index) => ({
+        day: canonicalDays[index],
         open: conf.start,
         close: conf.end,
         isClosed: conf.closed
@@ -114,7 +116,6 @@ const StepHours = ({ formData, updateFormData, nextStep, prevStep, lang, t }) =>
         phone: normalizePhone(formData.phone),
         businessName: formData.businessName,
         ownerName: formData.fullName,
-        email: formData.email,
         description: formData.additionalInfo || formData.category,
         category: formData.category,
         address: formData.district,
@@ -133,6 +134,10 @@ const StepHours = ({ formData, updateFormData, nextStep, prevStep, lang, t }) =>
         experienceYears: formData.experienceYears,
       };
 
+      if (formData.email?.trim()) {
+        payload.email = formData.email.trim();
+      }
+
       await applyProvider(payload);
       nextStep();
     } catch (err) {
@@ -144,8 +149,8 @@ const StepHours = ({ formData, updateFormData, nextStep, prevStep, lang, t }) =>
   };
 
   return (
-    <div className="space-y-10 sm:space-y-12 animate-in zoom-in-95 duration-700">
-      <div className="flex items-center justify-between mb-6 sm:mb-8">
+    <div className="space-y-5 lg:space-y-6 animate-in zoom-in-95 duration-700">
+      <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-4">
           <div className="p-3 bg-emerald-500/10 dark:bg-[#8f5cb1]/10 rounded-2xl text-emerald-600 dark:text-[#8f5cb1] shadow-sm">
             <Clock size={26} />
@@ -160,45 +165,45 @@ const StepHours = ({ formData, updateFormData, nextStep, prevStep, lang, t }) =>
         </div>
       )}
 
-      <div className="space-y-4 sm:space-y-5">
+      <div className="flex flex-col gap-2.5 lg:gap-3">
         {Object.entries(formData.workingHours).map(([day, config]) => (
-          <div key={day} className={`flex flex-col sm:flex-row items-stretch sm:items-center justify-between p-5 rounded-[12px] border transition-all duration-500 gap-5 ${
+          <div key={day} className={`flex flex-col sm:grid sm:grid-cols-[120px_minmax(0,1fr)_80px] sm:items-center p-3 lg:px-4 rounded-[12px] border transition-all duration-500 gap-3 ${
             config.closed 
                 ? 'bg-[var(--input-bg)] border-[var(--border-color)] opacity-60' 
                 : 'bg-[var(--card-bg)] border-[var(--border-color)] shadow-xl'
           }`}>
-            <div className="flex items-center justify-between sm:justify-start gap-5 sm:min-w-[150px]">
-              <div className="flex items-center gap-4">
+            <div className="flex items-center justify-between sm:justify-start gap-3">
+              <div className="flex items-center gap-2.5">
                 <div className={`w-3.5 h-3.5 rounded-full transition-all duration-500 ${config.closed ? 'bg-rose-500 grayscale' : 'bg-emerald-500 dark:bg-[#8f5cb1] shadow-[0_0_12px_rgba(16,185,129,0.3)] dark:shadow-[0_0_12px_#8f5cb1] animate-pulse'}`}></div>
-                <span className={`font-bold text-[15px] sm:text-[17px] uppercase tracking-tight ${config.closed ? 'text-[var(--text-muted)]' : 'text-[var(--text-dark)]'}`}>{t.hours.days[day] || day}</span>
+                <span className={`font-bold text-sm uppercase tracking-tight ${config.closed ? 'text-[var(--text-muted)]' : 'text-[var(--text-dark)]'}`}>{t.hours.days[day] || day}</span>
               </div>
             </div>
             
-            <div className={`flex items-center gap-3 sm:gap-4 transition-all duration-700 ${config.closed ? 'grayscale pointer-events-none opacity-20' : ''}`}>
-              <div className="relative flex-1 sm:flex-none">
+            <div className={`flex items-center justify-center gap-2.5 lg:gap-4 transition-all duration-700 ${config.closed ? 'grayscale pointer-events-none opacity-20' : ''}`}>
+              <div className="relative flex-1 max-w-[150px]">
                 <input 
                   type="time" 
                   disabled={config.closed}
                   value={config.start}
                   onChange={(e) => handleTimeChange(day, 'start', e.target.value)}
-                  className="w-full bg-[var(--input-bg)] border border-[var(--border-color)] rounded-xl px-4 py-3 text-xs sm:text-sm font-bold text-[var(--text-dark)] outline-none focus:border-[#8f5cb1] transition-colors"
+                  className="w-full bg-[var(--input-bg)] border border-[var(--border-color)] rounded-lg px-2.5 py-2 text-xs font-bold text-[var(--text-dark)] outline-none focus:border-[#8f5cb1] transition-colors"
                 />
               </div>
               <span className="text-[var(--text-muted)] text-xs font-bold uppercase">{t.hours.to}</span>
-              <div className="relative flex-1 sm:flex-none">
+              <div className="relative flex-1 max-w-[150px]">
                 <input 
                   type="time" 
                   disabled={config.closed}
                   value={config.end}
                   onChange={(e) => handleTimeChange(day, 'end', e.target.value)}
-                  className="w-full bg-[var(--input-bg)] border border-[var(--border-color)] rounded-xl px-4 py-3 text-xs sm:text-sm font-bold text-[var(--text-dark)] outline-none focus:border-[#8f5cb1] transition-colors"
+                  className="w-full bg-[var(--input-bg)] border border-[var(--border-color)] rounded-lg px-2.5 py-2 text-xs font-bold text-[var(--text-dark)] outline-none focus:border-[#8f5cb1] transition-colors"
                 />
               </div>
             </div>
 
             <button 
               onClick={() => handleToggle(day)}
-              className={`px-6 py-2.5 rounded-xl text-xs font-bold transition-all border duration-300 uppercase ${config.closed ? 'bg-[var(--input-bg)] text-[var(--text-muted)] border-[var(--border-color)]' : 'bg-rose-500/5 text-rose-500 dark:text-rose-400 border-rose-500/10'}`}
+              className={`w-full sm:w-auto px-4 py-2 rounded-lg text-[10px] font-bold transition-all border duration-300 uppercase ${config.closed ? 'bg-[var(--input-bg)] text-[var(--text-muted)] border-[var(--border-color)]' : 'bg-rose-500/5 text-rose-500 dark:text-rose-400 border-rose-500/10'}`}
             >
               {config.closed ? t.hours.closed : t.hours.disable}
             </button>
@@ -206,11 +211,11 @@ const StepHours = ({ formData, updateFormData, nextStep, prevStep, lang, t }) =>
         ))}
       </div>
 
-      <div className="flex flex-col sm:flex-row gap-5 pt-10">
+      <div className="flex flex-col sm:flex-row gap-4 pt-4">
         <button 
           onClick={handleSubmit}
           disabled={isSubmitting}
-          className={`order-1 flex-1 group relative inline-flex items-center justify-center gap-3 px-14 py-5 bg-emerald-600 dark:bg-[#8f5cb1] hover:bg-emerald-700 dark:hover:bg-[#d1b3ff] text-white font-black rounded-[12px] shadow-2xl shadow-emerald-600/20 dark:shadow-[#8f5cb1]/20 transition-all active:scale-[0.98] ${isSubmitting ? 'opacity-70 pointer-events-none' : ''}`}
+          className={`order-1 flex-1 group relative inline-flex items-center justify-center gap-3 px-12 py-3.5 bg-emerald-600 dark:bg-[#8f5cb1] hover:bg-emerald-700 dark:hover:bg-[#d1b3ff] text-white font-black rounded-[12px] shadow-2xl shadow-emerald-600/20 dark:shadow-[#8f5cb1]/20 transition-all active:scale-[0.98] ${isSubmitting ? 'opacity-70 pointer-events-none' : ''}`}
         >
           {isSubmitting ? (
             <Loader2 className="animate-spin w-5 h-5" />
@@ -223,7 +228,7 @@ const StepHours = ({ formData, updateFormData, nextStep, prevStep, lang, t }) =>
         </button>
         <button 
           onClick={prevStep}
-          className="order-2 px-10 py-5 text-slate-500 dark:text-white/40 hover:text-slate-800 dark:hover:text-white font-black transition-all text-center border-2 border-slate-200/50 dark:border-white/5 rounded-[12px] hover:bg-slate-200/50 dark:hover:bg-white/5 uppercase tracking-widest text-[10px]"
+          className="order-2 px-10 py-3.5 text-slate-500 dark:text-white/40 hover:text-slate-800 dark:hover:text-white font-black transition-all text-center border-2 border-slate-200/50 dark:border-white/5 rounded-[12px] hover:bg-slate-200/50 dark:hover:bg-white/5 uppercase tracking-widest text-[10px]"
         >
           {t.common.prev}
         </button>

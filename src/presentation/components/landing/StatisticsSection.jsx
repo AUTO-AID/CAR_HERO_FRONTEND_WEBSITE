@@ -1,12 +1,13 @@
-import React, { useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Typography, Grid, Paper } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 import CountUp from "react-countup";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import EngineeringIcon from "@mui/icons-material/Engineering";
 import TimerIcon from "@mui/icons-material/Timer";
 import MapIcon from "@mui/icons-material/Map";
+import { getPublicStatistics } from "@/infrastructure/services/providers.service";
 
 const StatisticItem = ({ icon: Icon, value, label, index }) => (
   <motion.div
@@ -85,7 +86,15 @@ const StatisticItem = ({ icon: Icon, value, label, index }) => (
           fontSize: { xs: "2.2rem", sm: "2.5rem", md: "2.8rem" },
         }}
       >
-        <CountUp end={value} duration={2.5} separator="," prefix="+" enableScrollSpy scrollSpyOnce />
+        <CountUp
+          key={value}
+          end={Number(value) || 0}
+          duration={2.5}
+          separator=","
+          prefix="+"
+          enableScrollSpy
+          scrollSpyOnce
+        />
       </Typography>
 
       <Typography
@@ -106,13 +115,37 @@ const StatisticItem = ({ icon: Icon, value, label, index }) => (
 
 const StatisticsSection = () => {
   const { t, i18n } = useTranslation();
+  const [liveStats, setLiveStats] = useState(null);
 
-  const stats = [
-    { icon: PeopleAltIcon, value: 15600, label: t("stats.users") },
-    { icon: EngineeringIcon, value: 500, label: t("stats.providers") },
-    { icon: MapIcon, value: 7, label: t("stats.cities") },
-    { icon: TimerIcon, value: 20, label: t("stats.response_time") },
-  ];
+  useEffect(() => {
+    let active = true;
+
+    const fetchStats = async () => {
+      try {
+        const response = await getPublicStatistics();
+        if (active && response?.success && response.data) {
+          setLiveStats(response.data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch public statistics:", error);
+      }
+    };
+
+    fetchStats();
+    const refreshInterval = window.setInterval(fetchStats, 60_000);
+
+    return () => {
+      active = false;
+      window.clearInterval(refreshInterval);
+    };
+  }, []);
+
+  const stats = liveStats ? [
+    { icon: PeopleAltIcon, value: liveStats.customers, label: t("stats.users") },
+    { icon: EngineeringIcon, value: liveStats.approvedProviders, label: t("stats.providers") },
+    { icon: MapIcon, value: liveStats.coveredAreas, label: t("stats.cities") },
+    { icon: TimerIcon, value: liveStats.averageResponseMinutes, label: t("stats.response_time") },
+  ] : [];
 
   return (
     <Box

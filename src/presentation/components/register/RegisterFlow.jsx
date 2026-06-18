@@ -75,20 +75,20 @@ const RegisterFlow = () => {
 
       <Navbar minimal={true} />
 
-      <main className="relative z-10 container mx-auto px-4 py-10 sm:py-20 flex flex-col items-center">
+      <main className="relative z-10 container mx-auto px-3 sm:px-4 py-6 sm:py-8 lg:py-10 flex flex-col items-center">
         {currentStep !== StepId.SUCCESS && (
-          <div className="w-full max-w-4xl mb-16 space-y-4 text-center px-4">
-              <h1 className="text-3xl sm:text-5xl font-bold text-[#8f5cb1] dark:text-[#a57ed8] tracking-tight leading-tight">
+          <div className="w-full max-w-6xl mb-8 lg:mb-10 space-y-2 text-center px-2 sm:px-4">
+              <h1 className="text-3xl sm:text-4xl font-bold text-[#8f5cb1] dark:text-[#a57ed8] tracking-tight leading-tight">
                 {t.header.title}
               </h1>
              {t.header.subtitle && <p className="text-slate-500 dark:text-[#c9a7e3] font-bold uppercase text-xs sm:text-sm">{t.header.subtitle}</p>}
-             <div className="pt-10">
+             <div className="pt-5 lg:pt-6">
                <Stepper currentStep={currentStep} lang={lang} />
              </div>
           </div>
         )}
 
-        <div className={`w-full max-w-4xl glass rounded-[24px] p-6 sm:p-12 shadow-2xl relative overflow-hidden transition-all duration-700`}>
+        <div className={`w-full max-w-6xl glass rounded-[20px] lg:rounded-[24px] p-5 sm:p-7 lg:p-8 shadow-2xl relative overflow-hidden transition-all duration-700`}>
           {currentStep !== StepId.SUCCESS && (
             <div className="absolute top-0 left-0 w-full h-1.5 bg-slate-200 dark:bg-[#0c0816]">
               <div 
@@ -102,7 +102,7 @@ const RegisterFlow = () => {
 
         {currentStep !== StepId.SUCCESS && (
           <button 
-            className="mt-12 flex items-center gap-2 text-slate-400 dark:text-white/40 hover:text-[#8f5cb1] dark:hover:text-[#d1b3ff] transition-all active:scale-95 group font-bold uppercase text-xs"
+            className="mt-7 flex items-center gap-2 text-slate-400 dark:text-white/40 hover:text-[#8f5cb1] dark:hover:text-[#d1b3ff] transition-all active:scale-95 group font-bold uppercase text-xs"
             onClick={() => window.location.href = '/'}
           >
             {lang === 'ar' ? (

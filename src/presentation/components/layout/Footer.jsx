@@ -1,29 +1,8 @@
 import React from "react";
-import {
-  Box,
-  Typography,
-  IconButton,
-  Grid,
-  Container,
-  Link,
-  Divider,
-  TextField,
-  Button,
-  Stack,
-} from "@mui/material";
-import {
-  Facebook,
-  Twitter,
-  YouTube,
-  Instagram,
-  Phone,
-  Email,
-  LocationOn,
-  Send,
-} from "@mui/icons-material";
-import logo from "@/assets/logo_carHero.png";
+import { Box, Container, Divider, IconButton, Link, Typography } from "@mui/material";
+import { Email, Facebook, Instagram, LocationOn, Phone, Twitter, YouTube } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
-import { motion } from "framer-motion";
+import logo from "@/assets/logo_carHero.png";
 
 const Footer = () => {
   const { t, i18n } = useTranslation();
@@ -37,308 +16,267 @@ const Footer = () => {
   ];
 
   const serviceLinks = [
-    { label: t("footer.servicesItems.roadside"), href: "#" },
-    { label: t("footer.servicesItems.towing"), href: "#" },
-    { label: t("footer.servicesItems.battery"), href: "#" },
-    { label: t("footer.servicesItems.fuel"), href: "#" },
-    { label: t("footer.servicesItems.tire"), href: "#" },
+    t("footer.servicesItems.roadside"),
+    t("footer.servicesItems.towing"),
+    t("footer.servicesItems.battery"),
+    t("footer.servicesItems.fuel"),
+    t("footer.servicesItems.tire"),
   ];
 
   const quickLinks = [
-    { label: t("home"), href: "#" },
-    { label: t("features"), href: "#" },
-    { label: t("team"), href: "#" },
-    { label: t("contact"), href: "#" },
+    { label: t("home"), href: "#home" },
+    { label: t("service.title"), href: "#services" },
+    { label: isRtl ? "التغطية" : "Coverage", href: "#coverage-map-section" },
+    { label: t("contact"), href: "#contact" },
     { label: t("footer.quickLinksItems.partner"), href: "/register" },
   ];
 
   const contactInfo = [
-    { icon: <Phone />, text: "+963 930 000 000", label: "Phone" },
-    { icon: <Email />, text: "support@carhero.app", label: "Email" },
-    {
-      icon: <LocationOn />,
-      text: t("footer.contactItems.address"),
-      label: "Address",
-    },
+    { Icon: Phone, text: "+963 956868573", label: "Phone", forceLtr: true },
+    { Icon: Email, text: "support@carhero.app", label: "Email", forceLtr: true },
+    { Icon: LocationOn, text: t("footer.contactItems.address"), label: "Address" },
   ];
 
-  const footerLinks = [
-    { label: t("footer.privacyPolicy"), href: "#" },
-    { label: t("footer.termsConditions"), href: "#" },
-  ];
+  const sectionTitleSx = {
+    color: "var(--primary-light)",
+    fontSize: "1.05rem",
+    fontWeight: 900,
+    mb: 2.5,
+    letterSpacing: 0.2,
+  };
+
+  const linkSx = {
+    width: "fit-content",
+    color: "var(--footer-muted)",
+    textDecoration: "none",
+    fontSize: "0.96rem",
+    fontWeight: 500,
+    lineHeight: 1.5,
+    transition: "all 0.25s ease",
+    "&:hover": {
+      color: "var(--primary-light)",
+      transform: isRtl ? "translateX(-4px)" : "translateX(4px)",
+    },
+  };
 
   return (
     <Box
       component="footer"
+      dir={isRtl ? "rtl" : "ltr"}
       sx={{
-        background: "var(--bg-footer, #0f0a1a)",
-        color: "#fff",
-        pt: { xs: 10, md: 15 },
-        pb: 6,
-        borderTop: "2px solid var(--primary-main, #8f5cb1)",
         position: "relative",
         overflow: "hidden",
+        background: "var(--footer-bg)",
+        color: "var(--footer-text)",
+        borderTop: "1px solid rgba(143, 92, 177, 0.55)",
+        pt: { xs: 7, md: 9 },
+        pb: { xs: 4, md: 5 },
       }}
     >
-      {/* Background Decorative Elements */}
       <Box
         sx={{
           position: "absolute",
-          top: -100,
-          right: isRtl ? "auto" : -100,
-          left: isRtl ? -100 : "auto",
-          width: 400,
-          height: 400,
-          background:
-            "radial-gradient(circle, rgba(143, 92, 177, 0.15) 0%, transparent 70%)",
+          width: 500,
+          height: 500,
+          top: -330,
+          insetInlineStart: -190,
+          borderRadius: "50%",
+          background: "rgba(143, 92, 177, 0.14)",
+          filter: "blur(35px)",
           pointerEvents: "none",
         }}
       />
 
-      <Container maxWidth="xl">
+      <Container
+        maxWidth="xl"
+        sx={{
+          position: "relative",
+          zIndex: 1,
+          px: { xs: "22px !important", sm: "34px !important", lg: "64px !important" },
+        }}
+      >
         <Box
           sx={{
-            display: "flex",
-            flexDirection: { xs: "column", lg: "row" },
-            gap: 8,
+            display: "grid",
+            gridTemplateColumns: { xs: "1fr", md: "minmax(260px, 1.15fr) 1.4fr", lg: "1.2fr 1.45fr 1.15fr" },
+            gridTemplateAreas: {
+              xs: '"brand" "links" "contact"',
+              md: '"brand links" "contact contact"',
+              lg: '"brand links contact"',
+            },
+            gap: { xs: 5, md: 6, lg: 8 },
+            alignItems: "start",
+            direction: "ltr",
           }}
         >
-          {/* Column 3: Contact (RTL: First, LTR: Last) */}
-          <Box sx={{ flex: 1, order: { xs: 1, lg: isRtl ? 3 : 1 } }}>
-            <Typography
-              variant="h5"
+          <Box
+            sx={{
+              gridArea: "brand",
+              direction: isRtl ? "rtl" : "ltr",
+              textAlign: isRtl ? "right" : "left",
+              minWidth: 0,
+            }}
+          >
+            <Box
+              component="img"
+              src={logo}
+              alt={t("footer.logoAlt")}
               sx={{
-                fontWeight: 800,
-                mb: 4,
-                color: "var(--primary-light, #c196ff)",
-                letterSpacing: 0.5,
-                textTransform: "uppercase",
-                fontSize: "1.2rem",
+                display: "block",
+                width: { xs: 210, md: 245 },
+                maxWidth: "100%",
+                height: "auto",
+                mb: 2.5,
+                filter: "drop-shadow(0 6px 18px rgba(143, 92, 177, 0.25))",
+              }}
+            />
+            <Typography
+              sx={{
+                maxWidth: 390,
+                color: "var(--footer-muted)",
+                fontSize: { xs: "0.98rem", md: "1.02rem" },
+                lineHeight: 1.9,
+                mb: 3,
               }}
             >
-              {t("footer.contact")}
+              {t("footer.tagline")}
             </Typography>
-            <Box
-              sx={{ display: "flex", flexDirection: "column", gap: 3.5, mb: 6 }}
-            >
-              {contactInfo.map((item, i) => (
+            <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1.25 }}>
+              {socialIcons.map(({ Icon, label, color }) => (
+                <IconButton
+                  key={label}
+                  aria-label={label}
+                  sx={{
+                    width: 44,
+                    height: 44,
+                    color: "var(--footer-text)",
+                    background: "var(--footer-surface)",
+                    border: "1px solid var(--border-color)",
+                    transition: "all 0.25s ease",
+                    "&:hover": {
+                      color: "#fff",
+                      background: color,
+                      borderColor: color,
+                      transform: "translateY(-4px)",
+                      boxShadow: `0 10px 24px ${color}55`,
+                    },
+                  }}
+                >
+                  {React.createElement(Icon, { fontSize: "small" })}
+                </IconButton>
+              ))}
+            </Box>
+          </Box>
+
+          <Box
+            sx={{
+              gridArea: "links",
+              display: "grid",
+              gridTemplateColumns: { xs: "1fr 1fr", sm: "repeat(2, minmax(150px, 1fr))" },
+              gap: { xs: 3, sm: 5 },
+              direction: isRtl ? "rtl" : "ltr",
+              textAlign: isRtl ? "right" : "left",
+              minWidth: 0,
+            }}
+          >
+            <Box>
+              <Typography sx={sectionTitleSx}>{t("footer.services")}</Typography>
+              <Box sx={{ display: "flex", flexDirection: "column", gap: 1.6 }}>
+                {serviceLinks.map((label) => (
+                  <Link key={label} href="#services" sx={linkSx}>{label}</Link>
+                ))}
+              </Box>
+            </Box>
+            <Box>
+              <Typography sx={sectionTitleSx}>{t("footer.quickLinks")}</Typography>
+              <Box sx={{ display: "flex", flexDirection: "column", gap: 1.6 }}>
+                {quickLinks.map((link) => (
+                  <Link key={link.label} href={link.href} sx={linkSx}>{link.label}</Link>
+                ))}
+              </Box>
+            </Box>
+          </Box>
+
+          <Box
+            sx={{
+              gridArea: "contact",
+              direction: isRtl ? "rtl" : "ltr",
+              textAlign: isRtl ? "right" : "left",
+              minWidth: 0,
+            }}
+          >
+            <Typography sx={sectionTitleSx}>{t("footer.contact")}</Typography>
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 1.6 }}>
+              {contactInfo.map(({ Icon, text, label, forceLtr }) => (
                 <Box
-                  key={i}
-                  sx={{ display: "flex", gap: 2.5, alignItems: "center" }}
+                  key={label}
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 1.25,
+                    minWidth: 0,
+                    width: "fit-content",
+                    maxWidth: "100%",
+                    color: "var(--footer-muted)",
+                    transition: "color 0.25s ease, transform 0.25s ease",
+                    "&:hover": {
+                      color: "var(--primary-light)",
+                      transform: isRtl ? "translateX(-3px)" : "translateX(3px)",
+                    },
+                  }}
                 >
                   <Box
                     sx={{
-                      width: 56,
-                      height: 56,
-                      borderRadius: "16px",
-                      background:
-                        "linear-gradient(135deg, var(--primary-main, #8f5cb1) 0%, #5e3a8a 100%)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      boxShadow: "0 10px 20px rgba(0,0,0,0.2)",
+                      width: 24,
+                      height: 24,
                       flexShrink: 0,
+                      display: "grid",
+                      placeItems: "center",
+                      color: "inherit",
                     }}
                   >
-                    {item.icon}
+                    {React.createElement(Icon, { sx: { fontSize: 19 } })}
                   </Box>
                   <Typography
-                    variant="body1"
+                    component="span"
                     sx={{
-                      color: "#fff",
-                      fontSize: "1.15rem",
+                      minWidth: 0,
+                      overflowWrap: "anywhere",
+                      color: "inherit",
+                      fontSize: "0.96rem",
                       fontWeight: 500,
-                      lineHeight: 1.4,
+                      lineHeight: 1.5,
+                      direction: forceLtr ? "ltr" : "inherit",
+                      unicodeBidi: forceLtr ? "isolate" : "normal",
+                      textAlign: forceLtr ? "left" : "inherit",
                     }}
                   >
-                    {item.text}
+                    {forceLtr ? <bdi dir="ltr">{text}</bdi> : text}
                   </Typography>
                 </Box>
               ))}
             </Box>
           </Box>
-
-          {/* Column 2: Links Group (RTL: Middle, LTR: Middle) */}
-          <Box sx={{ flex: 1, order: 2, display: "flex", gap: 4 }}>
-            <Box sx={{ flex: 1 }}>
-              <Typography
-                variant="h5"
-                sx={{
-                  fontWeight: 800,
-                  mb: 4,
-                  color: "var(--primary-light, #c196ff)",
-                  letterSpacing: 0.5,
-                  textTransform: "uppercase",
-                  fontSize: "1.2rem",
-                }}
-              >
-                {t("footer.services")}
-              </Typography>
-              <Box sx={{ display: "flex", flexDirection: "column", gap: 2.5 }}>
-                {serviceLinks.map((link, i) => (
-                  <Link
-                    key={i}
-                    href={link.href}
-                    sx={{
-                      color: "rgba(255, 255, 255, 0.7)",
-                      textDecoration: "none",
-                      fontSize: "1.1rem",
-                      transition: "all 0.3s ease",
-                      "&:hover": {
-                        color: "#fff",
-                        fontWeight: 600,
-                      },
-                    }}
-                  >
-                    {link.label}
-                  </Link>
-                ))}
-              </Box>
-            </Box>
-            <Box sx={{ flex: 1 }}>
-              <Typography
-                variant="h5"
-                sx={{
-                  fontWeight: 800,
-                  mb: 4,
-                  color: "var(--primary-light, #c196ff)",
-                  letterSpacing: 0.5,
-                  textTransform: "uppercase",
-                  fontSize: "1.2rem",
-                }}
-              >
-                {t("footer.quickLinks")}
-              </Typography>
-              <Box sx={{ display: "flex", flexDirection: "column", gap: 2.5 }}>
-                {quickLinks.map((link, i) => (
-                  <Link
-                    key={i}
-                    href={link.href}
-                    sx={{
-                      color: "rgba(255, 255, 255, 0.7)",
-                      textDecoration: "none",
-                      fontSize: "1.1rem",
-                      transition: "all 0.3s ease",
-                      "&:hover": {
-                        color: "#fff",
-                        fontWeight: 600,
-                      },
-                    }}
-                  >
-                    {link.label}
-                  </Link>
-                ))}
-              </Box>
-            </Box>
-          </Box>
-
-          {/* Column 1: Brand & About (RTL: Last, LTR: First) */}
-          <Box sx={{ flex: 1, order: { xs: 3, lg: isRtl ? 1 : 3 } }}>
-            <motion.div
-              initial={{ opacity: 0, x: isRtl ? 30 : -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-            >
-              <Box
-                component="img"
-                src={logo}
-                alt="CarHero"
-                sx={{
-                  width: "100%",
-                  maxWidth: { xs: 200, md: 280 },
-                  mb: 4,
-                  filter:
-                    "brightness(1.2) drop-shadow(0 0 20px rgba(143, 92, 177, 0.3))",
-                  display: "block",
-                }}
-              />
-              <Typography
-                variant="h6"
-                sx={{
-                  color: "rgba(255, 255, 255, 0.85)",
-                  lineHeight: 1.8,
-                  mb: 5,
-                  fontSize: { xs: "1.1rem", md: "1.25rem" },
-                  fontWeight: 400,
-                  maxWidth: 450,
-                }}
-              >
-                {t("footer.tagline")}
-              </Typography>
-
-              <Box sx={{ display: "flex", gap: 2.5 }}>
-                {socialIcons.map(({ Icon, label, color }, i) => (
-                  <motion.div
-                    key={i}
-                    whileHover={{ y: -6, scale: 1.1 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <IconButton
-                      aria-label={label}
-                      sx={{
-                        width: 50,
-                        height: 50,
-                        background: "rgba(255, 255, 255, 0.05)",
-                        border: "1px solid rgba(255, 255, 255, 0.1)",
-                        color: "#fff",
-                        transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
-                        "&:hover": {
-                          background: color,
-                          borderColor: color,
-                          boxShadow: `0 12px 28px ${color}77`,
-                          transform: "rotate(5deg)",
-                        },
-                      }}
-                    >
-                      <Icon />
-                    </IconButton>
-                  </motion.div>
-                ))}
-              </Box>
-            </motion.div>
-          </Box>
         </Box>
 
-        <Divider sx={{ my: 8, borderColor: "rgba(255, 255, 255, 0.1)" }} />
+        <Divider sx={{ mt: { xs: 6, md: 7 }, mb: 3.5, borderColor: "var(--border-color)" }} />
 
-        {/* Footer Bottom */}
         <Box
           sx={{
             display: "flex",
-            flexDirection: { xs: "column-reverse", md: "row" },
-            justifyContent: "space-between",
+            flexDirection: { xs: "column", sm: isRtl ? "row-reverse" : "row" },
             alignItems: "center",
-            gap: 3,
-            pt: 4,
-            borderTop: "1px solid rgba(255, 255, 255, 0.1)",
+            justifyContent: "space-between",
+            gap: 2,
+            textAlign: "center",
           }}
         >
-          <Typography
-            variant="body1"
-            sx={{
-              color: "rgba(255, 255, 255, 0.5)",
-              fontWeight: 500,
-              fontSize: "1rem",
-            }}
-          >
+          <Typography sx={{ color: "var(--footer-muted)", fontSize: "0.86rem", fontWeight: 500 }}>
             {t("footer.copyright")}
           </Typography>
-          <Box sx={{ display: "flex", gap: 5 }}>
-            {footerLinks.map((link, i) => (
-              <Link
-                key={i}
-                href={link.href}
-                sx={{
-                  color: "rgba(255, 255, 255, 0.5)",
-                  fontSize: "1rem",
-                  textDecoration: "none",
-                  fontWeight: 600,
-                  "&:hover": { color: "var(--primary-light)" },
-                }}
-              >
-                {link.label}
-              </Link>
+          <Box sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: { xs: 2, sm: 3.5 } }}>
+            {[t("footer.privacyPolicy"), t("footer.termsConditions")].map((label) => (
+              <Link key={label} href="#" sx={{ ...linkSx, fontSize: "0.86rem" }}>{label}</Link>
             ))}
           </Box>
         </Box>

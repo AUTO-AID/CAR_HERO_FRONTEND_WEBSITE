@@ -25,13 +25,13 @@
 
   "download": {
     "title": "GET THE APP NOW",
-    "subtitle": "Download CarHero from your favorite mobile store and stay prepared for any roadside emergency.",
+    "subtitle": "Download Car Hero from your favorite mobile store and stay prepared for any roadside emergency.",
     "updates": "STAY UPDATED WITH NEW FEATURES",
     "emailPlaceholder": "Enter your email address..."
   },
 
   "footer": {
-    "logoAlt": "CarHero Logo",
+    "logoAlt": "Car Hero Logo",
     "tagline": "Your trusted roadside assistance partner. Providing fast, reliable, and professional help wherever you are.",
     "services": "Our Services",
     "servicesItems": {
@@ -51,7 +51,7 @@
     },
     "privacyPolicy": "Privacy Policy",
     "termsConditions": "Terms & Conditions",
-    "copyright": "© 2025 CarHero. All rights reserved."
+    "copyright": "© 2025 Car Hero. All rights reserved."
   },
 
   "service": {
@@ -75,7 +75,7 @@
   },
 
   "why": {
-    "title": "WHY CHOOSE CARHERO?",
+    "title": "WHY CHOOSE CAR HERO?",
     "subtitle": "Experience the difference with our premium roadside assistance services.",
     "features": {
       "assistance": {
@@ -173,7 +173,7 @@
     },
     {
       "title": "Increase Your Income",
-      "desc": "Garage owners, mechanics, spare parts shops, and insurance professionals can partner with CarHero. Valid credentials required. Minimal startup investment."
+      "desc": "Garage owners, mechanics, spare parts shops, and insurance professionals can partner with Car Hero. Valid credentials required. Minimal startup investment."
     },
     {
       "title": "Flexible Schedule",

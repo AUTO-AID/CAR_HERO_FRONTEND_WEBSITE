@@ -44,7 +44,7 @@ const FileUpload = ({ onUpload, description, lang = 'ar' }) => {
   return (
     <div
       className={`
-        relative w-full border-2 border-dashed rounded-[24px] p-8 sm:p-12 transition-all duration-500 group cursor-pointer
+        relative w-full border-2 border-dashed rounded-[20px] p-5 sm:p-7 transition-all duration-500 group cursor-pointer
         ${isDragging
           ? 'border-[#8f5cb1] bg-[#8f5cb1]/10 scale-[1.01]'
           : 'border-[var(--border-color)] bg-[var(--input-bg)] hover:border-[#8f5cb1]/40 hover:bg-[var(--bg-section-alt)]'}
@@ -64,7 +64,7 @@ const FileUpload = ({ onUpload, description, lang = 'ar' }) => {
         onChange={(e) => e.target.files && validateFiles(Array.from(e.target.files))}
       />
 
-      <div className="flex flex-col items-center justify-center text-center space-y-4">
+      <div className="flex flex-col items-center justify-center text-center space-y-2.5">
         <div className="text-[#8f5cb1] opacity-60 transition-transform duration-500 group-hover:scale-110">
           <CloudUpload size={32} strokeWidth={1.5} />
         </div>

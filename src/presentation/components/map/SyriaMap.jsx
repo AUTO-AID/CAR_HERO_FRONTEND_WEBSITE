@@ -25,18 +25,18 @@ const governorateNames = {
 const ActivePanel = ({ govName, value, isArabic }) => (
   <Box
     sx={{
-      background: 'rgba(30, 30, 45, 0.95)',
+      background: 'var(--card-bg)',
       backdropFilter: 'blur(16px)',
       borderRadius: '16px',
-      border: '1px solid rgba(139,111,192,0.25)',
+      border: '1px solid var(--border-color)',
       p: 3,
-      boxShadow: '0 12px 40px rgba(0,0,0,0.3)'
+      boxShadow: 'var(--shadow-lg)'
     }}
   >
     <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
       <CheckCircle sx={{ color: '#8b6fc0', fontSize: 28 }} />
       <Box sx={{ textAlign: isArabic ? 'left' : 'right' }}>
-        <Typography variant="h5" sx={{ fontWeight: 700, color: '#fff', mb: 0.5, fontSize: '1.4rem' }}>
+        <Typography variant="h5" sx={{ fontWeight: 700, color: 'var(--text-dark)', mb: 0.5, fontSize: '1.4rem' }}>
           {govName}
         </Typography>
         <Chip
@@ -47,7 +47,7 @@ const ActivePanel = ({ govName, value, isArabic }) => (
       </Box>
     </Box>
 
-    <Typography sx={{ color: 'rgba(255,255,255,0.65)', fontSize: '14px', lineHeight: 1.7, mb: 3, textAlign: isArabic ? 'right' : 'left' }}>
+    <Typography sx={{ color: 'var(--text-muted)', fontSize: '14px', lineHeight: 1.7, mb: 3, textAlign: isArabic ? 'right' : 'left' }}>
       {isArabic
         ? `خدماتنا متوفرة بالكامل في ${govName}. فنيون متخصصون على مدار الساعة لخدمتك!`
         : `Our services are fully available in ${govName}. Expert technicians available 24/7!`
@@ -57,13 +57,13 @@ const ActivePanel = ({ govName, value, isArabic }) => (
     <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 2, mb: 2 }}>
       <Box sx={{ background: 'rgba(139,111,192,0.1)', borderRadius: '10px', p: 2, textAlign: 'center' }}>
         <Typography sx={{ color: '#a78bfa', fontSize: '1.5rem', fontWeight: 700 }}>{value}+</Typography>
-        <Typography sx={{ color: 'rgba(255,255,255,0.5)', fontSize: '11px' }}>
+        <Typography sx={{ color: 'var(--text-muted)', fontSize: '11px' }}>
           {isArabic ? 'فني متاح' : 'Technicians'}
         </Typography>
       </Box>
       <Box sx={{ background: 'rgba(139,111,192,0.1)', borderRadius: '10px', p: 2, textAlign: 'center' }}>
         <Typography sx={{ color: '#a78bfa', fontSize: '1.5rem', fontWeight: 700 }}>24/7</Typography>
-        <Typography sx={{ color: 'rgba(255,255,255,0.5)', fontSize: '11px' }}>
+        <Typography sx={{ color: 'var(--text-muted)', fontSize: '11px' }}>
           {isArabic ? 'متوفر' : 'Available'}
         </Typography>
       </Box>
@@ -89,18 +89,18 @@ const ActivePanel = ({ govName, value, isArabic }) => (
 const ComingSoonPanel = ({ govName, isArabic, email, setEmail, onNotify, isSubmitting, isSuccess }) => (
   <Box
     sx={{
-      background: 'rgba(30, 30, 45, 0.95)',
+      background: 'var(--card-bg)',
       backdropFilter: 'blur(16px)',
       borderRadius: '16px',
-      border: '1px solid rgba(139,111,192,0.25)',
+      border: '1px solid var(--border-color)',
       p: 3,
-      boxShadow: '0 12px 40px rgba(0,0,0,0.3)'
+      boxShadow: 'var(--shadow-lg)'
     }}
   >
     <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
-      <Schedule sx={{ color: 'rgba(255,255,255,0.3)', fontSize: 28 }} />
+      <Schedule sx={{ color: 'var(--text-muted)', fontSize: 28, opacity: 0.55 }} />
       <Box sx={{ textAlign: isArabic ? 'left' : 'right' }}>
-        <Typography variant="h5" sx={{ fontWeight: 700, color: '#fff', mb: 0.5, fontSize: '1.4rem' }}>
+        <Typography variant="h5" sx={{ fontWeight: 700, color: 'var(--text-dark)', mb: 0.5, fontSize: '1.4rem' }}>
           {govName}
         </Typography>
         <Chip
@@ -111,11 +111,29 @@ const ComingSoonPanel = ({ govName, isArabic, email, setEmail, onNotify, isSubmi
       </Box>
     </Box>
 
-    <Typography sx={{ color: 'rgba(255,255,255,0.65)', fontSize: '14px', lineHeight: 1.7, mb: 3, textAlign: isArabic ? 'right' : 'left' }}>
-      {isArabic
-        ? `نحن نعمل جاهدين لإطلاق كار هيرو في ${govName}. سجل بريدك ليتم إعلامك فور الإطلاق!`
-        : `We're working to launch Car Hero in ${govName}. Register your email to be notified at launch!`
-      }
+    <Typography
+      component="div"
+      dir={isArabic ? 'rtl' : 'ltr'}
+      sx={{
+        color: 'var(--text-muted)',
+        fontSize: '14px',
+        lineHeight: 1.7,
+        mb: 3,
+        textAlign: isArabic ? 'right' : 'left',
+        unicodeBidi: 'isolate'
+      }}
+    >
+      {isArabic ? (
+        <>
+          نحن نعمل جاهدين لإطلاق{' '}
+          <Box component="bdi" dir="ltr" sx={{ display: 'inline', unicodeBidi: 'isolate' }}>
+            Car Hero
+          </Box>
+          {' '}في {govName}. سجل بريدك ليتم إعلامك فور الإطلاق!
+        </>
+      ) : (
+        `We're working to launch Car Hero in ${govName}. Register your email to be notified at launch!`
+      )}
     </Typography>
 
     <TextField
@@ -128,13 +146,13 @@ const ComingSoonPanel = ({ govName, isArabic, email, setEmail, onNotify, isSubmi
       sx={{
         mb: 2,
         '& .MuiOutlinedInput-root': {
-          backgroundColor: 'rgba(255,255,255,0.05)',
+          backgroundColor: 'var(--input-bg)',
           borderRadius: '10px',
           '& fieldset': { borderColor: 'rgba(139,111,192,0.3)' },
           '&:hover fieldset': { borderColor: 'rgba(139,111,192,0.5)' },
           '&.Mui-focused fieldset': { borderColor: '#8b6fc0' }
         },
-        '& input': { color: '#fff', textAlign: isArabic ? 'right' : 'left' }
+        '& input': { color: 'var(--text-dark)', textAlign: isArabic ? 'right' : 'left' }
       }}
     />
 
@@ -181,19 +199,19 @@ const ComingSoonPanel = ({ govName, isArabic, email, setEmail, onNotify, isSubmi
 const DefaultPanel = ({ isArabic }) => (
   <Box
     sx={{
-      background: 'rgba(30, 30, 45, 0.6)',
+      background: 'var(--card-bg)',
       backdropFilter: 'blur(10px)',
       borderRadius: '16px',
-      border: '1px solid rgba(139,111,192,0.15)',
+      border: '1px solid var(--border-color)',
       p: 4,
       textAlign: 'center'
     }}
   >
     <MapIcon sx={{ fontSize: 48, color: 'rgba(139,111,192,0.4)', mb: 2 }} />
-    <Typography sx={{ color: '#fff', fontSize: '1.1rem', fontWeight: 600, mb: 1.5 }}>
+    <Typography sx={{ color: 'var(--text-dark)', fontSize: '1.1rem', fontWeight: 600, mb: 1.5 }}>
       {isArabic ? 'استكشف شبكتنا' : 'Explore Our Network'}
     </Typography>
-    <Typography sx={{ color: 'rgba(255,255,255,0.5)', fontSize: '13px', lineHeight: 1.7 }}>
+    <Typography sx={{ color: 'var(--text-muted)', fontSize: '13px', lineHeight: 1.7 }}>
       {isArabic
         ? 'مرر أو اضغط على أي مدينة على الخريطة لعرض حالة التغطية المباشرة، وتوفر الفنيين، وأنواع الخدمات.'
         : 'Hover or tap on any city on the map to view live coverage status, technician availability, and service types.'
@@ -203,6 +221,32 @@ const DefaultPanel = ({ isArabic }) => (
 );
 
 import { getGovernorates } from '@/infrastructure/services/providers.service';
+
+const DAMASCUS_ALIASES = new Set([
+  'damascus',
+  'rural damascus',
+  'rular damascus',
+  'damascus countryside',
+  'دمشق',
+  'ريف دمشق'
+]);
+
+const normalizeGovernorateData = (data) => {
+  const totals = new Map();
+
+  data.forEach((item) => {
+    const rawName = String(item?.governorate || item?.name || item?._id || '').trim();
+    if (!rawName) return;
+
+    const normalizedName = rawName.toLocaleLowerCase('en');
+    const name = DAMASCUS_ALIASES.has(normalizedName) ? 'Damascus' : rawName;
+    const count = Number(item?.count ?? item?.value ?? 0);
+
+    totals.set(name, (totals.get(name) || 0) + (Number.isFinite(count) ? count : 0));
+  });
+
+  return Array.from(totals, ([_id, count]) => ({ _id, count }));
+};
 
 const SyriaMap = () => {
   const { i18n } = useTranslation();
@@ -219,8 +263,9 @@ const SyriaMap = () => {
     const fetchGovData = async () => {
       try {
         const json = await getGovernorates();
-        if (json.success && Array.isArray(json.data)) {
-          setGovData(json.data);
+        const data = json?.data?.data ?? json?.data ?? json;
+        if (Array.isArray(data)) {
+          setGovData(normalizeGovernorateData(data));
         }
       } catch (err) {
         console.error('Failed to fetch governorate data:', err);
@@ -304,16 +349,16 @@ const SyriaMap = () => {
         display: 'flex',
         flexDirection: { xs: 'column', md: 'row' },
         alignItems: 'stretch',
-        gap: 4,
-        minHeight: '600px',
+        gap: { xs: 3, md: 4 },
+        minHeight: { xs: '680px', md: '680px' },
         direction: isArabic ? 'rtl' : 'ltr'
       }}
     >
       {/* Info Panel */}
       <Box
         sx={{
-          width: { xs: '100%', md: '340px' },
-          minHeight: { xs: '250px', md: '550px' },
+          width: { xs: '100%', md: '320px' },
+          minHeight: { xs: '250px', md: '650px' },
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
@@ -363,8 +408,8 @@ const SyriaMap = () => {
           flex: 1,
           width: '100%',
           minWidth: 0,
-          height: { xs: '390px', sm: '440px', md: '550px' },
-          minHeight: { xs: '390px', sm: '440px', md: '550px' },
+          height: { xs: '460px', sm: '540px', md: '650px' },
+          minHeight: { xs: '460px', sm: '540px', md: '650px' },
           borderRadius: '20px',
           overflow: 'hidden',
           position: 'relative',
@@ -378,11 +423,11 @@ const SyriaMap = () => {
         <Box
           ref={iframeRef}
           component="iframe"
-          src="/maps/syria_choropleth.html"
+            src="/maps/syria_choropleth.html?v=5"
           sx={{
             width: '100%',
-            height: { xs: '390px', sm: '440px', md: '550px' },
-            minHeight: { xs: '390px', sm: '440px', md: '550px' },
+              height: { xs: '460px', sm: '540px', md: '650px' },
+              minHeight: { xs: '460px', sm: '540px', md: '650px' },
             border: 'none',
             background: 'transparent',
             display: 'block'

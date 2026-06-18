@@ -7,3 +7,7 @@ export const applyProvider = (payload) => {
 export const getGovernorates = () => {
   return apiClient.get("/providers/public/governorates");
 };
+
+export const getPublicStatistics = () => {
+  return apiClient.get("/providers/public/statistics");
+};

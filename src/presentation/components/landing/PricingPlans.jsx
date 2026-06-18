@@ -384,7 +384,7 @@ const PricingPlans = () => {
                 sx={{
                   p: { xs: 2, sm: 3, md: 6 },
                   width: "100%",
-                  height: { xs: 620, sm: 590, md: 580 },
+                  height: "auto",
                   minHeight: { xs: 620, sm: 590, md: 580 },
                   display: "flex",
                   flexDirection: "column",
@@ -550,7 +550,7 @@ const PricingPlans = () => {
                 sx={{
                   p: { xs: 2, sm: 3, md: 6 },
                   width: "100%",
-                  height: { xs: 620, sm: 590, md: 580 },
+                  height: "auto",
                   minHeight: { xs: 620, sm: 590, md: 580 },
                   display: "flex",
                   flexDirection: "column",
@@ -681,7 +681,7 @@ const PricingPlans = () => {
                   </AnimatePresence>
                 </Box>
 
-                <Box sx={{ flexGrow: 1, minHeight: 0, position: "relative", zIndex: 1 }}>
+                <Box sx={{ flexGrow: 1, position: "relative", zIndex: 1 }}>
                   {premiumFeatures.map((feature, idx) => (
                     <Box
                       key={idx}

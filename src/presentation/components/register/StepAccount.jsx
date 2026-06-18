@@ -194,9 +194,9 @@ const StepAccount = ({ formData, updateFormData, nextStep, isVerified, setIsVeri
   );
 
   return (
-    <div className="space-y-6 sm:space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-      <div className="flex flex-col sm:flex-row sm:items-center gap-4 border-b border-slate-200 dark:border-white/10 pb-6">
-        <div className="p-3.5 bg-violet-600/10 dark:bg-[#8f5cb1]/10 rounded-2xl text-violet-600 dark:text-[#8f5cb1]">
+    <div className="space-y-5 lg:space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+      <div className="flex flex-col sm:flex-row sm:items-center gap-3 border-b border-slate-200 dark:border-white/10 pb-4">
+        <div className="p-2.5 bg-violet-600/10 dark:bg-[#8f5cb1]/10 rounded-xl text-violet-600 dark:text-[#8f5cb1]">
           <Fingerprint size={28} />
         </div>
         <div>
@@ -211,7 +211,7 @@ const StepAccount = ({ formData, updateFormData, nextStep, isVerified, setIsVeri
         </div>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-5 gap-y-4">
         <div className="md:col-span-1">
           <Input 
             lang={lang} icon={<User size={18} />} label={t.account.fullName} name="fullName"
@@ -222,11 +222,11 @@ const StepAccount = ({ formData, updateFormData, nextStep, isVerified, setIsVeri
           />
         </div>
 
-        <div className="md:col-span-1 space-y-2.5 flex flex-col">
+        <div className="md:col-span-1 space-y-1.5 flex flex-col">
           <label className={`block text-sm font-bold uppercase px-1 ${errors.phone && touched.phone ? 'text-rose-500' : 'text-slate-500 dark:text-[#c9a7e3]'}`}>
             {t.account.phone} <span className="text-rose-500">*</span>
           </label>
-          <div className="relative flex items-center h-[56px]">
+          <div className="relative flex items-center h-[52px]">
             <div className="relative flex-1 h-full">
                <input
                 name="phone" type="tel" maxLength={10} value={formData.phone}
@@ -327,11 +327,11 @@ const StepAccount = ({ formData, updateFormData, nextStep, isVerified, setIsVeri
         </div>
       </div>
 
-      <div className="flex flex-col sm:flex-row gap-4 pt-8">
+      <div className="flex flex-col sm:flex-row gap-4 pt-4">
         <button 
           onClick={handleNext}
           disabled={!isFormValid()}
-          className={`order-1 flex-1 group relative inline-flex items-center justify-center gap-3 px-14 py-5 font-black rounded-[16px] shadow-2xl transition-all active:scale-[0.98] overflow-hidden
+          className={`order-1 flex-1 group relative inline-flex items-center justify-center gap-3 px-12 py-3.5 font-black rounded-[14px] shadow-2xl transition-all active:scale-[0.98] overflow-hidden
           ${isFormValid() ? 'bg-violet-600 dark:bg-[#8f5cb1] hover:bg-violet-700 dark:hover:bg-[#a56dcc] text-white shadow-violet-600/30 dark:shadow-[#8f5cb1]/30' : 'bg-slate-200 dark:bg-[#1a1425] text-slate-400 dark:text-[#c9a7e3]/30 cursor-not-allowed opacity-60'}`}
         >
           <span className="relative z-10 text-base">{t.common.next}</span>

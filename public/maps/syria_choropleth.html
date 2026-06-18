@@ -145,11 +145,11 @@
         function getMapSettings() {
             var width = window.innerWidth;
             if (width < 480) {
-                return { center: [34.65, 38.55], zoom: 5.74 };
+                return { center: [34.65, 38.55], zoom: 5.9 };
             } else if (width < 768) {
-                return { center: [34.8, 38.5], zoom: 5.94 };
+                return { center: [34.8, 38.5], zoom: 6.1 };
             } else {
-                return { center: [35.0, 38.0], zoom: 6.5 };
+                return { center: [35.0, 38.0], zoom: 6.7 };
             }
         }
 
@@ -270,8 +270,9 @@
             layer.bringToFront();
             
             var props = layer.feature.properties;
+            var govName = (props.shapeName === 'Rural Damascus' || props.shapeName === 'Rular Damascus') ? 'Damascus' : props.shapeName;
             sendToParent('MAP_SELECT', {
-                governorate: props.shapeName,
+                governorate: govName,
                 status: props.status,
                 value: props.value
             });
@@ -289,8 +290,9 @@
             
             // Send hover event for preview (won't clear selection)
             var props = layer.feature.properties;
+            var govName = (props.shapeName === 'Rural Damascus' || props.shapeName === 'Rular Damascus') ? 'Damascus' : props.shapeName;
             sendToParent('MAP_HOVER', {
-                governorate: props.shapeName,
+                governorate: govName,
                 status: props.status,
                 value: props.value
             });
@@ -367,55 +369,50 @@
         window.addEventListener('message', function(event) {
             if (event.data && event.data.type === 'UPDATE_DATA') {
                 var data = event.data.data;
-                var dataMap = {};
+                var rawMap = {};
+
                 if (Array.isArray(data)) {
                     data.forEach(function(item) {
-                        var govName = item.governorate || item.name || item._id;
-                        dataMap[govName] = item.count !== undefined ? item.count : (item.value !== undefined ? item.value : 0);
+                        var govName = String(item.governorate || item.name || item._id || '').trim();
+                        var value = Number(item.count !== undefined ? item.count : (item.value !== undefined ? item.value : 0)) || 0;
+                        rawMap[govName] = (rawMap[govName] || 0) + value;
                     });
                 } else if (typeof data === 'object') {
                     Object.keys(data).forEach(function(key) {
-                        dataMap[key] = data[key];
+                        var govName = String(key).trim();
+                        rawMap[govName] = (rawMap[govName] || 0) + (Number(data[key]) || 0);
                     });
                 }
                 
+                // Consolidate Damascus and Rural Damascus
+                var damascusTotal = (rawMap["Damascus"] || 0) + (rawMap["\u062f\u0645\u0634\u0642"] || 0) +
+                                    (rawMap["Rural Damascus"] || 0) + (rawMap["Rular Damascus"] || 0) +
+                                    (rawMap["Damascus Countryside"] || 0) +
+                                    (rawMap["\u0631\u064a\u0641 \u062f\u0645\u0634\u0642"] || 0);
+
+                // Map Arabic/English names to GeoJSON shape names
+                var dataMap = {
+                    "Damascus": damascusTotal,
+                    "Rural Damascus": damascusTotal,
+                    "Rular Damascus": damascusTotal,
+                    "Aleppo": (rawMap["Aleppo"] || 0) + (rawMap["\u062d\u0644\u0628"] || 0),
+                    "Homs": (rawMap["Homs"] || 0) + (rawMap["\u062d\u0645\u0635"] || 0),
+                    "Hama": (rawMap["Hama"] || 0) + (rawMap["\u062d\u0645\u0627\u0629"] || 0),
+                    "Lattakia": (rawMap["Lattakia"] || 0) + (rawMap["\u0627\u0644\u0644\u0627\u0630\u0642\u064a\u0629"] || 0),
+                    "Tartous": (rawMap["Tartous"] || 0) + (rawMap["\u0637\u0631\u0637\u0648\u0633"] || 0),
+                    "Idleb": (rawMap["Idleb"] || 0) + (rawMap["\u0625\u062f\u0644\u0628"] || 0),
+                    "Ar-Raqqa": (rawMap["Ar-Raqqa"] || 0) + (rawMap["\u0627\u0644\u0631\u0642\u0629"] || 0),
+                    "Deir-ez-Zor": (rawMap["Deir-ez-Zor"] || 0) + (rawMap["Deir ez-Zor"] || 0) + (rawMap["\u062f\u064a\u0631 \u0627\u0644\u0632\u0648\u0631"] || 0),
+                    "Al-Hasakeh": (rawMap["Al-Hasakeh"] || 0) + (rawMap["\u0627\u0644\u062d\u0633\u0643\u0629"] || 0),
+                    "Dar\'a": (rawMap["Dar\'a"] || 0) + (rawMap["\u062f\u0631\u0639\u0627"] || 0),
+                    "As-Sweida": (rawMap["As-Sweida"] || 0) + (rawMap["\u0627\u0644\u0633\u0648\u064a\u062f\u0627\u0621"] || 0),
+                    "Quneitra": (rawMap["Quneitra"] || 0) + (rawMap["\u0627\u0644\u0642\u0646\u064a\u0637\u0631\u0629"] || 0)
+                };
+
                 geojsonLayer.eachLayer(function(layer) {
                     var name = layer.feature.properties.shapeName;
-                    var count = dataMap[name];
+                    var count = dataMap[name] || 0;
                     
-                    if (count === undefined) {
-                        if (name === "Rural Damascus" || name === "Rular Damascus") {
-                            count = dataMap["Rural Damascus"] || dataMap["Rular Damascus"] || dataMap["ريف دمشق"];
-                        } else if (name === "Damascus") {
-                            count = dataMap["Damascus"] || dataMap["دمشق"];
-                        } else if (name === "Aleppo") {
-                            count = dataMap["Aleppo"] || dataMap["حلب"];
-                        } else if (name === "Homs") {
-                            count = dataMap["Homs"] || dataMap["حمص"];
-                        } else if (name === "Hama") {
-                            count = dataMap["Hama"] || dataMap["حماة"];
-                        } else if (name === "Lattakia") {
-                            count = dataMap["Lattakia"] || dataMap["اللاذقية"];
-                        } else if (name === "Tartous") {
-                            count = dataMap["Tartous"] || dataMap["طرطوس"];
-                        } else if (name === "Idleb") {
-                            count = dataMap["Idleb"] || dataMap["إدلب"];
-                        } else if (name === "Ar-Raqqa") {
-                            count = dataMap["Ar-Raqqa"] || dataMap["الرقة"];
-                        } else if (name === "Deir-ez-Zor") {
-                            count = dataMap["Deir-ez-Zor"] || dataMap["Deir ez-Zor"] || dataMap["دير الزور"];
-                        } else if (name === "Al-Hasakeh") {
-                            count = dataMap["Al-Hasakeh"] || dataMap["الحسكة"];
-                        } else if (name === "Dar'a") {
-                            count = dataMap["Dar'a"] || dataMap["درعا"];
-                        } else if (name === "As-Sweida") {
-                            count = dataMap["As-Sweida"] || dataMap["السويداء"];
-                        } else if (name === "Quneitra") {
-                            count = dataMap["Quneitra"] || dataMap["القنيطرة"];
-                        }
-                    }
-                    
-                    count = count || 0;
                     layer.feature.properties.value = count;
                     layer.feature.properties.status = count > 0 ? 'active' : 'coming_soon';
                 });
@@ -424,8 +421,9 @@
                 
                 if (selectedGovernorate) {
                     var props = selectedGovernorate.feature.properties;
+                    var govName = (props.shapeName === 'Rural Damascus' || props.shapeName === 'Rular Damascus') ? 'Damascus' : props.shapeName;
                     sendToParent('MAP_SELECT', {
-                        governorate: props.shapeName,
+                        governorate: govName,
                         status: props.status,
                         value: props.value
                     });

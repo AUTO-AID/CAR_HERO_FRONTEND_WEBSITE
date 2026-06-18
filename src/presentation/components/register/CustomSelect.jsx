@@ -40,7 +40,7 @@ const CustomSelect = ({
   const displayLabel = selectedOption ? (selectedOption.label || selectedOption.value) : placeholder;
 
   return (
-    <div className={`space-y-2.5 w-full ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`} ref={containerRef}>
+    <div className={`space-y-1.5 w-full ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`} ref={containerRef}>
       {label && (
         <div className="flex items-center justify-between px-1">
           <label className={`block text-sm font-bold uppercase ${error && touched ? 'text-rose-500' : 'text-slate-500 dark:text-[#c9a7e3]'}`}>
@@ -55,7 +55,7 @@ const CustomSelect = ({
           disabled={disabled}
           onClick={() => setIsOpen(!isOpen)}
           className={`
-            w-full h-[58px] flex items-center justify-between px-4 transition-all duration-300
+            w-full h-[52px] flex items-center justify-between px-4 transition-all duration-300
             ${lang === 'ar' ? 'flex-row-reverse' : 'flex-row'}
             bg-[var(--input-bg)] border rounded-[16px] outline-none shadow-sm
             ${isOpen ? 'ring-4 ring-[#8f5cb1]/10 border-[#8f5cb1] bg-[var(--bg-section-alt)]' : ''}
@@ -64,7 +64,7 @@ const CustomSelect = ({
         >
           <div className={`flex items-center gap-3 ${lang === 'ar' ? 'flex-row-reverse' : 'flex-row'}`}>
             {Icon && <Icon size={20} className={`${isValid ? 'text-emerald-500' : 'text-[#8f5cb1]'} transition-colors`} />}
-            <span className={`text-[15px] font-bold ${!value ? 'text-slate-400 dark:text-white/20' : 'text-[var(--text-dark)]'}`}>
+            <span className={`text-sm font-bold ${!value ? 'text-slate-400 dark:text-white/20' : 'text-[var(--text-dark)]'}`}>
               {displayLabel}
             </span>
           </div>
@@ -93,7 +93,7 @@ const CustomSelect = ({
                       type="button"
                       onClick={() => handleSelect(optValue)}
                       className={`
-                        w-full flex items-center justify-between px-5 py-4 rounded-[16px] transition-all duration-300
+                        w-full flex items-center justify-between px-4 py-3 rounded-[14px] transition-all duration-300
                         ${lang === 'ar' ? 'flex-row-reverse text-right' : 'flex-row text-left'}
                         ${isOptSelected 
                           ? 'bg-gradient-to-r from-[#8f5cb1] to-[#6d3a91] text-white shadow-lg scale-[1.02]' 

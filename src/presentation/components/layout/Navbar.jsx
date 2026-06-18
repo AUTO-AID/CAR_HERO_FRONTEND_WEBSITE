@@ -15,48 +15,40 @@ import MenuIcon from "@mui/icons-material/Menu";
 import logo from "@/assets/logo_carHero.png";
 
 import { useTranslation } from "react-i18next";
-import i18n from "@/infrastructure/i18n";
 import { useTheme } from "@mui/material/styles";
-import { motion } from "framer-motion";
+import { motion as Motion } from "framer-motion";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import LanguageIcon from "@mui/icons-material/Language";
 import HomeIcon from "@mui/icons-material/Home";
-import StarIcon from "@mui/icons-material/Star";
-import CameraAltIcon from "@mui/icons-material/CameraAlt";
+import MiscellaneousServicesIcon from "@mui/icons-material/MiscellaneousServices";
+import TimelineIcon from "@mui/icons-material/Timeline";
+import MapIcon from "@mui/icons-material/Map";
 import ContactSupportIcon from "@mui/icons-material/ContactSupport";
-import GetAppIcon from "@mui/icons-material/GetApp";
+import HandshakeIcon from "@mui/icons-material/Handshake";
 import { ColorModeContext } from "@/application/contexts/color-mode.context";
 import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+
+const NAV_SECTION_IDS = ["home", "services", "how-it-works", "coverage-map-section", "contact"];
 
 const Navbar = ({ minimal = false }) => {
   const { t, i18n } = useTranslation();
   const theme = useTheme();
   const colorMode = useContext(ColorModeContext);
+  const navigate = useNavigate();
   const isArabic = i18n.language === "ar";
   const [open, setOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const [scrolled, setScrolled] = useState(false);
 
   const navItems = [
-    { label: t("home"), id: "home" },
-    { label: t("features"), id: "features" },
-    { label: t("screenshot"), id: "screenshot" },
-    { label: t("contact"), id: "contact" },
-    { label: t("download1"), id: "download" },
+    { label: t("home"), id: "home", icon: <HomeIcon /> },
+    { label: t("service.title"), id: "services", icon: <MiscellaneousServicesIcon /> },
+    { label: isArabic ? "طريقة العمل" : "How It Works", id: "how-it-works", icon: <TimelineIcon /> },
+    { label: isArabic ? "التغطية والباقات" : "Coverage & Plans", id: "coverage-map-section", icon: <MapIcon /> },
+    { label: t("contact"), id: "contact", icon: <ContactSupportIcon /> },
   ];
-
-  // Better icons for drawer
-  const getIcon = (id) => {
-    switch (id) {
-      case "home": return <HomeIcon />;
-      case "features": return <StarIcon />;
-      case "screenshot": return <CameraAltIcon />;
-      case "contact": return <ContactSupportIcon />;
-      case "download": return <GetAppIcon />;
-      default: return <StarIcon />;
-    }
-  };
 
   // Lang toggle
   const toggleLang = () => {
@@ -68,7 +60,9 @@ const Navbar = ({ minimal = false }) => {
   const scrollToSection = (id) => {
     const section = document.getElementById(id);
     if (section) {
-      section.scrollIntoView({ behavior: "smooth", block: "start" });
+      const headerOffset = window.innerWidth < 1200 ? 66 : 80;
+      const top = section.getBoundingClientRect().top + window.scrollY - headerOffset;
+      window.scrollTo({ top, behavior: "smooth" });
     }
   };
 
@@ -79,7 +73,7 @@ const Navbar = ({ minimal = false }) => {
 
     window.addEventListener("scroll", handleScroll);
 
-    const sections = navItems.map((item) => document.getElementById(item.id));
+    const sections = NAV_SECTION_IDS.map((id) => document.getElementById(id));
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -88,7 +82,7 @@ const Navbar = ({ minimal = false }) => {
           }
         });
       },
-      { threshold: 0.6 }
+      { threshold: 0.15, rootMargin: "-80px 0px -55% 0px" }
     );
 
     sections.forEach((sec) => sec && observer.observe(sec));
@@ -121,22 +115,35 @@ const Navbar = ({ minimal = false }) => {
       >
         <Toolbar
           sx={{
+            width: "100%",
+            maxWidth: 1440,
+            mx: "auto",
             justifyContent: "space-between",
-            px: { xs: 2.5, md: 8 },
-            flexDirection: { xs: isArabic ? "row-reverse" : "row", md: "row" },
+            px: { xs: 2, sm: 3, md: 5 },
+            minHeight: { xs: "66px !important", md: "80px !important" },
+            direction: "ltr",
           }}
         >
           {/* Logo */}
           <Box
             component="img"
             src={logo}
-            alt="CarHero Logo"
+            alt="Car Hero Logo"
             sx={{
-              height: { xs: 80, sm: 100, md: 110 },
+              width: { xs: 150, sm: 175, lg: 205 },
+              height: "auto",
+              maxHeight: { xs: 48, lg: 58 },
+              objectFit: "contain",
+              flexShrink: 0,
+              order: isArabic ? 2 : 1,
+              position: "relative",
+              left: { xs: -4, sm: -6, lg: -12 },
               cursor: "pointer",
-              transition: "transform 0.3s ease",
-              "&:hover": { transform: "scale(1.05)" },
-              filter: scrolled && theme.palette.mode === 'light' ? "none" : "brightness(1) contrast(1.1)",
+              transition: "transform 0.3s ease, filter 0.3s ease",
+              "&:hover": { transform: "translateY(-1px) scale(1.025)" },
+              filter: theme.palette.mode === "dark"
+                ? "drop-shadow(0 4px 12px rgba(143, 92, 177, 0.28))"
+                : "drop-shadow(0 3px 8px rgba(74, 35, 111, 0.18))",
             }}
             onClick={() => minimal ? (window.location.href = '/') : scrollToSection("home")}
           />
@@ -144,9 +151,18 @@ const Navbar = ({ minimal = false }) => {
           {/* Desktop Links */}
           <Box
             sx={{
-              display: { xs: "none", md: "flex" },
+              display: { xs: "none", lg: "flex" },
               alignItems: "center",
-              gap: 1.5,
+              gap: 0.35,
+              order: isArabic ? 1 : 2,
+              flexDirection: isArabic ? "row-reverse" : "row",
+              direction: isArabic ? "rtl" : "ltr",
+              px: scrolled ? 1 : 0,
+              py: scrolled ? 0.5 : 0,
+              borderRadius: "999px",
+              background: scrolled ? "rgba(143, 92, 177, 0.06)" : "rgba(255,255,255,0.04)",
+              border: "1px solid var(--border-color)",
+              transition: "all 0.3s ease",
             }}
           >
             {!minimal && navItems.map((item) => (
@@ -155,29 +171,22 @@ const Navbar = ({ minimal = false }) => {
                 onClick={() => scrollToSection(item.id)}
                 sx={{
                   textTransform: "none",
-                  fontSize: "1rem",
-                  px: 2,
+                  fontSize: "0.88rem",
+                  px: 1.45,
+                  py: 0.9,
+                  minWidth: "auto",
+                  borderRadius: "999px",
                   color: (activeSection === item.id) 
-                    ? "var(--primary)" 
+                    ? "white"
                     : (scrolled && theme.palette.mode === 'light') ? "var(--text-dark)" : "white",
                   fontWeight: activeSection === item.id ? 700 : 500,
                   position: "relative",
                   transition: "all 0.3s ease",
-                  "&::after": {
-                    content: '""',
-                    position: "absolute",
-                    bottom: 8,
-                    left: "50%",
-                    width: activeSection === item.id ? "60%" : "0%",
-                    height: "2px",
-                    background: "var(--gradient)",
-                    transform: "translateX(-50%)",
-                    transition: "all 0.3s ease",
-                    borderRadius: "2px",
-                  },
+                  background: activeSection === item.id ? "var(--gradient)" : "transparent",
+                  boxShadow: activeSection === item.id ? "0 6px 18px rgba(143, 92, 177, 0.28)" : "none",
                   "&:hover": { 
                     color: "var(--primary)",
-                    "&::after": { width: "60%" }
+                    background: "rgba(143, 92, 177, 0.12)"
                   },
                 }}
               >
@@ -185,12 +194,39 @@ const Navbar = ({ minimal = false }) => {
               </Button>
             ))}
 
+            {!minimal && (
+              <Button
+                onClick={() => navigate("/register")}
+                startIcon={<HandshakeIcon />}
+                sx={{
+                  mx: 0.5,
+                  px: 1.8,
+                  py: 0.9,
+                  borderRadius: "999px",
+                  color: "white",
+                  background: "var(--gradient)",
+                  textTransform: "none",
+                  fontWeight: 800,
+                  whiteSpace: "nowrap",
+                  boxShadow: "0 8px 22px rgba(143, 92, 177, 0.3)",
+                  "& .MuiButton-startIcon": { m: 0, marginInlineEnd: 0.7 },
+                  "&:hover": {
+                    background: "var(--gradient)",
+                    transform: "translateY(-2px)",
+                    boxShadow: "0 12px 28px rgba(143, 92, 177, 0.42)",
+                  },
+                }}
+              >
+                {t("contact1.register_btn")}
+              </Button>
+            )}
+
             {/* Language Switcher */}
             <Button
               onClick={toggleLang}
-              startIcon={<LanguageIcon sx={{ fontSize: 20 }} />}
+              startIcon={null}
               sx={{
-                ml: 2,
+                mx: 1,
                 px: 2.5,
                 py: 0.8,
                 color: (scrolled && theme.palette.mode === 'light') ? "var(--text-dark)" : "white",
@@ -202,23 +238,27 @@ const Navbar = ({ minimal = false }) => {
                 fontSize: "0.85rem",
                 background: "rgba(143, 92, 177, 0.05)",
                 backdropFilter: "blur(10px)",
+                direction: "ltr",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 0.8,
                 transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
-                "& .MuiButton-startIcon": {
-                  mr: 1,
-                  transition: "transform 0.5s ease",
-                },
                 "&:hover": {
                   background: "var(--gradient)",
                   color: "white",
                   borderColor: "transparent",
                   transform: "translateY(-2px)",
                   boxShadow: "0 8px 20px rgba(143, 92, 177, 0.4)",
-                  "& .MuiButton-startIcon": {
+                  "& .language-icon": {
                     transform: "rotate(180deg)",
                   },
                 },
               }}
             >
+              <LanguageIcon
+                className="language-icon"
+                sx={{ fontSize: 20, flexShrink: 0, transition: "transform 0.5s ease" }}
+              />
               {currentLang}
             </Button>
 
@@ -226,7 +266,7 @@ const Navbar = ({ minimal = false }) => {
             <Box
               onClick={colorMode.toggleColorMode}
               sx={{
-                ml: 1.5,
+                mx: 0.5,
                 width: 44,
                 height: 44,
                 display: "flex",
@@ -251,7 +291,7 @@ const Navbar = ({ minimal = false }) => {
                 },
               }}
             >
-              <motion.div
+              <Motion.div
                 key={theme.palette.mode}
                 initial={{ y: 20, opacity: 0, rotate: -45 }}
                 animate={{ y: 0, opacity: 1, rotate: 0 }}
@@ -262,14 +302,22 @@ const Navbar = ({ minimal = false }) => {
                 ) : (
                   <Brightness4Icon sx={{ color: "var(--primary)", fontSize: 24 }} />
                 )}
-              </motion.div>
+              </Motion.div>
             </Box>
           </Box>
 
           {/* Mobile Menu Controls */}
-          <Box sx={{ display: { xs: "flex", md: "none" }, alignItems: "center", gap: 1.5 }}>
+          <Box
+            sx={{
+              display: { xs: "flex", lg: "none" },
+              alignItems: "center",
+              gap: 1.5,
+              order: isArabic ? 1 : 2,
+            }}
+          >
             {!minimal && (
               <IconButton
+                aria-label={isArabic ? "فتح القائمة" : "Open navigation menu"}
                 sx={{
                   color: (scrolled && theme.palette.mode === 'light') ? "var(--text-dark)" : "white",
                   background: "rgba(143, 92, 177, 0.1)",
@@ -288,7 +336,7 @@ const Navbar = ({ minimal = false }) => {
 
       {/* Mobile Drawer */}
       <Drawer
-        anchor={isArabic ? "left" : "right"}
+        anchor={isArabic ? "right" : "left"}
         open={open}
         onClose={() => setOpen(false)}
         PaperProps={{
@@ -310,7 +358,7 @@ const Navbar = ({ minimal = false }) => {
             component="img"
             src={logo}
             alt="Logo"
-            sx={{ height: 80, mb: 1 }}
+            sx={{ width: 210, height: "auto", maxHeight: 82, objectFit: "contain", mb: 1 }}
           />
         </Box>
         <List sx={{ gap: 1, display: "flex", flexDirection: "column" }}>
@@ -332,8 +380,8 @@ const Navbar = ({ minimal = false }) => {
                   },
                 }}
               >
-                <Box sx={{ mr: 2, display: "flex", color: activeSection === item.id ? "var(--primary)" : "var(--text-muted)" }}>
-                  {getIcon(item.id)}
+                <Box sx={{ marginInlineEnd: 2, display: "flex", color: activeSection === item.id ? "var(--primary)" : "var(--text-muted)" }}>
+                  {item.icon}
                 </Box>
                 <Typography sx={{ fontWeight: activeSection === item.id ? 700 : 500 }}>
                   {item.label}
@@ -341,6 +389,28 @@ const Navbar = ({ minimal = false }) => {
               </ListItemButton>
             </ListItem>
           ))}
+
+          <ListItem disablePadding sx={{ mt: 1 }}>
+            <ListItemButton
+              onClick={() => {
+                navigate("/register");
+                setOpen(false);
+              }}
+              sx={{
+                borderRadius: "12px",
+                py: 1.5,
+                justifyContent: "center",
+                gap: 1,
+                color: "white",
+                background: "var(--gradient)",
+                boxShadow: "0 8px 22px rgba(143, 92, 177, 0.28)",
+                "&:hover": { background: "var(--gradient)", transform: "translateY(-1px)" },
+              }}
+            >
+              <HandshakeIcon />
+              <Typography sx={{ fontWeight: 800 }}>{t("contact1.register_btn")}</Typography>
+            </ListItemButton>
+          </ListItem>
 
           <Box sx={{ my: 2, height: "1px", background: "var(--border-color)" }} />
 
@@ -367,7 +437,9 @@ const Navbar = ({ minimal = false }) => {
                 <Brightness4Icon sx={{ color: "var(--primary)", fontSize: 22 }} />
               )}
               <Typography sx={{ fontWeight: 700 }}>
-                {theme.palette.mode === "dark" ? "Light Mode" : "Dark Mode"}
+                {theme.palette.mode === "dark"
+                  ? (isArabic ? "الوضع الفاتح" : "Light Mode")
+                  : (isArabic ? "الوضع الداكن" : "Dark Mode")}
               </Typography>
             </ListItemButton>
           </ListItem>
@@ -395,7 +467,7 @@ const Navbar = ({ minimal = false }) => {
               }}
             >
               <LanguageIcon className="lang-icon-mob" sx={{ fontSize: 20, color: "var(--primary)" }} />
-              {i18n.language === 'ar' ? "English Language" : "اللغة العربية"}
+              {i18n.language === 'ar' ? "English" : "العربية"}
             </ListItemButton>
           </ListItem>
         </List>

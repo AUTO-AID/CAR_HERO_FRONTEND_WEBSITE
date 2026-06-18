@@ -14,23 +14,28 @@ import StatisticsSection from "@/presentation/components/landing/StatisticsSecti
 import TestimonialsSection from "@/presentation/components/landing/TestimonialsSection";
 import ContactSection from "@/presentation/components/landing/ContactSection";
 import LoyaltyRewards from "@/presentation/components/landing/LoyaltyRewards";
+
+const SectionTone = ({ tone, children }) => (
+  <div className={`landing-section-tone landing-section-tone-${tone}`}>{children}</div>
+);
+
 const Home = () => {
   return (
     <>
       <Navbar />
-      <HeroSection />
-      <ServiceSection/>
-      <HowItWorks />
-      <WhyChooseUs/>
-      <CoverageSection />
-      <LoyaltyRewards />
-      <PricingPlans />
-      <AppScreenshots />
-      <SalientFeatures/>
-      <StatisticsSection/>
-      <ContactSection/>
-      <TestimonialsSection/>
-      <DownloadSection/>
+      <SectionTone tone="a"><HeroSection /></SectionTone>
+      <SectionTone tone="b"><ServiceSection /></SectionTone>
+      <SectionTone tone="a"><HowItWorks /></SectionTone>
+      <SectionTone tone="b"><WhyChooseUs /></SectionTone>
+      <SectionTone tone="a"><CoverageSection /></SectionTone>
+      <SectionTone tone="b"><LoyaltyRewards /></SectionTone>
+      <SectionTone tone="a"><PricingPlans /></SectionTone>
+      <SectionTone tone="b"><AppScreenshots /></SectionTone>
+      <SectionTone tone="a"><SalientFeatures /></SectionTone>
+      <SectionTone tone="b"><StatisticsSection /></SectionTone>
+      <SectionTone tone="a"><ContactSection /></SectionTone>
+      <SectionTone tone="b"><TestimonialsSection /></SectionTone>
+      <SectionTone tone="a"><DownloadSection /></SectionTone>
       <Footer/>
     </>
   );
