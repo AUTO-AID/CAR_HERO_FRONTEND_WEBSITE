@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Box, Typography, TextField, Button, Chip } from '@mui/material';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion as Motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+import { Link as RouterLink } from 'react-router-dom';
 import { CheckCircle, Schedule, Map as MapIcon } from '@mui/icons-material';
 
 const governorateNames = {
@@ -34,15 +35,15 @@ const ActivePanel = ({ govName, value, isArabic }) => (
     }}
   >
     <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
-      <CheckCircle sx={{ color: '#8b6fc0', fontSize: 28 }} />
+      <CheckCircle sx={{ color: 'var(--primary)', fontSize: 28 }} />
       <Box sx={{ textAlign: isArabic ? 'left' : 'right' }}>
-        <Typography variant="h5" sx={{ fontWeight: 700, color: 'var(--text-dark)', mb: 0.5, fontSize: '1.4rem' }}>
+        <Typography component="h3" sx={{ fontWeight: 700, color: 'var(--text-dark)', mb: 0.5, fontSize: '1.4rem' }}>
           {govName}
         </Typography>
         <Chip
           label={isArabic ? 'نشط' : 'Active'}
           size="small"
-          sx={{ backgroundColor: 'rgba(139,111,192,0.2)', color: '#a78bfa', fontWeight: 600, fontSize: '11px' }}
+          sx={{ backgroundColor: 'rgba(139,111,192,0.2)', color: 'var(--primary)', fontWeight: 600, fontSize: '11px' }}
         />
       </Box>
     </Box>
@@ -56,24 +57,29 @@ const ActivePanel = ({ govName, value, isArabic }) => (
 
     <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 2, mb: 2 }}>
       <Box sx={{ background: 'rgba(139,111,192,0.1)', borderRadius: '10px', p: 2, textAlign: 'center' }}>
-        <Typography sx={{ color: '#a78bfa', fontSize: '1.5rem', fontWeight: 700 }}>{value}+</Typography>
+        <Typography sx={{ color: 'var(--primary)', fontSize: '1.5rem', fontWeight: 700 }}>{value}+</Typography>
         <Typography sx={{ color: 'var(--text-muted)', fontSize: '11px' }}>
           {isArabic ? 'فني متاح' : 'Technicians'}
         </Typography>
       </Box>
       <Box sx={{ background: 'rgba(139,111,192,0.1)', borderRadius: '10px', p: 2, textAlign: 'center' }}>
-        <Typography sx={{ color: '#a78bfa', fontSize: '1.5rem', fontWeight: 700 }}>24/7</Typography>
+        <Typography sx={{ color: 'var(--primary)', fontSize: '1.5rem', fontWeight: 700 }}>24/7</Typography>
         <Typography sx={{ color: 'var(--text-muted)', fontSize: '11px' }}>
           {isArabic ? 'متوفر' : 'Available'}
         </Typography>
       </Box>
     </Box>
 
+    {/* كان زراً بارزاً بلا `onClick` إطلاقاً: أوضح دعوة للفعل في القسم
+        وأكثرها إغراءً بالنقر، ولا يحدث شيء عند الضغط. والطلب لا يتم من
+        الموقع أصلاً بل من التطبيق — كما تقول الأسئلة الشائعة نفسها. */}
     <Button
       fullWidth
       variant="contained"
+      component={RouterLink}
+      to="/app"
       sx={{
-        background: 'linear-gradient(135deg, #6a1b9a, #8b6fc0)',
+        background: 'var(--gradient)',
         borderRadius: '10px',
         py: 1.5,
         fontWeight: 600,
@@ -81,7 +87,7 @@ const ActivePanel = ({ govName, value, isArabic }) => (
         fontSize: '15px'
       }}
     >
-      {isArabic ? 'اطلب خدمة الآن' : 'Request Service'}
+      {isArabic ? 'اطلب الخدمة من التطبيق' : 'Request from the app'}
     </Button>
   </Box>
 );
@@ -100,13 +106,13 @@ const ComingSoonPanel = ({ govName, isArabic, email, setEmail, onNotify, isSubmi
     <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 2 }}>
       <Schedule sx={{ color: 'var(--text-muted)', fontSize: 28, opacity: 0.55 }} />
       <Box sx={{ textAlign: isArabic ? 'left' : 'right' }}>
-        <Typography variant="h5" sx={{ fontWeight: 700, color: 'var(--text-dark)', mb: 0.5, fontSize: '1.4rem' }}>
+        <Typography component="h3" sx={{ fontWeight: 700, color: 'var(--text-dark)', mb: 0.5, fontSize: '1.4rem' }}>
           {govName}
         </Typography>
         <Chip
           label={isArabic ? 'قريباً' : 'Coming Soon'}
           size="small"
-          sx={{ backgroundColor: 'rgba(255,165,0,0.15)', color: '#f5a623', fontWeight: 600, fontSize: '11px' }}
+          sx={{ backgroundColor: 'rgba(255,165,0,0.15)', color: 'var(--status-warning)', fontWeight: 600, fontSize: '11px' }}
         />
       </Box>
     </Box>
@@ -150,7 +156,7 @@ const ComingSoonPanel = ({ govName, isArabic, email, setEmail, onNotify, isSubmi
           borderRadius: '10px',
           '& fieldset': { borderColor: 'rgba(139,111,192,0.3)' },
           '&:hover fieldset': { borderColor: 'rgba(139,111,192,0.5)' },
-          '&.Mui-focused fieldset': { borderColor: '#8b6fc0' }
+          '&.Mui-focused fieldset': { borderColor: 'var(--primary)' }
         },
         '& input': { color: 'var(--text-dark)', textAlign: isArabic ? 'right' : 'left' }
       }}
@@ -170,8 +176,8 @@ const ComingSoonPanel = ({ govName, isArabic, email, setEmail, onNotify, isSubmi
         mb: 2
       }}
     >
-      <Schedule sx={{ color: '#f5a623', fontSize: 18 }} />
-      <Typography sx={{ color: '#f5a623', fontSize: '13px', fontWeight: 500 }}>
+      <Schedule sx={{ color: 'var(--status-warning)', fontSize: 18 }} />
+      <Typography sx={{ color: 'var(--status-warning)', fontSize: '13px', fontWeight: 500 }}>
         {isArabic ? 'قيد الانتظار' : 'Coming Soon'}
       </Typography>
     </Box>
@@ -182,7 +188,7 @@ const ComingSoonPanel = ({ govName, isArabic, email, setEmail, onNotify, isSubmi
       onClick={onNotify}
       disabled={!email || isSubmitting || isSuccess}
       sx={{
-        background: (email && !isSuccess) ? 'linear-gradient(135deg, #6a1b9a, #8b6fc0)' : (isSuccess ? '#10b981' : 'rgba(100,100,120,0.3)'),
+        background: (email && !isSuccess) ? 'var(--gradient)' : (isSuccess ? '#10b981' : 'rgba(100,100,120,0.3)'),
         borderRadius: '10px',
         py: 1.5,
         fontWeight: 600,
@@ -231,6 +237,71 @@ const DAMASCUS_ALIASES = new Set([
   'ريف دمشق'
 ]);
 
+const GOVERNORATE_ALIASES = new Map([
+  ['damascus', 'Damascus'],
+  ['rural damascus', 'Damascus'],
+  ['rular damascus', 'Damascus'],
+  ['damascus countryside', 'Damascus'],
+  ['\u062f\u0645\u0634\u0642', 'Damascus'],
+  ['\u0631\u064a\u0641 \u062f\u0645\u0634\u0642', 'Damascus'],
+  ['aleppo', 'Aleppo'],
+  ['\u062d\u0644\u0628', 'Aleppo'],
+  ['homs', 'Homs'],
+  ['\u062d\u0645\u0635', 'Homs'],
+  ['hama', 'Hama'],
+  ['\u062d\u0645\u0627\u0629', 'Hama'],
+  ['lattakia', 'Lattakia'],
+  ['latakia', 'Lattakia'],
+  ['\u0627\u0644\u0644\u0627\u0630\u0642\u064a\u0629', 'Lattakia'],
+  ['tartous', 'Tartous'],
+  ['tartus', 'Tartous'],
+  ['\u0637\u0631\u0637\u0648\u0633', 'Tartous'],
+  ['idleb', 'Idleb'],
+  ['idlib', 'Idleb'],
+  ['\u0625\u062f\u0644\u0628', 'Idleb'],
+  ['\u0627\u062f\u0644\u0628', 'Idleb'],
+  ['ar-raqqa', 'Ar-Raqqa'],
+  ['ar raqqa', 'Ar-Raqqa'],
+  ['raqqa', 'Ar-Raqqa'],
+  ['\u0627\u0644\u0631\u0642\u0629', 'Ar-Raqqa'],
+  ['deir-ez-zor', 'Deir-ez-Zor'],
+  ['deir ez-zor', 'Deir-ez-Zor'],
+  ['deir ez zor', 'Deir-ez-Zor'],
+  ['deir ezzor', 'Deir-ez-Zor'],
+  ['\u062f\u064a\u0631 \u0627\u0644\u0632\u0648\u0631', 'Deir-ez-Zor'],
+  ['al-hasakeh', 'Al-Hasakeh'],
+  ['al hasakeh', 'Al-Hasakeh'],
+  ['hasakeh', 'Al-Hasakeh'],
+  ['hasakah', 'Al-Hasakeh'],
+  ['al-hasakah', 'Al-Hasakeh'],
+  ['al hasakah', 'Al-Hasakeh'],
+  ['\u0627\u0644\u062d\u0633\u0643\u0629', 'Al-Hasakeh'],
+  ['\u0627\u0644\u0642\u0627\u0645\u0634\u0644\u064a', 'Al-Hasakeh'],
+  ["dar'a", "Dar'a"],
+  ['daraa', "Dar'a"],
+  ['dara', "Dar'a"],
+  ['\u062f\u0631\u0639\u0627', "Dar'a"],
+  ['as-sweida', 'As-Sweida'],
+  ['as sweida', 'As-Sweida'],
+  ['sweida', 'As-Sweida'],
+  ['suwayda', 'As-Sweida'],
+  ['\u0627\u0644\u0633\u0648\u064a\u062f\u0627\u0621', 'As-Sweida'],
+  ['quneitra', 'Quneitra'],
+  ['\u0627\u0644\u0642\u0646\u064a\u0637\u0631\u0629', 'Quneitra']
+]);
+
+const getCanonicalGovernorate = (value) => {
+  const rawName = String(value || '').trim();
+  if (!rawName) return '';
+
+  const normalizedKey = rawName
+    .toLocaleLowerCase('en')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  return GOVERNORATE_ALIASES.get(normalizedKey) || rawName;
+};
+
 const normalizeGovernorateData = (data) => {
   const totals = new Map();
 
@@ -239,7 +310,7 @@ const normalizeGovernorateData = (data) => {
     if (!rawName) return;
 
     const normalizedName = rawName.toLocaleLowerCase('en');
-    const name = DAMASCUS_ALIASES.has(normalizedName) ? 'Damascus' : rawName;
+    const name = DAMASCUS_ALIASES.has(normalizedName) ? 'Damascus' : getCanonicalGovernorate(rawName);
     const count = Number(item?.count ?? item?.value ?? 0);
 
     totals.set(name, (totals.get(name) || 0) + (Number.isFinite(count) ? count : 0));
@@ -367,7 +438,7 @@ const SyriaMap = () => {
       >
         <AnimatePresence mode="wait">
           {displayGov ? (
-            <motion.div
+            <Motion.div
               key={displayGov.governorate}
               initial={{ opacity: 0, x: isArabic ? 30 : -30 }}
               animate={{ opacity: 1, x: 0 }}
@@ -387,9 +458,9 @@ const SyriaMap = () => {
                   isSuccess={isSuccess}
                 />
               )}
-            </motion.div>
+            </Motion.div>
           ) : (
-            <motion.div
+            <Motion.div
               key="default"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -397,7 +468,7 @@ const SyriaMap = () => {
               transition={{ duration: 0.3 }}
             >
               <DefaultPanel isArabic={isArabic} />
-            </motion.div>
+            </Motion.div>
           )}
         </AnimatePresence>
       </Box>

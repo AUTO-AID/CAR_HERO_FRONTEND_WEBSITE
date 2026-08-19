@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Box, Typography, IconButton, Chip } from "@mui/material";
-import { motion, AnimatePresence } from "framer-motion";
+import { Box, Typography, IconButton, Chip, useMediaQuery } from "@mui/material";
+import { motion as Motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import {
   ChevronLeft,
   ChevronRight,
   MobileScreenShare,
   AutoAwesome,
+  Pause,
+  PlayArrow,
 } from "@mui/icons-material";
 
 const appScreenshots = [
@@ -28,11 +30,22 @@ const AppScreenshots = () => {
   const { t, i18n } = useTranslation();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  // كان التشغيل التلقائي يبدأ دائماً وبلا زر إيقاف — مخالفة WCAG 2.2.2
+  // لكل محتوى متحرّك تلقائياً لأكثر من خمس ثوانٍ. الآن: لا يبدأ أصلاً لمن
+  // يطلب تقليل الحركة، ويتوقّف عند التحويم أو دخول التركيز، وله زر ظاهر.
+  const reducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
+  const [isAutoPlaying, setIsAutoPlaying] = useState(!reducedMotion);
+  const [isPaused, setIsPaused] = useState(false);
   const isRtl = i18n.language === "ar";
+  const prevLabel = isRtl ? "اللقطة السابقة" : "Previous screenshot";
+  const nextLabel = isRtl ? "اللقطة التالية" : "Next screenshot";
 
   useEffect(() => {
-    if (!isAutoPlaying) return;
+    if (reducedMotion) setIsAutoPlaying(false);
+  }, [reducedMotion]);
+
+  useEffect(() => {
+    if (!isAutoPlaying || isPaused) return undefined;
     const timer = setInterval(() => {
       setCurrentIndex((prev) =>
         prev === appScreenshots.length - 1 ? 0 : prev + 1,
@@ -40,7 +53,7 @@ const AppScreenshots = () => {
       setDirection(1);
     }, 4000);
     return () => clearInterval(timer);
-  }, [isAutoPlaying]);
+  }, [isAutoPlaying, isPaused]);
 
   const handlePrev = () => {
     setIsAutoPlaying(false);
@@ -93,9 +106,11 @@ const AppScreenshots = () => {
         overflow: "hidden",
       }}
     >
-      {/* Animated Background Orbs */}
-      <motion.div
-        animate={{
+      {/* كرتان زخرفيتان كانتا تتحرّكان بلا توقّف فوق `backdrop-filter` كثيف:
+          كلفة مستمرة على وحدة الرسوميات حتى وقت السكون، ومصدر إزعاج لمن
+          يطلب تقليل الحركة. الآن ثابتتان في كلتا الحالتين إن طُلب ذلك. */}
+      <Motion.div
+        animate={reducedMotion ? undefined : {
           scale: [1, 1.2, 1],
           opacity: [0.1, 0.2, 0.1],
         }}
@@ -117,8 +132,8 @@ const AppScreenshots = () => {
           borderRadius: "50%",
         }}
       />
-      <motion.div
-        animate={{
+      <Motion.div
+        animate={reducedMotion ? undefined : {
           scale: [1.2, 1, 1.2],
           opacity: [0.15, 0.1, 0.15],
         }}
@@ -142,7 +157,7 @@ const AppScreenshots = () => {
       />
 
       <Box sx={{ textAlign: "center", mb: 8, position: "relative", zIndex: 1 }}>
-        <motion.div
+        <Motion.div
           initial={{ opacity: 0, scale: 0.8, rotate: -10 }}
           whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
           viewport={{ once: true }}
@@ -157,7 +172,7 @@ const AppScreenshots = () => {
               alignItems: "center",
               justifyContent: "center",
               background:
-                "linear-gradient(135deg, var(--primary) 0%, #6b4c9a 100%)",
+                "linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%)",
               mx: "auto",
               mb: 3,
               boxShadow:
@@ -180,47 +195,27 @@ const AppScreenshots = () => {
           >
             <MobileScreenShare sx={{ fontSize: 36, color: "#fff" }} />
           </Box>
-        </motion.div>
+        </Motion.div>
 
-        <motion.div
+        <Motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.1 }}
         >
           <Typography
-            variant="h4"
-            sx={{
-              fontWeight: 800,
-              mb: 2,
-              letterSpacing: "1px",
-              background:
-                "linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 50%, #6b4c9a 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-              fontSize: { xs: "28px", sm: "36px", md: "44px" },
-              textShadow: "0 0 40px rgba(143, 92, 177, 0.3)",
-            }}
+            component="h2"
+            className="section-title"
+            sx={{ mx: "auto", mb: 2.5, display: "block", width: "fit-content" }}
           >
-            {t("appScreenshots.title") || "App Screenshots"}
+            {t("appScreenshots.title")}
           </Typography>
 
-          <Typography
-            sx={{
-              color: "var(--text-muted)",
-              maxWidth: 600,
-              mx: "auto",
-              fontSize: { xs: "1rem", md: "1.15rem" },
-              lineHeight: 1.8,
-              fontWeight: 400,
-            }}
-          >
-            {t("appScreenshots.subtitle") ||
-              "Explore the Car Hero app interface"}
+          <Typography className="section-subtitle" sx={{ mx: "auto" }}>
+            {t("appScreenshots.subtitle")}
           </Typography>
 
-          <motion.div
+          <Motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -243,7 +238,7 @@ const AppScreenshots = () => {
                   border: "1px solid rgba(143, 92, 177, 0.3)",
                   color: "var(--primary-light)",
                   fontWeight: 600,
-                  borderRadius: "10px",
+                  borderRadius: "12px",
                   px: 1.5,
                   "& .MuiChip-icon": { ml: isRtl ? 0 : 1 },
                 }}
@@ -256,7 +251,7 @@ const AppScreenshots = () => {
                   border: "1px solid rgba(143, 92, 177, 0.3)",
                   color: "#00E5FF",
                   fontWeight: 600,
-                  borderRadius: "10px",
+                  borderRadius: "12px",
                   px: 1.5,
                   "& .MuiChip-icon": { ml: isRtl ? 0 : 1 },
                 }}
@@ -269,18 +264,25 @@ const AppScreenshots = () => {
                   border: "1px solid rgba(143, 92, 177, 0.3)",
                   color: "#FF6B9D",
                   fontWeight: 600,
-                  borderRadius: "10px",
+                  borderRadius: "12px",
                   px: 1.5,
                   "& .MuiChip-icon": { ml: isRtl ? 0 : 1 },
                 }}
               />
             </Box>
-          </motion.div>
-        </motion.div>
+          </Motion.div>
+        </Motion.div>
       </Box>
 
       {/* Phone Carousel */}
       <Box
+        role="group"
+        aria-roledescription={isRtl ? "معرض لقطات" : "carousel"}
+        aria-label={t("appScreenshots.title")}
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+        onFocusCapture={() => setIsPaused(true)}
+        onBlurCapture={() => setIsPaused(false)}
         sx={{
           display: "flex",
           flexDirection: "column",
@@ -333,7 +335,7 @@ const AppScreenshots = () => {
           <Box
             sx={{
               position: "relative",
-              borderRadius: "40px",
+              borderRadius: "999px",
               overflow: "hidden",
               border: "4px solid #3a3a5e",
               boxShadow: `
@@ -361,7 +363,7 @@ const AppScreenshots = () => {
             }}
           >
             <AnimatePresence mode="wait" custom={direction}>
-              <motion.img
+              <Motion.img
                 key={currentIndex}
                 src={appScreenshots[currentIndex]}
                 alt={`App screenshot ${currentIndex + 1}`}
@@ -410,29 +412,48 @@ const AppScreenshots = () => {
               px: 2,
             }}
           >
+            {/* كانت هذه العناصر `Motion.div` تتلقّى خصيصة `sx` — وهي خصيصة
+                MUI لا يفهمها عنصر framer-motion، فكانت كل أنماط النقاط
+                تُتجاهَل بصمت ولا تُرسم أصلاً. وكانت `div` بـ onClick أيضاً:
+                لا تُركَّز بلوحة المفاتيح ولا تُعلن كعنصر تفاعلي. */}
             {appScreenshots.map((_, index) => (
-              <motion.div
+              <Box
+                component="button"
+                type="button"
                 key={index}
                 onClick={() => handleDotClick(index)}
-                whileHover={{ scale: 1.2 }}
-                whileTap={{ scale: 0.9 }}
+                aria-label={isRtl ? `الانتقال إلى اللقطة ${index + 1}` : `Go to screenshot ${index + 1}`}
+                aria-current={index === currentIndex ? "true" : undefined}
+                // النقطة تبقى ١٠ بكسل بصرياً — وهو المقاس الصحيح لمؤشّر شرائح —
+                // لكن مساحة اللمس كانت ١٠×١٠ أيضاً، أي ربع الحد الموصى به وسط
+                // اثنتي عشرة نقطة متجاورة. الزرّ الآن ٤٤ بكسل شفّاف، والنقطة
+                // تُرسم بـ`::before` داخله.
                 sx={{
-                  width: index === currentIndex ? "32px" : "10px",
-                  height: "10px",
-                  borderRadius: "5px",
-                  backgroundColor:
-                    index === currentIndex
-                      ? "var(--primary)"
-                      : "rgba(255,255,255,0.2)",
+                  // ٢٤ بكسل هو الحد الأدنى في WCAG 2.5.8. أربع وأربعون عرضاً
+                  // لكل نقطة تعني ٥٢٨ بكسل لاثنتي عشرة نقطة — أعرض من شاشة
+                  // الجوال. الارتفاع يبقى ٤٤ فالمساحة الرأسية متاحة.
+                  width: index === currentIndex ? 44 : 24,
+                  height: 44,
+                  p: 0,
+                  border: 0,
+                  background: "none",
+                  display: "grid",
+                  placeItems: "center",
                   cursor: "pointer",
-                  transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
-                  boxShadow:
-                    index === currentIndex ? "0 0 12px var(--primary)" : "none",
-                  "&:hover": {
+                  "&::before": {
+                    content: '""',
+                    display: "block",
+                    width: index === currentIndex ? 32 : 10,
+                    height: 10,
+                    borderRadius: "5px",
                     backgroundColor:
-                      index === currentIndex
-                        ? "var(--primary)"
-                        : "rgba(255,255,255,0.4)",
+                      index === currentIndex ? "var(--primary)" : "rgba(255,255,255,0.35)",
+                    transition: "all 400ms cubic-bezier(0.4, 0, 0.2, 1)",
+                    boxShadow: index === currentIndex ? "0 0 12px var(--primary)" : "none",
+                  },
+                  "&:hover::before": {
+                    backgroundColor:
+                      index === currentIndex ? "var(--primary)" : "rgba(255,255,255,0.6)",
                   },
                 }}
               />
@@ -442,6 +463,7 @@ const AppScreenshots = () => {
           {/* Navigation Arrows - Desktop */}
           <IconButton
             onClick={handlePrev}
+            aria-label={prevLabel}
             sx={{
               position: "absolute",
               top: "50%",
@@ -461,7 +483,7 @@ const AppScreenshots = () => {
                 boxShadow: "0 8px 25px rgba(143, 92, 177, 0.4)",
               },
               display: { xs: "none", md: "flex" },
-              transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+              transition: "all 250ms cubic-bezier(0.4, 0, 0.2, 1)",
             }}
           >
             {isRtl ? <ChevronRight /> : <ChevronLeft />}
@@ -469,6 +491,7 @@ const AppScreenshots = () => {
 
           <IconButton
             onClick={handleNext}
+            aria-label={nextLabel}
             sx={{
               position: "absolute",
               top: "50%",
@@ -488,10 +511,34 @@ const AppScreenshots = () => {
                 boxShadow: "0 8px 25px rgba(143, 92, 177, 0.4)",
               },
               display: { xs: "none", md: "flex" },
-              transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
+              transition: "all 250ms cubic-bezier(0.4, 0, 0.2, 1)",
             }}
           >
             {isRtl ? <ChevronLeft /> : <ChevronRight />}
+          </IconButton>
+        </Box>
+
+        {/* زر إيقاف/تشغيل التقدّم التلقائي — شرط WCAG 2.2.2 لأي محتوى
+            يتحرّك تلقائياً لأكثر من خمس ثوانٍ */}
+        <Box sx={{ display: "flex", justifyContent: "center", mt: 5 }}>
+          <IconButton
+            onClick={() => setIsAutoPlaying((playing) => !playing)}
+            aria-label={
+              isAutoPlaying
+                ? (isRtl ? "إيقاف التقدّم التلقائي" : "Pause automatic slideshow")
+                : (isRtl ? "تشغيل التقدّم التلقائي" : "Play automatic slideshow")
+            }
+            aria-pressed={isAutoPlaying}
+            sx={{
+              width: 44,
+              height: 44,
+              color: "var(--text-dark)",
+              border: "1px solid var(--border-color)",
+              background: "var(--card-bg)",
+              "&:hover": { color: "var(--primary-text)", borderColor: "var(--primary)" },
+            }}
+          >
+            {isAutoPlaying ? <Pause fontSize="small" /> : <PlayArrow fontSize="small" />}
           </IconButton>
         </Box>
 
@@ -501,17 +548,18 @@ const AppScreenshots = () => {
             display: { xs: "flex", md: "none" },
             justifyContent: "center",
             gap: 2,
-            mt: 6,
+            mt: 3,
           }}
         >
-          <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+          <Motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
             <IconButton
               onClick={handlePrev}
+              aria-label={prevLabel}
               sx={{
                 backgroundColor:
-                  "linear-gradient(135deg, var(--primary) 0%, #6b4c9a 100%)",
+                  "linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%)",
                 background:
-                  "linear-gradient(135deg, var(--primary) 0%, #6b4c9a 100%)",
+                  "linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%)",
                 color: "#fff",
                 width: 56,
                 height: 56,
@@ -523,15 +571,16 @@ const AppScreenshots = () => {
             >
               {isRtl ? <ChevronRight /> : <ChevronLeft />}
             </IconButton>
-          </motion.div>
-          <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+          </Motion.div>
+          <Motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
             <IconButton
               onClick={handleNext}
+              aria-label={nextLabel}
               sx={{
                 backgroundColor:
-                  "linear-gradient(135deg, var(--primary) 0%, #6b4c9a 100%)",
+                  "linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%)",
                 background:
-                  "linear-gradient(135deg, var(--primary) 0%, #6b4c9a 100%)",
+                  "linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%)",
                 color: "#fff",
                 width: 56,
                 height: 56,
@@ -543,11 +592,11 @@ const AppScreenshots = () => {
             >
               {isRtl ? <ChevronLeft /> : <ChevronRight />}
             </IconButton>
-          </motion.div>
+          </Motion.div>
         </Box>
 
         {/* Screenshot Counter */}
-        <motion.div
+        <Motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
@@ -564,7 +613,7 @@ const AppScreenshots = () => {
           >
             {currentIndex + 1} / {appScreenshots.length}
           </Typography>
-        </motion.div>
+        </Motion.div>
       </Box>
     </Box>
   );

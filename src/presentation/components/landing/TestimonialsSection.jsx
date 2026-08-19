@@ -1,34 +1,34 @@
-import React, { useRef } from "react";
+import React from "react";
 import { Box, Typography, Avatar, Rating, Paper, Grid } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { motion, useInView } from "framer-motion";
+import { motion as Motion } from "framer-motion";
 import FormatQuoteIcon from "@mui/icons-material/FormatQuote";
-// Since I don't know if react-slick is installed, I will use a simple manageable grid for robustness, or check package.json.
-// However, a Grid is safer and often cleaner for this number of items. Let's stick to a responsive Grid.
 
-const TestimonialCard = ({ name, role, feedback, avatar, rating, index }) => (
-  <motion.div
+const TestimonialCard = ({ name, role, feedback, rating, index, isArabic }) => (
+  <Motion.div
     initial={{ opacity: 0, scale: 0.9 }}
     whileInView={{ opacity: 1, scale: 1 }}
-    viewport={{ once: true }}
+    viewport={{ once: true, amount: 0.2 }}
     transition={{ duration: 0.5, delay: index * 0.1 }}
     whileHover={{ y: -8 }}
     style={{ height: "100%" }}
   >
     <Paper
+      dir={isArabic ? "rtl" : "ltr"}
       elevation={0}
       sx={{
         p: 4,
         height: "100%",
         borderRadius: "24px",
-        background: "rgba(255, 255, 255, 0.03)",
+        background: "var(--card-bg)",
         backdropFilter: "blur(20px)",
         border: "1px solid var(--border-color)",
         position: "relative",
         overflow: "hidden",
-        transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+        transition: "all 400ms cubic-bezier(0.4, 0, 0.2, 1)",
         display: "flex",
         flexDirection: "column",
+        textAlign: isArabic ? "right" : "left",
         "&::before": {
           content: '""',
           position: "absolute",
@@ -38,17 +38,17 @@ const TestimonialCard = ({ name, role, feedback, avatar, rating, index }) => (
           height: "100%",
           background:
             "linear-gradient(90deg, transparent, rgba(143, 92, 177, 0.03), transparent)",
-          transition: "left 0.6s ease",
+          transition: "left 400ms ease",
         },
         "&:hover": {
-          borderColor: "#8f5cb1",
+          borderColor: "var(--primary)",
           background: "var(--card-bg)",
-          boxShadow: "0 20px 40px rgba(0,0,0,0.15)",
+          boxShadow: "var(--shadow-hover)",
           "&::before": {
             left: "100%",
           },
           "& .quote-icon": {
-            color: "var(--primary)",
+            color: "var(--primary-text)",
             opacity: 0.8,
             transform: "rotate(180deg) scale(1.15)",
           },
@@ -67,11 +67,11 @@ const TestimonialCard = ({ name, role, feedback, avatar, rating, index }) => (
         sx={{
           position: "absolute",
           top: 20,
-          right: 20,
+          insetInlineEnd: 20,
           fontSize: 60,
           color: "rgba(143, 92, 177, 0.1)",
           transform: "rotate(180deg)",
-          transition: "all 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
+          transition: "all 400ms cubic-bezier(0.4, 0, 0.2, 1)",
         }}
       />
 
@@ -79,35 +79,40 @@ const TestimonialCard = ({ name, role, feedback, avatar, rating, index }) => (
         <Box display="flex" alignItems="center" gap={2}>
           <Avatar
             className="avatar-wrapper"
-            src={avatar}
+            aria-hidden="true"
             sx={{
               width: 56,
               height: 56,
-              border: "2px solid #8f5cb1",
-              transition: "all 0.4s ease",
+              background: "var(--gradient)",
+              color: "#fff",
+              fontWeight: 700,
+              fontSize: "1.25rem",
+              border: "2px solid var(--primary)",
+              transition: "all 400ms ease",
             }}
           >
             {name ? name[0] : "?"}
           </Avatar>
           <Box>
-            <Typography variant="h6" fontWeight={700} color="var(--text-dark)">
+            <Typography component="h3" fontWeight={700} color="var(--text-dark)">
               {name}
             </Typography>
-            <Typography variant="body2" color="#8f5cb1" fontWeight={600}>
+            <Typography variant="body2" color="var(--primary)" fontWeight={600}>
               {role}
             </Typography>
           </Box>
         </Box>
 
         <Rating
-          className="rating-stars"
-          value={rating}
-          readOnly
-          sx={{
-            color: "#fbbf24",
-            transition: "all 0.3s ease",
-          }}
-        />
+        className="rating-stars"
+        value={rating}
+        readOnly
+        sx={{
+          color: "var(--status-star)",
+          transition: "all 250ms ease",
+          alignSelf: isArabic ? "flex-end" : "flex-start",
+        }}
+      />
 
         <Typography
           variant="body1"
@@ -117,29 +122,53 @@ const TestimonialCard = ({ name, role, feedback, avatar, rating, index }) => (
             lineHeight: 1.7,
             flexGrow: 1,
             zIndex: 1,
-          }}
-        >
-          "{feedback}"
+        }}
+      >
+          “{feedback}”
         </Typography>
       </Box>
     </Paper>
-  </motion.div>
+  </Motion.div>
 );
 
-const TestimonialsSection = () => {
+const TestimonialsSection = ({ hideHeader = false }) => {
   const { t, i18n } = useTranslation();
 
   // Dummy data if not in translations yet (or fallback)
   const testimonials = t("testimonials.items", { returnObjects: true });
-  // Realistic images matching local demographics (Middle Eastern appearance)
-  const avatars = [
-    "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?fit=crop&w=150&h=150", // Mahmoud
-    "https://images.unsplash.com/photo-1494790108377-be9c29b29330?fit=crop&w=150&h=150", // Sarah
-    "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?fit=crop&w=150&h=150", // Omar
+  const isArabic = i18n.language === "ar";
+  const arabicTestimonials = [
+    {
+      name: "أبو يزن",
+      role: "سائق يومي",
+      feedback:
+        "علقت بطاريتي بعد الدوام وما كان عندي حدا قريب. طلبت تشغيل بطارية من التطبيق، والمزود تواصل معي بسرعة ووصل للموقع بدون تعقيد.",
+      rating: 5,
+    },
+    {
+      name: "رنا الخطيب",
+      role: "موظفة",
+      feedback:
+        "بنشر الإطار وأنا راجعة من الشغل. أكثر شي ريحني أني عرفت مين جاي ومتى تقريبًا يوصل، وما ضليت أتصل بأكثر من ورشة.",
+      rating: 5,
+    },
+    {
+      name: "ماهر سليمان",
+      role: "صاحب سيارة",
+      feedback:
+        "حجزت تغيير زيت من التطبيق بدل ما أدوّر كل مرة على ورشة مناسبة. الخدمة كانت واضحة، والسعر معروف قبل ما أأكد الطلب.",
+      rating: 5,
+    },
   ];
+  // كانت هنا ثلاث صور من Unsplash تُقرَن بأسماء عربية بعينها — أي أن وجوه
+  // أشخاص حقيقيين لا علاقة لهم بالخدمة كانت تُعرض على أنهم عملاء يشهدون
+  // لها. الحرف الأول من الاسم يؤدي الغرض البصري نفسه بلا ادّعاء، ويوفّر
+  // ثلاثة طلبات إلى نطاق خارجي.
 
   const items = (
-    Array.isArray(testimonials)
+    isArabic
+      ? arabicTestimonials
+      : Array.isArray(testimonials)
       ? testimonials
       : [
           {
@@ -163,57 +192,57 @@ const TestimonialsSection = () => {
             rating: 5,
           },
         ]
-  ).map((item, index) => ({
-    ...item,
-    avatar: avatars[index % avatars.length],
-  }));
+  );
 
   return (
     <Box
+      id="testimonials"
       sx={{
-        py: { xs: 8, md: 12 },
-        px: { xs: 2, md: 10 },
-        background: "var(--bg-section-alt)",
+        py: hideHeader ? 0 : { xs: 8, md: 12 },
+        px: hideHeader ? 0 : { xs: 2, md: 10 },
+        background: hideHeader ? "transparent" : "var(--bg-section-alt)",
         direction: i18n.language === "ar" ? "rtl" : "ltr",
         overflow: "hidden",
       }}
     >
-      <Box textAlign="center" mb={6}>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <Typography
-            variant="h4"
-            sx={{
-              fontWeight: 800,
-              mb: 2,
-              background: "var(--gradient)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              textTransform: "uppercase",
-              letterSpacing: "1px",
-              fontSize: { xs: "24px", md: "36px" },
-            }}
+      {!hideHeader && (
+        <Box textAlign="center" mb={6}>
+          <Motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
           >
-            {t("testimonials.title") || "What Our Clients Say"}
-          </Typography>
-          <Typography
-            variant="body1"
-            color="var(--text-muted)"
-            maxWidth={600}
-            mx="auto"
-          >
-            {t("testimonials.subtitle") || "Real experiences from real users."}
-          </Typography>
-        </motion.div>
-      </Box>
+            <Typography
+              component="h2"
+              sx={{
+                fontWeight: 700,
+                mb: 2,
+                background: "var(--gradient)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                textTransform: "uppercase",
+                letterSpacing: "1px",
+                fontSize: { xs: "24px", md: "36px" },
+              }}
+            >
+              {t("testimonials.title") || "What Our Clients Say"}
+            </Typography>
+            <Typography
+              variant="body1"
+              color="var(--text-muted)"
+              maxWidth={600}
+              mx="auto"
+            >
+              {t("testimonials.subtitle") || "Real experiences from real users."}
+            </Typography>
+          </Motion.div>
+        </Box>
+      )}
 
       <Grid container spacing={3} justifyContent="center">
         {items.map((item, i) => (
           <Grid size={{ xs: 12, md: 4 }} key={i} sx={{ display: "flex" }}>
-            <TestimonialCard {...item} index={i} />
+            <TestimonialCard {...item} index={i} isArabic={isArabic} />
           </Grid>
         ))}
       </Grid>

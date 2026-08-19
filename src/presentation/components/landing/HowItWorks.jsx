@@ -1,14 +1,16 @@
 import React from 'react';
-import { Box, Typography, Container, Paper } from '@mui/material';
-import { motion } from 'framer-motion';
+import { Box, Typography } from '@mui/material';
+import { motion as Motion } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import { 
-  Smartphone, 
-  Build as Wrench, 
-  LocationOn as MapPin, 
-  Navigation, 
+import {
+  Smartphone,
+  Build as Wrench,
+  LocationOn as MapPin,
+  Navigation,
   VerifiedUser as ShieldCheck
 } from '@mui/icons-material';
+import Section from '@/presentation/components/ui/Section';
+import SectionHead from '@/presentation/components/ui/SectionHead';
 
 const HowItWorks = () => {
   const { t, i18n } = useTranslation();
@@ -23,203 +25,160 @@ const HowItWorks = () => {
   ];
 
   return (
-    <Box
-      component="section"
-      id="how-it-works"
-      sx={{
-        py: { xs: 8, md: 15 },
-        position: 'relative',
-        background: "var(--bg-light)",
-        transition: "background-color 0.4s ease",
-        width: "100%",
-        overflow: 'hidden'
-      }}
-    >
-      <Container maxWidth="lg">
-        {/* Header */}
-        <Box sx={{ textAlign: 'center', mb: 10 }}>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <Typography
-              variant="h3"
-              sx={{
-                fontWeight: 800,
-                color: "var(--primary)",
-                mb: 2,
-                fontSize: { xs: "32px", md: "48px" },
-                letterSpacing: "-1px",
-              }}
-            >
-              {t('how_it_works.title')}
-            </Typography>
-            <Typography
-              sx={{
-                color: "var(--text-muted)",
-                fontSize: "1.1rem",
-                maxWidth: 600,
-                mx: "auto",
-                lineHeight: 1.7,
-              }}
-            >
-              {t('how_it_works.subtitle')}
-            </Typography>
-          </motion.div>
+    <Section id="how-it-works" rhythm="spacious">
+      <SectionHead title={t('how_it_works.title')} subtitle={t('how_it_works.subtitle')} />
+
+      {/* Timeline Content */}
+      <Box sx={{ position: 'relative', width: '100%' }}>
+
+        {/* Connecting Line (Desktop) */}
+        <Box
+          sx={{
+            display: { xs: 'none', lg: 'block' },
+            position: 'absolute',
+            top: '40px',
+            left: '10%',
+            right: '10%',
+            height: '3px',
+            background: 'var(--border-color)',
+            zIndex: 0,
+            '&::after': {
+              content: '""',
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              height: '100%',
+              width: '100%',
+              backgroundImage: 'repeating-linear-gradient(to right, var(--primary), var(--primary) 8px, transparent 8px, transparent 16px)',
+              opacity: 0.3,
+            }
+          }}
+        >
+           <Motion.div
+             initial={{ width: 0 }}
+             whileInView={{ width: '100%' }}
+             viewport={{ once: true }}
+             transition={{ duration: 1, delay: 0.5 }}
+             style={{ height: '100%', background: 'var(--gradient)' }}
+           />
         </Box>
 
-        {/* Timeline Content */}
-        <Box sx={{ position: 'relative', width: '100%' }}>
-          
-          {/* Connecting Line (Desktop) */}
-          <Box
-            sx={{
-              display: { xs: 'none', md: 'block' },
-              position: 'absolute',
-              top: '40px',
-              left: '10%',
-              right: '10%',
-              height: '2px',
-              background: 'var(--border-color)',
-              zIndex: 0
-            }}
-          >
-             <motion.div 
-               initial={{ width: 0 }}
-               whileInView={{ width: '100%' }}
-               viewport={{ once: true }}
-               transition={{ duration: 1, delay: 0.5 }}
-               style={{ height: '100%', background: 'var(--gradient)' }}
-             />
-          </Box>
-
-          {/* Steps Container */}
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: { xs: 'column', md: 'row' },
-              justifyContent: 'space-between',
-              alignItems: { xs: 'center', md: 'flex-start' },
-              gap: { xs: 8, md: 2 },
-              position: 'relative',
-              zIndex: 1
-            }}
-          >
-            {steps.map((step, index) => (
-              <Box
-                key={index}
-                sx={{
-                  flex: 1,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  textAlign: 'center',
-                  width: { xs: '100%', md: 'auto' },
-                  maxWidth: { md: '200px' }
-                }}
+        {/* Steps Container — شبكة تتدرّج بدل صفّ من خمسة يُضغط عند ٩٦٠ بكسل.
+            خمسة أعمدة داخل ١٦١ بكسل كانت تكسر العناوين إلى سطر وسطرين
+            وثلاثة، فتتفاوت خطوط الأساس ويصعب المسح البصري للخطوات. */}
+        <Box
+          className="how-steps-grid"
+        >
+          {steps.map((step, index) => (
+            <Box
+              key={index}
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                textAlign: 'center',
+                minWidth: 0,
+              }}
+            >
+              {/* Icon Wrapper */}
+              <Motion.div
+                initial={{ opacity: 0, scale: 0.5 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.15 }}
               >
-                {/* Icon Wrapper */}
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.5 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.15 }}
+                <Box
+                  sx={{
+                    width: 80,
+                    height: 80,
+                    borderRadius: '20px',
+                    backgroundColor: 'var(--card-bg)',
+                    border: '1px solid var(--border-color)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: 'var(--primary)',
+                    position: 'relative',
+                    boxShadow: 'var(--shadow-sm)',
+                    mb: 3,
+                    transition: 'all 400ms cubic-bezier(0.4, 0, 0.2, 1)',
+                    '&:hover': {
+                      transform: 'translateY(-8px) scale(1.05)',
+                      borderColor: 'var(--primary)',
+                      boxShadow: 'var(--shadow-hover), 0 0 25px rgba(143, 92, 177, 0.2)',
+                      background: 'var(--gradient)',
+                      color: 'white',
+                      '& .step-badge': {
+                        transform: 'scale(1.15)',
+                        boxShadow: '0 6px 16px rgba(0,0,0,0.3)',
+                      }
+                    }
+                  }}
                 >
+                  {step.icon}
+
+                  {/* Badge */}
                   <Box
+                    className="step-badge"
                     sx={{
-                      width: 80,
-                      height: 80,
-                      borderRadius: '20px',
-                      backgroundColor: 'var(--card-bg)',
-                      border: '1px solid var(--border-color)',
+                      position: 'absolute',
+                      top: -10,
+                      right: isRtl ? 'auto' : -10,
+                      left: isRtl ? -10 : 'auto',
+                      width: 28,
+                      height: 28,
+                      borderRadius: '50%',
+                      backgroundColor: 'transparent',
+                      background: 'var(--gradient)',
+                      color: '#fff',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      color: 'var(--primary)',
-                      position: 'relative',
-                      boxShadow: 'var(--shadow-sm)',
-                      mb: 3,
-                      transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                      '&:hover': {
-                        transform: 'translateY(-8px) scale(1.05)',
-                        borderColor: 'var(--primary)',
-                        boxShadow: 'var(--shadow-hover), 0 0 25px rgba(143, 92, 177, 0.2)',
-                        background: 'var(--gradient)',
-                        color: 'white',
-                        '& .step-badge': {
-                          transform: 'scale(1.15)',
-                          boxShadow: '0 6px 16px rgba(0,0,0,0.3)',
-                        }
-                      }
-                    }}
-                  >
-                    {step.icon}
-                    
-                    {/* Badge */}
-                    <Box
-                      className="step-badge"
-                      sx={{
-                        position: 'absolute',
-                        top: -10,
-                        right: isRtl ? 'auto' : -10,
-                        left: isRtl ? -10 : 'auto',
-                        width: 28,
-                        height: 28,
-                        borderRadius: '50%',
-                        backgroundColor: 'var(--primary)',
-                        color: '#fff',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        fontSize: '12px',
-                        fontWeight: 700,
-                        boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
-                        transition: 'all 0.3s ease',
-                      }}
-                    >
-                      {index + 1}
-                    </Box>
-                  </Box>
-                </motion.div>
-
-                {/* Text Content */}
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.15 + 0.2 }}
-                >
-                  <Typography
-                    variant="h6"
-                    sx={{
+                      fontSize: '12px',
                       fontWeight: 700,
-                      mb: 1,
-                      color: "var(--text-dark)",
-                      fontSize: '18px',
-                      lineHeight: 1.2
+                      boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
+                      transition: 'all 250ms ease',
                     }}
                   >
-                    {t(`how_it_works.steps.${index}.title`)}
-                  </Typography>
-                  <Typography
-                    sx={{
-                      color: "var(--text-muted)",
-                      fontSize: "0.9rem",
-                      lineHeight: 1.5,
-                      px: 1
-                    }}
-                  >
-                    {t(`how_it_works.steps.${index}.description`)}
-                  </Typography>
-                </motion.div>
-              </Box>
-            ))}
-          </Box>
-        </Box>
+                    {index + 1}
+                  </Box>
+                </Box>
+              </Motion.div>
 
-      </Container>
-    </Box>
+              {/* Text Content */}
+              <Motion.div
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.15 + 0.2 }}
+              >
+                <Typography
+                  component="h3"
+                  sx={{
+                    fontWeight: 700,
+                    mb: 1,
+                    color: "var(--text-dark)",
+                    fontSize: 'var(--fs-h3)',
+                    lineHeight: 1.3
+                  }}
+                >
+                  {t(`how_it_works.steps.${index}.title`)}
+                </Typography>
+                <Typography
+                  sx={{
+                    color: "var(--text-muted)",
+                    fontSize: "0.92rem",
+                    lineHeight: 1.65,
+                  }}
+                >
+                  {t(`how_it_works.steps.${index}.description`)}
+                </Typography>
+              </Motion.div>
+            </Box>
+          ))}
+        </Box>
+      </Box>
+    </Section>
   );
 };
 

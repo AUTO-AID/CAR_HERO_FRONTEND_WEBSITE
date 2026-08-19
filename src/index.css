@@ -11,49 +11,85 @@
   --primary: #8f5cb1;
   --primary-light: #c9a7e3;
   --primary-dark: #6a1b9a;
-  --gradient: linear-gradient(135deg, #8f5cb1 0%, #6a1b9a 100%);
-  
-  /* Backgrounds - Clean white/light purple */
-  --bg-light: #ffffff;
-  --bg-section-alt: #f8f5fc;
-  --section-tone-a: #ffffff;
-  --section-tone-b: #f5f0fa;
-  --bg-dark-start: #ffffff;
-  --bg-dark-end: #f8f5fc;
+  --primary-hover: #7b3fa0;
+  /* زخرفي فقط (أشرطة، قصّ نصّ، هالات). أسطح الأزرار تستعمل
+     --gradient-surface لأن حدّ التباين يختلف بين الدورين. */
+  --gradient: linear-gradient(135deg, #9b6bbf 0%, #7b2fa0 50%, #6a1b9a 100%);
+
+  /* ألوان الحالة — مستقلة عن اللون الأساسي، فدورها دلالي لا هوياتي.
+     كانت مكتوبة يدوياً داخل JSX بقيم مختلفة في كل ملف. */
+  --status-success: #0f8f63;
+  --status-warning: #a86a00;
+  --status-star: #d99400;
+
+  /* Backgrounds — warm lavender-white tones */
+  --bg-light: #faf8fd;
+  --bg-section-alt: #f3ecf9;
+  /* أسماء بديلة كانت مستخدمة في المكوّنات بلا تعريف — تُوحَّد في مرحلة نظام
+     التصميم. حتى ذلك الحين تشير إلى الرمز الصحيح بدل أن تسقط إلى شفاف. */
+  --bg-default: #faf8fd;
+  --bg-section: #faf8fd;
+  --bg-dark: #f3ecf9;
+  --section-tone-a: #faf8fd;
+  --section-tone-b: #f4eef9;
+  --bg-dark-start: #faf8fd;
+  --bg-dark-end: #f6f2fb;
   --card-bg: #ffffff;
-  --navbar-bg: rgba(255, 255, 255, 0.95);
-  --footer-bg: #f8f5fc;
+  --navbar-bg: rgba(250, 248, 253, 0.92);
+  --footer-bg: #f6f2fb;
   --footer-text: #1a1a2e;
-  --footer-muted: #5a5a6e;
-  --footer-surface: rgba(143, 92, 177, 0.08);
+  --footer-muted: #6b6b80;
+  --footer-surface: rgba(143, 92, 177, 0.06);
   --footer-icon-bg: #ffffff;
   --footer-icon-color: #8f5cb1;
-  --footer-icon-border: rgba(143, 92, 177, 0.22);
+  --footer-icon-border: rgba(143, 92, 177, 0.18);
   
   /* Text Colors */
-  --text-dark: #1a1a2e;
+  --text-dark: #1e1e32;
   --text-light: #ffffff;
-  --text-muted: #5a5a6e;
+  --text-muted: #6b6b80;
   
-  /* Borders & Inputs */
-  --border-color: rgba(143, 92, 177, 0.15);
-  --border-glass: rgba(143, 92, 177, 0.1);
+  /* Borders & Inputs — softer, warmer */
+  --border-color: rgba(143, 92, 177, 0.12);
+  --border-glass: rgba(143, 92, 177, 0.08);
   --input-bg: #f8f5fc;
   
-  /* Shadows */
-  --shadow-sm: 0 2px 8px rgba(26, 26, 46, 0.06);
-  --shadow-md: 0 8px 24px rgba(26, 26, 46, 0.1);
-  --shadow-lg: 0 16px 48px rgba(26, 26, 46, 0.15);
-  --shadow-hover: 0 12px 32px rgba(143, 92, 177, 0.2);
+  /* Shadows — refined with warm purple undertones */
+  --shadow-sm: 0 1px 3px rgba(26, 26, 46, 0.04), 0 4px 12px rgba(143, 92, 177, 0.06);
+  --shadow-md: 0 2px 6px rgba(26, 26, 46, 0.04), 0 12px 28px rgba(143, 92, 177, 0.08);
+  --shadow-lg: 0 4px 8px rgba(26, 26, 46, 0.04), 0 20px 48px rgba(143, 92, 177, 0.12);
+  --shadow-hover: 0 8px 32px rgba(143, 92, 177, 0.18);
   
+  /* ===== Layout tokens =====
+     كانت الأقسام تختار عرض حاويتها وحشوتها كلٌّ على حدة: maxWidth="xl"
+     (١٥٣٦px) و"lg" (١٢٠٠px) و.app-container (١٢٠٠px) وBox خام بحشوة px:10 —
+     أربع حواف مختلفة في تمرير واحد. هذه الرموز هي المصدر الوحيد الآن. */
+  --container-max: 1200px;
+  --container-wide: 1440px;
+  --container-pad: clamp(20px, 4vw, 56px);
+  --section-space: clamp(64px, 7vw, 96px);
+  --section-space-lg: clamp(80px, 9vw, 128px);
+
+  /* ===== Type scale ===== */
+  --fs-h1: clamp(2.4rem, 5vw, 3.8rem);
+  --fs-h2: clamp(1.85rem, 3.4vw, 2.6rem);
+  --fs-h3: 1.15rem;
+  --fs-body: 1rem;
+  --fs-label: 0.82rem;
+  --lh-heading: 1.25;
+  --lh-body: 1.75;
+  --measure: 68ch;
+
   /* Layout */
   --max-width: 1200px;
-  --card-radius: 16px;
-  --btn-radius: 12px;
+  --card-radius: 18px;
+  --btn-radius: 14px;
+  --radius-card: 20px;
+  --radius-pill: 999px;
   
-  /* Transitions */
-  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-fast: all 0.2s ease;
+  /* Transitions — smoother cubic-bezier */
+  --transition-smooth: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --transition-fast: all 0.22s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 /* ============== DARK MODE ============== */
@@ -62,40 +98,193 @@
   --primary: #a57ed8;
   --primary-light: #c9a7e3;
   --primary-dark: #8f5cb1;
-  --gradient: linear-gradient(135deg, #a57ed8 0%, #7b3fa0 100%);
-  
+  --primary-hover: #b98fdd;
+  --gradient: linear-gradient(135deg, #b388e0 0%, #8b4fc4 50%, #7b3fa0 100%);
+
+  /* نُسخ أفتح لتحقّق التباين على الخلفيات الداكنة */
+  --status-success: #4ade80;
+  --status-warning: #fbbf24;
+  --status-star: #fbbf24;
+
   /* Backgrounds - deep, rich purples */
   --bg-light: #0d0815;
-  --bg-section-alt: #150f20;
+  --bg-section-alt: #170e28;
+  --bg-default: #0d0815;
+  --bg-section: #0d0815;
+  --bg-dark: #170e28;
   --section-tone-a: #0d0815;
-  --section-tone-b: #151020;
+  --section-tone-b: #140c22;
   --bg-dark-start: #0d0815;
   --bg-dark-end: #150f20;
   --card-bg: #1a1229;
-  --navbar-bg: rgba(13, 8, 21, 0.95);
+  --navbar-bg: rgba(13, 8, 21, 0.92);
   --footer-bg: #0f0a1a;
-  --footer-text: #ffffff;
-  --footer-muted: rgba(255, 255, 255, 0.7);
-  --footer-surface: rgba(255, 255, 255, 0.05);
+  --footer-text: #f0eef5;
+  --footer-muted: rgba(255, 255, 255, 0.65);
+  --footer-surface: rgba(255, 255, 255, 0.04);
   --footer-icon-bg: linear-gradient(135deg, #a57ed8 0%, #6a1b9a 100%);
   --footer-icon-color: #ffffff;
-  --footer-icon-border: rgba(165, 126, 216, 0.35);
+  --footer-icon-border: rgba(165, 126, 216, 0.3);
   
   /* Text Colors - high contrast for readability */
-  --text-dark: #f5f5f7;
+  --text-dark: #f0eef5;
   --text-light: #ffffff;
-  --text-muted: #cbd5e1;
+  --text-muted: #b8b5c8;
   
   /* Borders */
-  --border-color: rgba(165, 126, 216, 0.2);
-  --border-glass: rgba(165, 126, 216, 0.15);
+  --border-color: rgba(165, 126, 216, 0.16);
+  --border-glass: rgba(165, 126, 216, 0.1);
   --input-bg: rgba(26, 18, 41, 0.8);
   
   /* Shadows - subtle glow effect */
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.5);
-  --shadow-hover: 0 12px 32px rgba(165, 126, 216, 0.25);
+  --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.2), 0 4px 12px rgba(0, 0, 0, 0.15);
+  --shadow-md: 0 2px 6px rgba(0, 0, 0, 0.2), 0 12px 28px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 4px 8px rgba(0, 0, 0, 0.2), 0 20px 48px rgba(0, 0, 0, 0.3);
+  --shadow-hover: 0 8px 28px rgba(165, 126, 216, 0.2);
+}
+
+/* ===============================================
+   DESIGN TOKENS — المصدر الوحيد لقيم التصميم.
+   لا تعتمد على السمة، فتُعرَّف مرّة واحدة على :root.
+
+   جرد ما كان مستخدماً قبل التوحيد:
+   ٤٠ حجم خطّ مختلفاً، ١٤ وزناً، ٢٠ قيمة استدارة، ١٣ مدّة انتقال،
+   و١٠١ كتابة يدوية للّون الأساسي رغم وجود --primary.
+   =============================================== */
+:root {
+  /* ===== الأوزان =====
+     IBM Plex Sans Arabic لا يوفّر أثقل من ٧٠٠ (جوجل فونتس: 100–700).
+     الأوزان ٨٠٠ و٩٠٠ و٩٥٠ و١٠٠٠ التي كانت مكتوبة تُصطنَع اصطناعاً في
+     العربية (faux bold) بينما تُصيَّر حقيقيةً في Poppins الإنجليزي — أي أن
+     الواجهتين لم تكونا تتطابقان في الثقل أصلاً. السلّم هنا يقف عند ٧٠٠
+     فيتطابق التصيير في اللغتين، والتوكيد يأتي من الحجم واللون لا من وزن
+     غير موجود. وأوزان ٦٥٠ و٧٥٠ و٨٥٠ لم تكن تعني شيئاً: تُقرَّب لأقرب وزن. */
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+
+  /* ===== سلّم الأحجام ===== */
+  --fs-2xs: 0.75rem;
+  --fs-xs: 0.82rem;
+  --fs-sm: 0.9rem;
+  --fs-md: 1rem;
+  --fs-lg: 1.125rem;
+  --fs-xl: 1.35rem;
+  --fs-2xl: clamp(1.5rem, 2.4vw, 1.85rem);
+
+  /* ===== الارتفاعات السطرية =====
+     العربية تحتاج سطراً أوسع من اللاتينية لأجل النقاط والمدّات. */
+  --lh-tight: 1.3;
+  --lh-snug: 1.5;
+  --lh-normal: 1.7;
+  --lh-relaxed: 1.85;
+
+  /* ===== المسافات ===== */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+
+  /* ===== الاستدارة ===== */
+  --radius-xs: 8px;
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 20px;
+  --radius-xl: 24px;
+  --radius-pill: 999px;
+  --radius-circle: 50%;
+
+  /* ===== مقاسات عناصر التحكّم =====
+     ٤٤ بكسل هو الحد الأدنى لمساحة اللمس، فهو ارتفاع العنصر القياسي. */
+  --control-sm: 36px;
+  --control-md: 44px;
+  --control-lg: 52px;
+  --tap-min: 44px;
+
+  /* ===== الحركة =====
+     كانت ثلاث عشرة مدّة مختلفة (0.2s…1s وduration-200…1000). ثلاث درجات
+     تكفي: استجابة فورية، انتقال عادي، ودخول عنصر كبير. */
+  --dur-fast: 150ms;
+  --dur-base: 250ms;
+  --dur-slow: 400ms;
+  --ease-standard: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-emphasized: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ===== الطبقات =====
+     كانت 1، 2، 5، 10، 100، 1200، 2000، 3000 مبعثرة بلا سلّم. */
+  --z-base: 1;
+  --z-raised: 10;
+  --z-sticky: 100;
+  --z-navbar: 1200;
+  --z-dropdown: 1300;
+  --z-modal: 2000;
+  --z-toast: 2500;
+  --z-skiplink: 3000;
+
+  /* ===== حلقة التركيز الموحّدة ===== */
+  --focus-ring: 0 0 0 3px var(--focus-ring-color);
+
+  /* ===== درجات شفافية اللون الأساسي =====
+     مُعدِّل الشفافية في Tailwind (`bg-[#hex]/10`) لا يقبل متغيّر CSS، فكان
+     اللون يُكتب يدوياً بصيغته الست عشرية — وهي قيمة الوضع الفاتح دائماً.
+     النتيجة: عناصر التسجيل كانت تبقى بأرجواني الوضع الفاتح فوق خلفية
+     داكنة. هذه الرموز تتبع السمة لأن --primary-rgb يُعاد تعريفه لكل سمة. */
+  --primary-a10: rgba(var(--primary-rgb), 0.10);
+  --primary-a15: rgba(var(--primary-rgb), 0.15);
+  --primary-a20: rgba(var(--primary-rgb), 0.20);
+  --primary-a30: rgba(var(--primary-rgb), 0.30);
+  --primary-a40: rgba(var(--primary-rgb), 0.40);
+  --primary-a50: rgba(var(--primary-rgb), 0.50);
+  --primary-a60: rgba(var(--primary-rgb), 0.60);
+}
+
+:root, :root[data-theme='light'] {
+  --primary-rgb: 143, 92, 177;
+  --focus-ring-color: rgba(143, 92, 177, 0.45);
+  /* سطح الأزرار الممتلئة — منفصل عن --primary لأن لهما دورين مختلفين */
+  --primary-surface: #8f5cb1;
+  --primary-surface-hover: #7b3fa0;
+  --on-primary: #ffffff;
+  /* النصّ الصغير بلون الهوية: #8f5cb1 يعطي 4.26:1 فقط فوق النغمة الفاتحة
+     الثانية (#f4eef9) — دون 4.5. هذه الدرجة تتجاوز الحدّ فوق النغمات
+     الثلاث جميعها (5.30 و5.72 و6.04) وتبقى ضمن هوية اللون. */
+  --primary-text: #7f4da1;
+  /* تدرّج أسطح الأزرار — منفصل عن --gradient الزخرفي.
+     أفتح درجة في --gradient تعطي 4.00:1 مع الأبيض في الفاتح و2.79 في
+     الداكن، أي أن ثلث الزرّ الأيسر كان دون الحدّ. أفتح درجة هنا 4.85. */
+  --gradient-surface: linear-gradient(135deg, #8f5cb1 0%, #7b2fa0 50%, #6a1b9a 100%);
+  /* الزرّ الثانوي: سطح محايد ونصّ أساسي — كان يُبنى ثلاث مرّات بثلاث صيغ */
+  --surface-secondary: var(--input-bg);
+  --on-surface-secondary: var(--text-dark);
+  /* أسطح الحالات — كانت تُكتب يدوياً بقيم مختلفة في كل ملف */
+  --surface-hover: rgba(143, 92, 177, 0.06);
+  --surface-active: rgba(143, 92, 177, 0.12);
+  --state-disabled-opacity: 0.55;
+}
+
+:root[data-theme='dark'], :root.dark {
+  --primary-rgb: 165, 126, 216;
+  --focus-ring-color: rgba(165, 126, 216, 0.55);
+  /* في الوضع الداكن يُفتَح --primary ليقرأ كنصّ فوق خلفية داكنة (#a57ed8)،
+     لكنه كسطح زرّ مع نصّ أبيض يعطي 3.19:1 فقط — دون حدّ 4.5. السطح يبقى
+     #8f5cb1: أبيض عليه 4.85، وهو نفسه 4.08 مقابل خلفية الصفحة و3.73 مقابل
+     البطاقة، أي يتجاوز حدّ 3:1 لعناصر الواجهة في الحالتين. */
+  --primary-surface: #8f5cb1;
+  --primary-surface-hover: #9b6bbf;
+  --on-primary: #ffffff;
+  /* في الداكن يتجاوز --primary الحدّ أصلاً (5.66–6.19) فيبقى كما هو */
+  --primary-text: #a57ed8;
+  --gradient-surface: linear-gradient(135deg, #8f5cb1 0%, #7b2fa0 50%, #6a1b9a 100%);
+  --surface-secondary: var(--input-bg);
+  --on-surface-secondary: var(--text-dark);
+  --surface-hover: rgba(165, 126, 216, 0.1);
+  --surface-active: rgba(165, 126, 216, 0.18);
+  --state-disabled-opacity: 0.5;
 }
 
 /* ============== RESET & BASE ============== */
@@ -107,12 +296,7 @@ html {
   scroll-behavior: smooth; 
 }
 
-/* Give wide desktop screens a zoomed-out view similar to browser zoom at 85%. */
-@media (min-width: 1280px) {
-  html {
-    zoom: 0.85;
-  }
-}
+/* Wide desktop: use a wider max-width instead of zoom hack */
 
 body {
   font-family: "IBM Plex Sans Arabic", sans-serif;
@@ -120,19 +304,29 @@ body {
   color: var(--text-dark);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: background-color 0.4s ease, color 0.4s ease;
-  line-height: 1.6;
+  text-rendering: optimizeLegibility;
+  transition: background-color 400ms ease, color 400ms ease;
+  line-height: 1.65;
   font-size: 1.05rem;
+  animation: pageEntrance 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+@keyframes pageEntrance {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .font-primary {
   font-family: "IBM Plex Sans Arabic", sans-serif;
 }
 
-.app-container { 
-  max-width: var(--max-width); 
-  margin: 0 auto; 
-  padding: 0 20px; 
+/* نفس رموز الحاوية الموحّدة — كانت 1200px بحشوة 20px ثابتة، فتختلف
+   حافّتها عن حافّة أقسام MUI في الصفحات الأخرى. */
+.app-container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-pad);
 }
 
 a { 
@@ -170,55 +364,8 @@ button {
   box-shadow: var(--shadow-sm);
 }
 
-.navbar-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  max-width: var(--max-width);
-  padding: 0 20px;
-}
-
-.navbar-logo {
-  color: var(--text-light);
-  font-size: 1.8rem;
-  font-weight: 700;
-  transition: var(--transition-fast);
-}
-
 .navbar.scrolled .navbar-logo { 
-  color: var(--primary); 
-}
-
-.navbar-menu { 
-  list-style: none; 
-  margin: 0; 
-  padding: 0; 
-  display: flex; 
-  gap: 25px; 
-  align-items: center; 
-}
-
-.navbar-menu a { 
-  color: var(--text-light); 
-  font-weight: 600; 
-  transition: var(--transition-fast);
-  position: relative;
-}
-
-.navbar-menu a::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: var(--primary);
-  transition: width 0.3s ease;
-}
-
-.navbar-menu a:hover::after {
-  width: 100%;
+  color: var(--primary-text); 
 }
 
 .navbar.scrolled .navbar-menu a { 
@@ -227,7 +374,7 @@ button {
 
 .navbar-menu a:hover, 
 .navbar.scrolled .navbar-menu a:hover { 
-  color: var(--primary); 
+  color: var(--primary-text); 
 }
 
 /* ============== SECTIONS ============== */
@@ -249,83 +396,1278 @@ button {
 }
 
 .landing-section-tone > :not(#home) {
-  background: transparent !important;
-  padding-top: clamp(72px, 8vw, 118px) !important;
-  padding-bottom: clamp(72px, 8vw, 118px) !important;
+  background: transparent;
 }
 
-.landing-section-tone > :not(#home)::before {
-  pointer-events: none;
-}
-
-.landing-section-tone :is(
-  .section-title,
-  #services h3:first-of-type,
-  #how-it-works h3:first-of-type,
-  #features h3:first-of-type,
-  #coverage-map-section h3:first-of-type,
-  #loyalty-rewards h3:first-of-type,
-  #pricing h3:first-of-type,
-  #app-screenshots h3:first-of-type,
-  #screenshot h3:first-of-type
-) {
+/* ===============================================
+   SECTION SHELL — القسم يملك إيقاعه وحاويته، ولا
+   يضبط أيٌّ منها بنفسه بعد اليوم.
+   =============================================== */
+.section-shell {
   position: relative;
-  width: fit-content;
-  max-width: min(92vw, 900px);
-  margin-inline: auto !important;
-  margin-bottom: 1.15rem !important;
-  padding-bottom: 0.9rem;
-  color: var(--primary) !important;
-  font-size: clamp(2rem, 4vw, 3.15rem) !important;
-  font-weight: 900 !important;
-  line-height: 1.25 !important;
-  text-align: center !important;
-  letter-spacing: -0.035em !important;
+  width: 100%;
+  padding-block: var(--section-space);
+  overflow: clip;
 }
 
-.landing-section-tone :is(
-  .section-title,
-  #services h3:first-of-type,
-  #how-it-works h3:first-of-type,
-  #features h3:first-of-type,
-  #coverage-map-section h3:first-of-type,
-  #loyalty-rewards h3:first-of-type,
-  #pricing h3:first-of-type,
-  #app-screenshots h3:first-of-type,
-  #screenshot h3:first-of-type
-)::after {
+.section-shell.is-spacious {
+  padding-block: var(--section-space-lg);
+}
+
+.section-container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-pad);
+}
+
+.section-container.is-wide {
+  max-width: var(--container-wide);
+}
+
+/* ===============================================
+   SECTION HEAD — عنوان القسم الموحّد.
+   كانت القاعدة السابقة تستهدف `#id h3:first-of-type`
+   عبر قائمة معرّفات مكتوبة يدوياً، فأي قسم يستخدم
+   وسماً غير h3 يفلت من التوحيد بصمت — وهذا ما جعل
+   أحجام العناوين تتراوح بين ٣٦ و٤٨ بكسل لنفس المستوى.
+   =============================================== */
+.section-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: clamp(40px, 5vw, 64px);
+  text-align: center;
+}
+
+.section-head.is-start {
+  align-items: flex-start;
+  text-align: start;
+}
+
+.section-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 16px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-color);
+  /* كانت القيمة مكتوبة يدوياً بأرجواني الوضع الفاتح فلا تتبع السمة */
+  background: var(--primary-a10);
+  color: var(--primary-text);
+  font-size: var(--fs-label);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.section-title {
+  position: relative;
+  max-width: min(92vw, 900px);
+  margin: 0;
+  padding-bottom: 0.85rem;
+  color: var(--primary-text);
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  line-height: var(--lh-heading);
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+.section-title::after {
   content: '';
   position: absolute;
-  left: 50%;
+  inset-inline-start: 50%;
   bottom: 0;
   width: 58px;
   height: 4px;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: var(--gradient);
   box-shadow: 0 0 16px rgba(143, 92, 177, 0.35);
   transform: translateX(-50%);
 }
 
-.landing-section-tone .section-subtitle {
-  max-width: 720px;
-  margin: 0 auto 3rem;
+[dir="rtl"] .section-title::after {
+  transform: translateX(50%);
+}
+
+.section-head.is-start .section-title::after {
+  inset-inline-start: 0;
+  transform: none;
+}
+
+.section-subtitle {
+  max-width: var(--measure);
+  margin: 0;
   color: var(--text-muted);
   font-size: clamp(0.98rem, 1.4vw, 1.12rem);
   line-height: 1.85;
-  text-align: center;
 }
 
-.placeholder-section { 
-  min-height: 40vh; 
-  display: flex; 
-  align-items: center; 
-  justify-content: center; 
-  text-align: center; 
+/* شريط الثقة: قسمان داخل غلاف واحد، فالفراغ بينهما لا بين حشوتيهما */
+.trust-stack {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(48px, 6vw, 80px);
+}
+
+/* ============== HOME PAGE REFRESH ============== */
+.MuiButton-root.hero-main-button,
+.MuiButton-root.hero-outline-button,
+.MuiButton-root.navbar-provider-cta,
+.MuiButton-root.home-primary-action,
+.MuiButton-root.home-secondary-action {
+  border-radius: 999px;
+  text-transform: none;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.hero-subtitle-text {
+  text-align: left;
+}
+
+.hero-subtitle-text-rtl {
+  direction: rtl;
+  text-align: right;
+  unicode-bidi: plaintext;
+}
+
+.hero-brand-title {
+  width: fit-content;
+  max-width: 100%;
+  color: transparent;
+  background: linear-gradient(135deg, #ffffff 0%, #ead7ff 24%, #c084fc 52%, #8f5cb1 78%, #38bdf8 112%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 18px 44px rgba(143, 92, 177, 0.4), 0 2px 0 rgba(255, 255, 255, 0.1);
+  filter: drop-shadow(0 8px 18px rgba(106, 27, 154, 0.28));
+}
+
+[dir="rtl"] .hero-brand-title {
+  margin-inline-start: auto;
+}
+
+/* العنوان الأول صار سطرين: الاسم ثم الوعد. الوعد بحجم يخدم القراءة لا
+   بحجم الشعار، ويبقى داخل h1 دلالياً. */
+.hero-brand-title .hero-brand-word {
+  display: block;
+}
+
+.hero-brand-title .hero-tagline {
+  display: block;
+  margin-top: 0.35em;
+  font-size: clamp(1.05rem, 2.4vw, 1.9rem);
+  font-weight: 700;
+  line-height: 1.45;
+  letter-spacing: 0;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.92);
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow: 0 6px 18px rgba(13, 8, 21, 0.45);
+  filter: none;
+}
+
+/* صور الهاتف الزخرفية كانت تتجاوز عرض الشاشة على الجوال (٣٧٧ داخل ٣٧٥) */
+.hero-visual-wrap,
+.hero-phone-back,
+.hero-phone-front {
+  max-width: 100%;
+}
+
+/* الحركة الدائمة (الطفو) تتوقف لمن يطلب تقليل الحركة */
+@media (prefers-reduced-motion: reduce) {
+  .hero-phone-back,
+  .hero-phone-front {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+@media (max-width: 1199px) {
+  .hero-brand-title {
+    margin-inline: auto;
+  }
+}
+
+.MuiButton-root.hero-main-button {
+  min-height: 54px;
+  padding-inline: 28px;
+  color: white;
+  /* أوّل درجة كانت #9b6bbf: 4.00:1 مع الأبيض — دون الحدّ. #8f5cb1: 4.85 */
+  background: linear-gradient(135deg, #8f5cb1 0%, #7b2fa0 50%, #6a1b9a 100%);
+  box-shadow: 0 6px 20px rgba(106, 27, 154, 0.22), 0 2px 6px rgba(106, 27, 154, 0.12);
+}
+
+.MuiButton-root.hero-outline-button {
+  min-height: 54px;
+  padding-inline: 26px;
+  color: white;
+  border-color: rgba(255, 255, 255, 0.36);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+}
+
+.MuiButton-root.hero-main-button:hover,
+.MuiButton-root.hero-outline-button:hover,
+.MuiButton-root.home-primary-action:hover,
+.MuiButton-root.home-secondary-action:hover,
+.MuiButton-root.navbar-provider-cta:hover {
+  transform: translateY(-2px);
+}
+
+.hero-visual-wrap {
+  position: relative;
+  min-height: 560px;
+  display: block;
+}
+
+.hero-phone-back,
+.hero-phone-front {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+.hero-phone-back img,
+.hero-phone-front img {
+  max-width: min(84%, 380px);
+  height: auto;
+  filter: drop-shadow(0 28px 42px rgba(0, 0, 0, 0.32));
+}
+
+.hero-phone-back img {
+  opacity: 0.7;
+  transform: translateX(-68px) scale(0.88);
+  filter: blur(0.5px) drop-shadow(0 24px 34px rgba(0, 0, 0, 0.24));
+}
+
+[dir="rtl"] .hero-phone-back img {
+  transform: translateX(68px) scale(0.88);
+}
+
+.hero-phone-front img {
+  transform: translateX(34px);
+}
+
+[dir="rtl"] .hero-phone-front img {
+  transform: translateX(-34px);
+}
+
+/* تحت ١٢٠٠ ينهار Hero إلى عمود واحد فتنزل صور الهاتف الزخرفية تحت النص
+   بارتفاع ٥٦٠ بكسل كاملاً. القاعدة السابقة كانت تعالج ما دون ٩٠٠ فقط، فبقي
+   النطاق ٩٠٠–١١٩٩ يدفع بقية الصفحة نصف شاشة إلى الأسفل بلا مقابل.
+   موضعها هنا بعد القاعدة الأساس — قبلها كانت تخسر بالترتيب لا بالتخصيص. */
+@media (max-width: 1199px) {
+  .hero-visual-wrap {
+    min-height: 430px;
+    max-width: 460px;
+    width: 100%;
+    margin-inline: auto;
+  }
+
+  .hero-phone-back img,
+  .hero-phone-front img {
+    max-width: min(78%, 320px);
+  }
+}
+
+/* مدخل الملفات: مخفي بصرياً لكنه يبقى قابلاً للتركيز وفي شجرة الوصول.
+   `hidden` كان يزيله من الاثنين معاً فيتعذّر الرفع بلوحة المفاتيح. */
+.sr-only-file {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ===============================================
+   HOW IT WORKS — شبكة الخطوات.
+   عمود واحد على الجوال، عمودان على اللوح، وخمسة أعمدة فقط حين يتّسع
+   العرض لها فعلاً (١٢٠٠+). بين ٩٠٠ و١٢٠٠ كانت الخمسة تُحشر في ١٦١ بكسل.
+   =============================================== */
+.how-steps-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 44px 24px;
+  justify-items: center;
+}
+
+@media (min-width: 600px) {
+  .how-steps-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 48px 28px;
+  }
+}
+
+@media (min-width: 900px) {
+  .how-steps-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1200px) {
+  .how-steps-grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 32px 16px;
+  }
+}
+
+.how-steps-grid > * {
+  max-width: 260px;
+}
+
+/* ===============================================
+   HERO TRUST STRIP — الدليل فوق الطيّة.
+   =============================================== */
+.hero-trust-strip {
+  list-style: none;
+  margin: 30px 0 0;
+  padding: 18px 20px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px 22px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  text-align: start;
+}
+
+.hero-trust-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  min-width: 0;
+}
+
+.hero-trust-icon {
+  flex: none;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 11px;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.hero-trust-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.hero-trust-text strong {
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: #fff;
+  /* الخلفية صورة طريق تحت تدرّج — الظل يضمن الحدّ الأدنى فوق البقع الفاتحة */
+  text-shadow: 0 2px 8px rgba(13, 8, 21, 0.5);
+}
+
+.hero-trust-text span {
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.82);
+  text-shadow: 0 2px 8px rgba(13, 8, 21, 0.5);
+}
+
+/* في العمود الواحد يتمدّد الشريط على عرض القسم كاملاً فيصير سطراً طويلاً */
+@media (max-width: 1199px) {
+  .hero-trust-strip {
+    max-width: 640px;
+    margin-inline: auto;
+  }
+}
+
+/* على الجوال يبقى الشريط شبكة ٢×٢ بالعناوين وحدها: أربعة صفوف كاملة
+   بعنوان ووصف كانت ٢٩٨ بكسل تدفع بقية الـHero بعيداً. الوصف تفصيل مساعد
+   لا يستحق نصف شاشة، والعنوان وحده يحمل المؤشّر. */
+@media (max-width: 599px) {
+  .hero-trust-strip {
+    gap: 12px 14px;
+    padding: 14px;
+  }
+
+  .hero-trust-item {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 7px;
+  }
+
+  .hero-trust-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 12px;
+  }
+
+  .hero-trust-text strong {
+    font-size: 0.82rem;
+    font-weight: 700;
+  }
+
+  .hero-trust-text span {
+    display: none;
+  }
+}
+
+/* ===============================================
+   HERO SCROLL CUE
+   =============================================== */
+.hero-scroll-cue {
+  /* الإشارة تعني شيئاً فقط حين يملأ الـHero الشاشة. على الجوال هو أطول من
+     الشاشة أصلاً، فالحافة المقطوعة تدل على الاستمرار بلا إشارة. */
+  display: none;
+  position: absolute;
+  z-index: 3;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 8px 16px 6px;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.78);
+  transition: color 250ms ease, transform 250ms ease;
+}
+
+/* عرضاً: تخطيط العمودين يبدأ عند ١٢٠٠ فيبقى الـHero بارتفاع شاشة واحدة.
+   ارتفاعاً: تحت ٨٢٠ بكسل يتجاوز محتوى الـHero الشاشة، فتنزل الإشارة تحت
+   الطيّة — إشارة إلى التمرير لا تُرى إلا بعد التمرير لا تفيد أحداً. */
+@media (min-width: 1200px) and (min-height: 820px) {
+  .hero-scroll-cue { display: inline-flex; }
+}
+
+.hero-scroll-cue:hover {
+  color: #fff;
+}
+
+.hero-scroll-cue svg {
+  animation: hero-cue-bob 2.2s ease-in-out infinite;
+}
+
+@keyframes hero-cue-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(4px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-scroll-cue svg { animation: none; }
+}
+
+/* الشريط الثابت يغطّي ٧٩ بكسل — كان القفز إلى أي قسم يضعه تحته */
+#how-it-works,
+#services,
+#coverage-map-section,
+#trust,
+#join {
+  scroll-margin-top: 92px;
+}
+
+.MuiButton-root.navbar-provider-cta {
+  min-height: 44px;
+  padding-inline: 18px;
+  color: white;
+  /* أوّل درجة كانت #9b6bbf: 4.00:1 مع الأبيض — دون الحدّ. #8f5cb1: 4.85 */
+  background: linear-gradient(135deg, #8f5cb1 0%, #7b2fa0 60%, #22c55e 160%);
+  box-shadow: 0 4px 14px rgba(143, 92, 177, 0.2);
+}
+
+.MuiButton-root.navbar-provider-cta.mobile {
+  min-height: 48px;
+}
+
+.navbar-lang-toggle,
+.navbar-theme-toggle {
+  appearance: none;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  /* ٤٤ هو الحدّ الأدنى لهدف اللمس — كانت ٤٢ */
+  height: 44px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  color: var(--text-dark);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 10px 28px rgba(13, 8, 21, 0.12);
+  backdrop-filter: blur(14px);
+  cursor: pointer;
+  transition: transform 250ms ease, border-color 250ms ease, background 250ms ease, box-shadow 250ms ease;
+}
+
+.navbar-lang-toggle {
+  gap: 6px;
+  min-width: 96px;
+  padding: 4px 6px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.navbar-lang-toggle span {
+  display: inline-grid;
+  min-width: 28px;
+  height: 30px;
+  place-items: center;
+  border-radius: 999px;
+  color: currentColor;
+  opacity: 0.62;
+  transition: opacity 250ms ease, color 250ms ease, background 250ms ease, transform 250ms ease;
+}
+
+.navbar-lang-toggle span.active {
+  color: white;
+  background: linear-gradient(135deg, #8f5cb1, #6a1b9a);
+  opacity: 1;
+  box-shadow: 0 8px 18px rgba(106, 27, 154, 0.28);
+}
+
+.navbar-theme-toggle {
+  width: 78px;
+  padding: 4px;
+  overflow: hidden;
+}
+
+.navbar-theme-thumb {
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #fbbf24, #f97316);
+  box-shadow: 0 8px 20px rgba(249, 115, 22, 0.3);
+  transition: transform 250ms cubic-bezier(0.2, 0.8, 0.2, 1), background 250ms ease, box-shadow 250ms ease;
+}
+
+.navbar-theme-toggle.is-dark .navbar-theme-thumb {
+  transform: translateX(36px);
+  background: linear-gradient(135deg, #8f5cb1, #38bdf8);
+  box-shadow: 0 8px 20px rgba(56, 189, 248, 0.24);
+}
+
+.navbar-theme-icons {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.navbar-theme-icons svg {
+  width: 32px;
+}
+
+.navbar-lang-toggle:hover,
+.navbar-theme-toggle:hover {
+  transform: translateY(-2px);
+  border-color: rgba(143, 92, 177, 0.42);
+  background: rgba(143, 92, 177, 0.14);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16), 0 14px 30px rgba(143, 92, 177, 0.18);
+}
+
+.navbar-lang-toggle:focus-visible,
+.navbar-theme-toggle:focus-visible {
+  outline: 3px solid rgba(143, 92, 177, 0.32);
+  outline-offset: 3px;
+}
+
+.navbar-lang-toggle.mobile,
+.navbar-theme-toggle.mobile {
+  display: inline-flex;
+  width: 100%;
+  border-color: var(--border-color);
+  background: rgba(143, 92, 177, 0.07);
+  color: var(--text-dark);
+}
+
+.navbar-theme-toggle.mobile {
+  max-width: none;
+}
+
+.MuiButton-root.navbar-drawer-tool {
+  min-height: 44px;
+  border-radius: 12px;
+  color: var(--primary-text);
+  border: 1px solid var(--border-color);
+  background: rgba(143, 92, 177, 0.07);
+  text-transform: none;
+  font-weight: 700;
+}
+
+.home-services-preview,
+.home-split-band {
+  background: var(--section-tone-a);
+}
+
+.home-process-section,
+.home-download-cta,
+.home-provider-register-section {
+  background: var(--section-tone-b);
+}
+
+.home-eyebrow {
+  width: fit-content;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  border-radius: 999px;
+  color: var(--primary-text);
+  background: rgba(143, 92, 177, 0.07);
+  border: 1px solid rgba(143, 92, 177, 0.14);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.home-title {
+  color: var(--text-dark);
+  font-size: clamp(2rem, 4vw, 3.4rem) !important;
+  line-height: 1.18 !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.015em !important;
+}
+
+.home-subtitle {
+  color: var(--text-muted);
+  max-width: 720px;
+  font-size: clamp(1rem, 1.4vw, 1.16rem) !important;
+  line-height: 1.85 !important;
+  font-weight: 500 !important;
+}
+
+.home-subtitle.align-start {
+  margin-top: 16px;
+  margin-bottom: 28px;
+  text-align: start;
+}
+
+.home-service-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+  max-width: 1060px;
+  margin-inline: auto;
+}
+
+.home-service-card {
+  /* البطاقة هدف رابط عميق من شبكة الرئيسية — بلا هذا تستقر تحت الشريط الثابت */
+  scroll-margin-top: 104px;
+  position: relative;
+  min-height: 190px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 24px;
+  overflow: hidden;
+  border-radius: 20px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  cursor: default;
+  transition: var(--transition-smooth);
+}
+
+.home-service-card::before {
+  content: "";
+  position: absolute;
+  inset-inline: 24px;
+  top: 0;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #9b6bbf, #38bdf8);
+  opacity: 0;
+  transition: opacity 250ms ease;
+}
+
+.home-service-card:hover::before {
+  opacity: 0.8;
+}
+
+.home-service-card::after {
+  content: "";
+  position: absolute;
+  inset-inline-end: -40px;
+  top: -42px;
+  width: 116px;
+  height: 116px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(143, 92, 177, 0.1), transparent 68%);
+  pointer-events: none;
+  transition: transform 400ms ease, opacity 400ms ease;
+}
+
+:root[data-theme='dark'] .home-service-card,
+:root.dark .home-service-card {
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015)),
+    var(--card-bg);
+}
+
+.home-service-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(143, 92, 177, 0.28);
+  box-shadow: var(--shadow-hover);
+}
+
+.home-service-card:hover::after {
+  transform: scale(1.3);
+  opacity: 0.85;
+}
+
+.home-service-icon {
+  position: relative;
+  z-index: 1;
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  border-radius: 16px;
+  color: white;
+  background: linear-gradient(135deg, #9b6bbf 0%, #7b2fa0 60%, #6a1b9a 100%);
+  box-shadow: 0 6px 18px rgba(143, 92, 177, 0.2);
+  transition: transform 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 250ms ease;
+}
+
+.home-service-card:hover .home-service-icon {
+  transform: translateY(-2px) rotate(-2deg);
+  box-shadow: 0 8px 24px rgba(143, 92, 177, 0.28);
+}
+
+[dir="rtl"] .home-service-card:hover .home-service-icon {
+  transform: translateY(-2px) rotate(2deg);
+}
+
+/* العنوان h2 في صفحة الخدمات (رأس القسم h1) وh3 في الرئيسية (رأس h2) —
+   المحدّد يغطّي المستويين فلا يعتمد الشكل على مستوى العنوان الدلالي. */
+.home-service-card :is(h2, h3) {
+  margin: 0;
+  color: var(--text-dark);
+  font-size: clamp(0.98rem, 1.2vw, 1.12rem);
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.home-service-card p {
+  margin: 9px 0 0;
+  color: var(--text-muted);
+  font-size: 0.87rem;
+  font-weight: 600;
+  line-height: 1.68;
+}
+
+/* البطاقة صارت رابطاً: ستّ بطاقات كانت تصف خدمات ولا تقود إلى أي مكان،
+   و`cursor: default` كان يعلن ذلك صراحةً. الآن كل بطاقة تفتح تفاصيل خدمتها. */
+.home-service-card.is-link {
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.home-service-cta {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  margin-top: 2px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--primary-text);
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 250ms ease, transform 250ms ease;
+}
+
+.home-service-card.is-link:hover .home-service-cta,
+.home-service-card.is-link:focus-visible .home-service-cta {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+[dir="rtl"] .home-service-cta svg {
+  transform: scaleX(-1);
+}
+
+/* اللمس لا يمرّ بحالة hover — الإشارة تبقى ظاهرة حيث لا مؤشّر */
+@media (hover: none) {
+  .home-service-cta {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.home-actions-row {
+  display: flex;
+  justify-content: center;
+  margin-top: 34px;
+}
+
+.home-provider-register-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(360px, 0.8fr);
+  align-items: center;
+  gap: clamp(30px, 6vw, 72px);
+}
+
+.home-provider-copy .home-subtitle {
+  max-width: 680px;
+}
+
+.home-provider-panel {
+  position: relative;
+  min-height: 350px;
+  padding: clamp(24px, 4vw, 38px);
+  border-radius: 24px;
+  overflow: hidden;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.54)),
+    var(--card-bg);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-md);
+}
+
+:root[data-theme='dark'] .home-provider-panel,
+:root.dark .home-provider-panel {
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.035)),
+    var(--card-bg);
+}
+
+.home-provider-panel::after {
+  content: "";
+  position: absolute;
+  inset-inline-end: -72px;
+  top: -72px;
+  width: 210px;
+  height: 210px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(143, 92, 177, 0.22), transparent 68%);
+  pointer-events: none;
+}
+
+.home-provider-icon {
+  width: 72px;
+  height: 72px;
+  display: grid;
+  place-items: center;
+  border-radius: 20px;
+  color: white;
+  background: linear-gradient(135deg, #8f5cb1 0%, #6a1b9a 58%, #0ea5e9 140%);
+  box-shadow: 0 18px 36px rgba(143, 92, 177, 0.24);
+  margin-bottom: 28px;
+}
+
+.home-provider-steps {
+  display: grid;
+  gap: 14px;
+}
+
+.home-provider-step {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 16px;
+  background: rgba(143, 92, 177, 0.08);
+  border: 1px solid rgba(143, 92, 177, 0.14);
+}
+
+.home-provider-step span {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  /* شارة رقمية بنصّ أبيض — سطح ممتلئ، فيستعمل رمز السطح لا --primary */
+  color: var(--on-primary);
+  background: var(--primary-surface);
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.home-provider-step svg {
+  color: var(--primary-text);
+}
+
+.home-provider-step p {
+  margin: 0;
+  color: var(--text-dark);
+  font-size: 0.95rem;
+  line-height: 1.55;
+  font-weight: 700;
+}
+
+.MuiButton-root.home-primary-action {
+  min-height: 50px;
+  padding-inline: 26px;
+  color: white;
+  /* أوّل درجة كانت #9b6bbf: 4.00:1 مع الأبيض — دون الحدّ. #8f5cb1: 4.85 */
+  background: linear-gradient(135deg, #8f5cb1 0%, #7b2fa0 60%, #6a1b9a 100%);
+  box-shadow: 0 4px 16px rgba(143, 92, 177, 0.2), 0 1px 4px rgba(143, 92, 177, 0.1);
+}
+
+.MuiButton-root.home-primary-action.compact {
+  width: fit-content;
+  margin-top: 22px;
+}
+
+.MuiButton-root.home-secondary-action {
+  min-height: 48px;
+  padding-inline: 22px;
+  color: var(--primary-text);
+  border: 1px solid rgba(143, 92, 177, 0.22);
+  background: rgba(143, 92, 177, 0.05);
+}
+
+/* ===== دعوة السائق في خاتمة الرئيسية (مسار ثانٍ بجانب دعوة المزوّد) ===== */
+.home-driver-cta {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: clamp(18px, 3vw, 32px);
+  margin-top: clamp(32px, 5vw, 56px);
+  padding: clamp(22px, 3vw, 34px);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  background: var(--card-bg);
+  box-shadow: var(--shadow-sm);
+}
+
+.home-driver-cta-icon {
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  flex-shrink: 0;
+  border-radius: 16px;
+  color: var(--on-primary);
+  background: var(--gradient-surface);
+  box-shadow: 0 8px 20px rgba(143, 92, 177, 0.28);
+}
+
+.home-driver-cta h2 {
+  margin: 6px 0 4px;
+  color: var(--text-dark);
+  font-size: clamp(1.15rem, 2.2vw, 1.5rem);
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.home-driver-cta p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.98rem;
+  line-height: 1.7;
+}
+
+@media (max-width: 860px) {
+  .home-driver-cta {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+  }
+}
+
+/* ===== روابط أسفل لوحة التحميل في صفحة التطبيق ===== */
+.app-info-download-note {
+  margin-top: 10px;
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  line-height: 1.7;
+}
+
+.app-info-steps-link {
+  margin-inline-start: 10px;
+}
+
+@media (max-width: 620px) {
+  .app-info-steps-link {
+    margin-inline-start: 0;
+    margin-top: 10px;
+  }
+}
+
+.home-feature-panel.accent {
+  background:
+    linear-gradient(135deg, rgba(34, 197, 94, 0.12), rgba(143, 92, 177, 0.1)),
+    var(--card-bg);
+}
+
+:root[data-theme='dark'] .home-stat-pills span,
+:root.dark .home-stat-pills span {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* ============== APP INFO PAGE ============== */
+.app-info-page {
+  background: var(--section-tone-a);
+  color: var(--text-dark);
+  overflow: hidden;
+}
+
+.app-info-hero {
+  position: relative;
+  padding: clamp(118px, 12vw, 158px) 0 clamp(70px, 8vw, 108px);
+  background:
+    radial-gradient(circle at 78% 18%, rgba(143, 92, 177, 0.16), transparent 34%),
+    radial-gradient(circle at 10% 24%, rgba(14, 165, 233, 0.1), transparent 30%),
+    var(--section-tone-a);
+}
+
+.app-info-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(360px, 0.8fr);
+  align-items: center;
+  gap: clamp(36px, 6vw, 86px);
+}
+
+.app-info-eyebrow,
+.app-info-section-head span,
+.app-info-download-panel span {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 14px;
+  border-radius: 999px;
+  color: var(--primary-text);
+  background: rgba(143, 92, 177, 0.1);
+  border: 1px solid rgba(143, 92, 177, 0.18);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.app-info-hero h1 {
+  max-width: 850px;
+  margin: 18px 0 18px;
+  color: var(--text-dark);
+  font-size: clamp(2.5rem, 6vw, 5.25rem);
+  line-height: 1.02;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.app-info-hero h1 span {
+  color: transparent;
+  background: linear-gradient(135deg, #8f5cb1, #6a1b9a 50%, #0ea5e9 130%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.app-info-hero p {
+  max-width: 690px;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: clamp(1rem, 1.5vw, 1.18rem);
+  line-height: 1.9;
+  font-weight: 600;
+}
+
+.MuiButton-root.app-info-hero-action {
+  margin-top: 28px;
+}
+
+.app-info-phone-scene {
+  position: relative;
+  min-height: 560px;
+}
+
+.app-info-phone-scene::before {
+  content: "";
+  position: absolute;
+  inset: 12% 4% 10%;
+  border-radius: 42px;
+  background: linear-gradient(135deg, rgba(143, 92, 177, 0.2), rgba(14, 165, 233, 0.14));
+  filter: blur(4px);
+}
+
+.app-info-phone-scene img {
+  position: absolute;
+  max-width: min(55%, 285px);
+  object-fit: contain;
+  filter: drop-shadow(0 28px 42px rgba(13, 8, 21, 0.28));
+}
+
+.app-info-phone-back {
+  inset-inline-start: 8%;
+  top: 12%;
+  transform: rotate(-8deg);
+  opacity: 0.84;
+}
+
+.app-info-phone-front {
+  inset-inline-end: 10%;
+  top: 2%;
+  transform: rotate(6deg);
+}
+
+.app-info-section {
+  padding: clamp(76px, 8vw, 112px) 0;
+}
+
+.app-info-why-section {
+  position: relative;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.72)),
+    url("./assets/header-bg.webp") center/cover;
+}
+
+:root[data-theme='dark'] .app-info-why-section,
+:root.dark .app-info-why-section {
+  background:
+    linear-gradient(135deg, rgba(13, 8, 21, 0.86), rgba(24, 16, 37, 0.82)),
+    url("./assets/header-bg.webp") center/cover;
+}
+
+.app-info-service-card h3,
+.app-info-flow-card h3,
+.app-info-benefit-card h3 {
+  margin: 0;
+  font-size: 1.04rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.app-info-flow-card svg,
+.app-info-benefit-card svg {
+  color: var(--primary-text);
+  margin-bottom: 14px;
+}
+
+.app-info-flow-card h3,
+.app-info-benefit-card h3 {
+  color: var(--primary-text);
+}
+
+.app-info-flow-card p,
+.app-info-benefit-card p {
+  margin: 8px 0 0;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.65;
+  font-weight: 600;
+}
+
+.app-info-benefit-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.app-info-benefit-card {
+  min-height: 190px;
+  padding: 24px;
+  border-radius: 16px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+}
+
+.app-info-faq-item.active strong {
+  transform: rotate(45deg);
+}
+
+.app-info-faq-item.active p {
+  max-height: 180px;
+  padding-top: 6px;
+}
+
+.app-info-download-section {
+  padding: clamp(72px, 8vw, 112px) 0;
+  background: var(--section-tone-a);
+}
+
+.app-info-download-panel {
+  min-height: 280px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.7fr);
+  align-items: center;
+  gap: 30px;
+  padding: clamp(28px, 5vw, 48px) !important;
+  border-radius: 34px;
+  color: white;
+  /* الدرجة السماوية #0ea5e9 كانت أوّل التدرّج وتحمل نصّاً أبيض: 2.77:1 فقط.
+     #0369a1 يحفظ الطابع السماوي ويعطي 5.93، فتصير أفتح درجة في اللوحة
+     هي #8f5cb1 عند 4.85 — فوق الحدّ. */
+  background: linear-gradient(135deg, #0369a1, #8f5cb1 72%, #6a1b9a);
+  overflow: hidden;
+}
+
+.app-info-download-panel span {
+  color: white;
+  background: rgba(255, 255, 255, 0.13);
+  border-color: rgba(255, 255, 255, 0.26);
+}
+
+.app-info-download-panel h2 {
+  max-width: 650px;
+  margin: 18px 0 10px;
+  font-size: clamp(1.85rem, 4vw, 3.1rem);
+  line-height: 1.12;
+  font-weight: 700;
+}
+
+.app-info-download-panel p {
+  max-width: 630px;
+  margin: 0 0 22px;
+  color: rgba(255, 255, 255, 0.86);
+  line-height: 1.8;
+  font-weight: 600;
+}
+
+.app-info-download-phones {
+  position: relative;
+  min-height: 255px;
+}
+
+.app-info-download-phones img {
+  position: absolute;
+  max-width: 170px;
+  filter: drop-shadow(0 22px 30px rgba(13, 8, 21, 0.28));
+}
+
+.app-info-download-phones img:first-child {
+  inset-inline-start: 14%;
+  top: 12px;
+  transform: rotate(-8deg);
+}
+
+.app-info-download-phones img:last-child {
+  inset-inline-end: 10%;
+  top: -14px;
+  transform: rotate(6deg);
 }
 
 .section-title {
   text-align: center;
-  color: var(--primary);
+  color: var(--primary-text);
   margin: 0 0 1rem;
   font-size: 2.5rem;
   font-weight: 700;
@@ -351,87 +1693,273 @@ button {
   background-color: var(--bg-section-alt); 
 }
 
-/* ============== UNIFIED CARD STYLES ============== */
-.unified-card {
-  background: var(--card-bg);
-  border-radius: var(--card-radius);
-  border: 1px solid var(--border-color);
-  box-shadow: var(--shadow-sm);
-  transition: var(--transition-smooth);
+/* ============== CONTACT SECTION ============== */
+.contact-page-shell {
+  background: var(--section-tone-a);
+  color: var(--text-dark);
 }
 
-.unified-card:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-hover);
-  border-color: var(--primary-light);
+.contact-hero-band {
+  padding: clamp(92px, 11vw, 138px) 0 clamp(54px, 7vw, 84px);
+  background: var(--section-tone-a);
+  border-bottom: 1px solid var(--border-color);
 }
 
-/* ============== TEAM SECTION ============== */
-.team-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem;
-}
-
-.team-card {
-  background: var(--card-bg);
-  border-radius: var(--card-radius);
-  padding: 2rem 1.5rem;
+.contact-page-head,
+.contact-form-heading,
+.contact-social-copy,
+.contact-faq-head {
+  max-width: 760px;
+  margin-inline: auto;
   text-align: center;
-  box-shadow: var(--shadow-sm);
-  transition: var(--transition-smooth);
-  border: 1px solid var(--border-color);
 }
 
-.team-card:hover {
-  transform: translateY(-8px);
-  box-shadow: var(--shadow-hover);
-  border-color: var(--primary-light);
+.contact-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  margin-bottom: 14px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  color: var(--primary-text);
+  background: rgba(143, 92, 177, 0.1);
+  border: 1px solid rgba(143, 92, 177, 0.18);
+  font-size: 0.78rem;
+  font-weight: 700;
 }
 
-.team-img-wrap {
-  width: 140px;
-  height: 140px;
-  margin: 0 auto 1.5rem;
-  border-radius: 50%;
-  overflow: hidden;
-  border: 4px solid var(--primary);
-  box-shadow: 0 4px 16px rgba(143, 92, 177, 0.2);
+.contact-page-head h1,
+.contact-form-heading h2,
+.contact-social-copy h2,
+.contact-faq-head h2 {
+  margin: 0;
+  color: var(--text-dark);
+  font-size: clamp(2.1rem, 4.4vw, 3.8rem);
+  line-height: 1.15;
+  font-weight: 700;
+  letter-spacing: 0;
 }
 
-.team-img-wrap img { 
-  width: 100%; 
-  height: 100%; 
-  object-fit: cover; 
+.contact-page-head h1 span {
+  color: transparent;
+  background: linear-gradient(135deg, #8f5cb1, #6a1b9a 55%, #0ea5e9 140%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.team-card h4 { 
-  margin: 0.5rem 0; 
-  color: var(--text-dark); 
-  font-size: 1.25rem;
+.contact-form-heading h2 {
+  font-size: clamp(2rem, 3.2vw, 3rem);
+}
+
+.contact-page-head p,
+.contact-form-heading p,
+.contact-social-copy p,
+.contact-faq-head p {
+  max-width: 690px;
+  margin: 16px auto 0;
+  color: var(--text-muted);
+  font-size: 1.04rem;
+  line-height: 1.85;
   font-weight: 600;
 }
 
-.team-card .role { 
-  color: var(--primary); 
-  font-weight: 600; 
-  margin-bottom: 0.75rem;
+.contact-form-heading p {
+  max-width: 620px;
+  margin-top: 12px;
+  font-size: 1rem;
+}
+
+.contact-method-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  max-width: 940px;
+  margin: clamp(46px, 6vw, 74px) auto 0;
+}
+
+.contact-method-card {
+  min-height: 168px;
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 12px;
+  padding: 26px;
+  text-align: center;
+  border-radius: 20px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition-smooth);
+}
+
+.contact-method-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(143, 92, 177, 0.32);
+  box-shadow: 0 18px 44px rgba(143, 92, 177, 0.12), var(--shadow-hover);
+}
+
+.contact-method-card span {
+  width: 64px;
+  height: 64px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  color: white;
+  background: linear-gradient(135deg, #8f5cb1, #6a1b9a 68%, #0ea5e9 145%);
+  box-shadow: 0 16px 30px rgba(143, 92, 177, 0.24);
+}
+
+.contact-method-card strong {
+  color: var(--text-dark);
   font-size: 0.95rem;
+  font-weight: 700;
 }
 
-.team-card .desc { 
-  font-size: 0.9rem; 
-  color: var(--text-muted); 
-  line-height: 1.6; 
+.contact-method-card p {
+  max-width: 240px;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  font-weight: 600;
+  line-height: 1.65;
 }
 
-/* ============== CONTACT SECTION ============== */
-.contact-grid { 
-  display: flex; 
-  gap: 40px; 
-  justify-content: center; 
-  align-items: flex-start; 
-  width: 100%; 
+.contact-form-band,
+.contact-social-band,
+.contact-faq-band {
+  padding: clamp(72px, 8vw, 106px) 0;
+  background: var(--section-tone-b);
+}
+
+.contact-form-layout {
+  display: grid;
+  justify-items: center;
+  max-width: 920px;
+}
+
+.contact-modern-form {
+  width: min(100%, 640px);
+  margin-top: 28px;
+  padding: clamp(22px, 3vw, 34px);
+  border: 1px solid rgba(143, 92, 177, 0.18);
+  border-radius: 24px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.04), rgba(143, 92, 177, 0.035)),
+    var(--card-bg);
+  box-shadow: 0 20px 60px rgba(22, 11, 34, 0.14);
+}
+
+.contact-field-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.contact-modern-form input,
+.contact-modern-form select,
+.contact-modern-form textarea {
+  width: 100%;
+  margin-bottom: 12px;
+  padding: 15px 17px;
+  border: 1px solid rgba(143, 92, 177, 0.22);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.045);
+  color: var(--text-dark);
+  font-weight: 700;
+  line-height: 1.4;
+  outline: none;
+  transition: border-color 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
+}
+
+.contact-modern-form input::placeholder,
+.contact-modern-form textarea::placeholder {
+  color: color-mix(in srgb, var(--text-muted) 78%, transparent);
+  opacity: 1;
+}
+
+.contact-modern-form input:focus,
+.contact-modern-form select:focus,
+.contact-modern-form textarea:focus {
+  border-color: rgba(168, 112, 214, 0.72);
+  background: rgba(255, 255, 255, 0.07);
+  box-shadow: 0 0 0 4px rgba(143, 92, 177, 0.12);
+}
+
+.contact-modern-form select {
+  appearance: auto;
+  cursor: pointer;
+}
+
+.contact-modern-form textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+.contact-modern-form.rtl-form input,
+.contact-modern-form.rtl-form select,
+.contact-modern-form.rtl-form textarea {
+  direction: rtl;
+  text-align: right;
+}
+
+.contact-modern-form.ltr-form input,
+.contact-modern-form.ltr-form select,
+.contact-modern-form.ltr-form textarea {
+  direction: ltr;
+  text-align: left;
+}
+
+/* الغلاف `label` فالنقر على النصّ يبدّل المربّع أيضاً — لكن ارتفاعه كان
+   يتبع سطر النصّ وحده (١٦ بكسل عند سطر واحد). نضمن ٤٤ بكسل لمساحة اللمس. */
+.contact-consent {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-height: 44px;
+  margin: 4px 0 20px;
+  color: var(--text-muted);
+  font-size: 0.84rem;
+  line-height: 1.6;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.rtl-form .contact-consent {
+  flex-direction: row-reverse;
+  justify-content: flex-start;
+  text-align: right;
+}
+
+
+
+.contact-submit-btn {
+  min-width: 210px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 52px;
+  padding-inline: 30px;
+  border-radius: 12px;
+  font-weight: 700;
+  box-shadow: 0 16px 34px rgba(143, 92, 177, 0.24);
+}
+
+.contact-modern-form.rtl-form .contact-submit-btn {
+  float: left;
+}
+
+.contact-modern-form::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.contact-modern-form select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(143, 92, 177, 0.15);
 }
 
 .faq, .contact-form-container { 
@@ -439,66 +1967,19 @@ button {
 }
 
 .faq h3, .contact-form-container h3 { 
-  color: var(--primary); 
+  color: var(--primary-text); 
   margin-top: 0; 
   font-size: 1.5rem; 
   margin-bottom: 1.5rem;
   font-weight: 600;
 }
 
-.faq-item {
-  background: var(--card-bg);
-  border-radius: var(--card-radius);
-  padding: 1.25rem;
-  margin-bottom: 1rem;
-  cursor: pointer;
-  transition: var(--transition-smooth);
-  border: 1px solid var(--border-color);
-}
-
-.faq-item:hover { 
-  border-color: var(--primary-light);
-  box-shadow: var(--shadow-sm);
-}
-
-.faq-row { 
-  display: flex; 
-  align-items: center; 
-  justify-content: space-between; 
-  gap: 1rem; 
-}
-
-.faq-question { 
-  font-weight: 600; 
-  color: var(--text-dark);
-}
-
-.faq-toggle { 
-  font-weight: 700; 
-  font-size: 1.5rem; 
-  color: var(--primary); 
-  transition: transform 0.3s ease; 
-  flex-shrink: 0;
-}
-
 .faq-item.active .faq-toggle { 
   transform: rotate(45deg); 
 }
 
-.faq-answer-wrapper { 
-  max-height: 0; 
-  overflow: hidden; 
-  transition: max-height 0.35s ease-in-out; 
-}
-
 .faq-item.active .faq-answer-wrapper { 
   max-height: 200px; 
-}
-
-.faq-answer { 
-  padding-top: 1rem; 
-  color: var(--text-muted); 
-  line-height: 1.7; 
 }
 
 /* Contact Form */
@@ -516,6 +1997,19 @@ button {
   transition: var(--transition-fast);
 }
 
+/* مربّع الموافقة كان يُشدّ إلى عرض النموذج كاملاً (٢٩٠ بكسل) لأن القاعدة
+   العامّة `.contact-form input { width: 100% }` تليه في الترتيب بالتخصيص
+   نفسه. موضعه هنا بعدها — ومعه `:where` لرفع التخصيص دون تثبيت !important. */
+.contact-form input[type="checkbox"],
+.contact-consent input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 auto;
+  margin: 0;
+  padding: 0;
+  accent-color: var(--primary);
+}
+
 .contact-form input::placeholder,
 .contact-form textarea::placeholder {
   color: var(--text-muted);
@@ -528,8 +2022,8 @@ button {
 }
 
 .form-submit-btn {
-  background: var(--gradient);
-  color: var(--text-light);
+  background: var(--gradient-surface);
+  color: var(--on-primary);
   padding: 14px 28px;
   border-radius: var(--btn-radius);
   border: none;
@@ -545,209 +2039,12 @@ button {
   box-shadow: var(--shadow-hover); 
 }
 
-/* ============== PARTNER SECTION ============== */
-.partner-section { 
-  text-align: center; 
-  margin-top: 5rem;
-  padding: clamp(2rem, 5vw, 4rem);
-  border: 1px solid var(--border-color);
-  border-radius: 32px;
-  background: var(--section-tone-b);
-  box-shadow: var(--shadow-md);
-}
-
-.partner-cards { 
-  display: grid; 
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
-  gap: 2rem; 
-  margin-top: 2rem; 
-}
-
-.partner-card {
-  background: var(--card-bg);
-  border-radius: var(--card-radius);
-  padding: 2.25rem;
-  box-shadow: var(--shadow-sm);
-  border: 1px solid var(--border-color);
-  transition: var(--transition-smooth);
-  text-align: left;
-  position: relative;
-  overflow: hidden;
-}
-
-[dir="rtl"] .partner-card {
-  text-align: right;
-}
-
-[dir="ltr"] .partner-card {
-  text-align: left;
-}
-
-.partner-card::before {
-  content: '';
-  position: absolute;
-  inset: 0 0 auto;
-  height: 3px;
-  background: var(--gradient);
-  opacity: 0;
-  transform: scaleX(0.45);
-  transition: var(--transition-smooth);
-}
-
-.partner-card:hover { 
-  transform: translateY(-8px); 
-  box-shadow: var(--shadow-hover); 
-  border-color: var(--primary-light);
-}
-
-.partner-card:hover::before {
-  opacity: 1;
-  transform: scaleX(1);
-}
-
-.partner-card .card-icon { 
-  width: 58px;
-  height: 58px;
-  margin-bottom: 1.35rem;
-  color: var(--primary);
-  background: linear-gradient(145deg, rgba(143, 92, 177, 0.2), rgba(143, 92, 177, 0.05));
-  border: 1px solid rgba(143, 92, 177, 0.3);
-  border-radius: 17px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 10px 24px rgba(143, 92, 177, 0.12);
-  transition: var(--transition-smooth);
-}
-
-.partner-card:hover .card-icon {
-  color: var(--primary-light);
-  border-color: var(--primary-light);
-  transform: translateY(-3px) rotate(-3deg);
-  box-shadow: 0 14px 30px rgba(143, 92, 177, 0.22);
-}
-
-.partner-card .partner-card-title {
-  width: fit-content;
-  position: relative;
-  margin: 0 0 1.15rem;
-  padding-bottom: 0.7rem;
-  font-size: clamp(1.35rem, 2vw, 1.65rem);
-  line-height: 1.25;
-  font-weight: 900;
-  letter-spacing: -0.025em;
-  color: var(--primary);
-  background: linear-gradient(135deg, var(--primary-light), var(--primary), var(--text-dark));
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.partner-card .partner-card-title::after {
-  content: '';
-  position: absolute;
-  inset-inline-start: 0;
-  bottom: 0;
-  width: 42px;
-  height: 3px;
-  border-radius: 999px;
-  background: var(--gradient);
-  box-shadow: 0 0 12px rgba(143, 92, 177, 0.5);
-  transition: width 0.35s ease;
-}
-
-.partner-card:hover .partner-card-title::after {
-  width: 72px;
-}
-
-.partner-card p { 
-  color: var(--text-muted); 
-  font-size: 0.95rem; 
-  line-height: 1.7; 
-  margin: 0; 
-}
-
-.partner-cta-panel {
-  margin-top: 2.75rem;
-  padding: clamp(1.5rem, 4vw, 2.5rem);
-  border-radius: 28px;
-  border: 1px solid rgba(143, 92, 177, 0.35);
-  background:
-    radial-gradient(circle at 15% 20%, rgba(193, 150, 255, 0.18), transparent 35%),
-    linear-gradient(135deg, rgba(143, 92, 177, 0.16), var(--card-bg));
-  box-shadow: 0 22px 60px rgba(50, 25, 76, 0.2);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 2rem;
-  text-align: start;
-  position: relative;
-  overflow: hidden;
-}
-
-.partner-cta-panel::after {
-  content: '';
-  position: absolute;
-  width: 180px;
-  height: 180px;
-  inset-inline-end: -80px;
-  bottom: -100px;
-  border-radius: 50%;
-  background: rgba(143, 92, 177, 0.16);
-  filter: blur(8px);
-}
-
-.partner-cta-copy {
-  max-width: 720px;
-  position: relative;
-  z-index: 1;
-}
-
-.partner-cta-eyebrow {
-  display: inline-flex;
-  padding: 0.4rem 0.8rem;
-  margin-bottom: 0.9rem;
-  border: 1px solid rgba(143, 92, 177, 0.3);
-  border-radius: 999px;
-  color: var(--primary);
-  background: rgba(143, 92, 177, 0.1);
-  font-size: 0.76rem;
-  font-weight: 800;
-}
-
-.partner-cta-copy h3 {
-  margin: 0 0 0.65rem;
-  color: var(--text-dark);
-  font-size: clamp(1.45rem, 3vw, 2.15rem);
-  font-weight: 900;
-  line-height: 1.3;
-}
-
-.partner-cta-copy p {
-  margin: 0;
-  color: var(--text-muted);
-  font-size: 1rem;
-  line-height: 1.75;
-}
-
-.partner-primary-cta {
-  margin-top: 0;
-  min-width: 190px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  white-space: nowrap;
-  position: relative;
-  z-index: 1;
-}
-
 /* ============== REGISTER / CTA BUTTON ============== */
 .register-btn {
-  background: var(--gradient);
-  color: var(--text-light);
+  background: var(--gradient-surface);
+  color: var(--on-primary);
   padding: 16px 40px;
-  border-radius: 50px;
+  border-radius: 999px;
   border: none;
   font-weight: 700;
   font-size: 1.15rem;
@@ -757,6 +2054,21 @@ button {
   margin-top: 2.5rem;
   box-shadow: 0 6px 24px rgba(143, 92, 177, 0.35);
   letter-spacing: 0.5px;
+}
+
+/* الزرّ الثانوي: نفس الإجراء («احصل على التطبيق») كان يُبنى بثلاث صيغ —
+   مرّة بـopacity 0.85 فوق --text-muted، ومرّة بـ0.8، ومرّة بـ--border-color.
+   الأوليان تعطيان 2.0:1 مع الأبيض في الوضع الداكن. صيغة واحدة الآن. */
+.register-btn.is-secondary {
+  background: var(--surface-secondary);
+  color: var(--on-surface-secondary);
+  border: 1px solid var(--border-color);
+  box-shadow: none;
+}
+
+.register-btn.is-secondary:hover {
+  background: var(--surface-hover);
+  border-color: var(--primary);
 }
 
 .register-btn:hover { 
@@ -770,16 +2082,16 @@ button {
 }
 
 /* Hero Register Button - Enhanced */
-.register-hero-btn {
-  background: var(--gradient) !important;
-  color: var(--text-light) !important;
-  box-shadow: 0 6px 24px rgba(143, 92, 177, 0.4) !important;
-  border: none !important;
+.MuiButton-root.register-hero-btn {
+  background: var(--gradient-surface);
+  color: var(--on-primary);
+  box-shadow: 0 6px 24px rgba(143, 92, 177, 0.4);
+  border: none;
 }
 
-.register-hero-btn:hover {
-  box-shadow: 0 10px 32px rgba(143, 92, 177, 0.5) !important;
-  transform: translateY(-3px) !important;
+.MuiButton-root.register-hero-btn:hover {
+  box-shadow: 0 10px 32px rgba(143, 92, 177, 0.5);
+  transform: translateY(-3px);
 }
 
 /* ============== REGISTER PAGE ============== */
@@ -827,7 +2139,7 @@ button {
 
 .register-form legend {
   font-weight: 600;
-  color: var(--primary);
+  color: var(--primary-text);
   padding: 0 0.5rem;
 }
 
@@ -852,15 +2164,11 @@ button {
   outline: none; 
 }
 
-.submit-btn-container { 
-  text-align: center; 
-}
-
 .submit-btn {
-  background: var(--gradient);
-  color: var(--text-light);
+  background: var(--gradient-surface);
+  color: var(--on-primary);
   padding: 14px 40px;
-  border-radius: 50px;
+  border-radius: 999px;
   border: none;
   font-weight: 700;
   font-size: 1.1rem;
@@ -874,33 +2182,65 @@ button {
   box-shadow: 0 10px 30px rgba(143, 92, 177, 0.35); 
 }
 
-.back-link { 
-  display: inline-block; 
-  margin-top: 1.5rem; 
-  color: var(--primary); 
-  font-weight: 600; 
-}
-
-.back-link:hover { 
-  text-decoration: underline; 
-}
-
 /* ============== RESPONSIVE ============== */
 @media (max-width: 900px) {
-  .contact-grid { 
-    flex-direction: column; 
-    align-items: center; 
-  }
+
   .faq, .contact-form-container { 
     width: 100%; 
     max-width: 600px; 
   }
+
+  .hero-visual-wrap {
+    min-height: 430px;
+    max-width: 420px;
+    width: 100%;
+    margin-inline: auto;
+  }
+
+  .hero-phone-back img,
+  .hero-phone-front img {
+    max-width: min(76%, 300px);
+  }
+
+  .contact-method-grid {
+    grid-template-columns: 1fr;
+    max-width: 520px;
+  }
+
+  .contact-method-card {
+    min-height: 150px;
+  }
+
+  .app-info-hero-grid,
+  .app-info-download-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .app-info-phone-scene {
+    min-height: 440px;
+    max-width: 460px;
+    width: 100%;
+    margin-inline: auto;
+  }
+
+  .app-info-service-grid,
+  .app-info-flow-grid,
+  .app-info-benefit-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .home-service-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .home-provider-register-grid {
+    grid-template-columns: 1fr;
+  }
+
 }
 
 @media (max-width: 768px) {
-  .navbar-menu { 
-    display: none; 
-  }
+
   .section-title { 
     font-size: 2rem; 
   }
@@ -911,33 +2251,79 @@ button {
     padding: 1.5rem;
     margin: 0 15px;
   }
-}
 
-/* ============== UTILITY CLASSES ============== */
-.text-gradient {
-  background: var(--gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
+  .home-service-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 
-.hover-lift {
-  transition: var(--transition-smooth);
-}
+  .contact-hero-band {
+    padding-top: 92px;
+  }
 
-.hover-lift:hover {
-  transform: translateY(-6px);
+  .contact-field-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .contact-modern-form,
+  .faq.contact-faq-list {
+    width: 100%;
+  }
+
+  .contact-page-head p,
+  .contact-form-heading p,
+  .contact-social-copy p,
+  .contact-faq-head p {
+    font-size: 0.98rem;
+  }
+
+  .app-info-hero {
+    text-align: center;
+  }
+
+  .app-info-hero p {
+    margin-inline: auto;
+  }
+
+  .app-info-eyebrow {
+    margin-inline: auto;
+  }
+
+  .app-info-download-panel {
+    text-align: center;
+  }
+
+  .app-info-download-panel p,
+  .app-info-download-panel span {
+    margin-inline: auto;
+  }
+
+  .app-info-download-phones {
+    min-height: 230px;
+  }
+
+  .home-service-card {
+    min-height: 172px;
+    padding: 18px;
+  }
+
+  .home-service-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+  }
+
 }
 
 /* ============== MICRO-ANIMATIONS ============== */
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 6px 24px rgba(143, 92, 177, 0.35); }
-  50% { box-shadow: 0 8px 32px rgba(143, 92, 177, 0.55), 0 0 40px rgba(143, 92, 177, 0.2); }
+  0%, 100% { box-shadow: 0 4px 16px rgba(143, 92, 177, 0.25); }
+  50% { box-shadow: 0 6px 24px rgba(143, 92, 177, 0.4), 0 0 32px rgba(143, 92, 177, 0.12); }
 }
 
 @keyframes float {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-12px); }
+  50% { transform: translateY(-8px); }
 }
 
 @keyframes shimmer {
@@ -947,7 +2333,7 @@ button {
 
 @keyframes bounce-subtle {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
+  50% { transform: translateY(-4px); }
 }
 
 @keyframes rotate-icon {
@@ -957,11 +2343,11 @@ button {
 
 @keyframes scale-pulse {
   0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
+  50% { transform: scale(1.03); }
 }
 
 @keyframes fade-in-up {
-  from { opacity: 0; transform: translateY(20px); }
+  from { opacity: 0; transform: translateY(16px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
@@ -972,215 +2358,67 @@ button {
 
 @keyframes sparkle {
   0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.6; transform: scale(1.2); }
+  50% { opacity: 0.7; transform: scale(1.1); }
 }
 
 /* ============== FOCUS STATES & ACCESSIBILITY ============== */
+/* كانت الحلقة `box-shadow` مع `outline: none`. الظلال تُقصّ داخل الحاويات
+   ذات `overflow: hidden` — وهي كثيرة هنا — وتختفي كلياً في وضع Windows
+   عالي التباين. الـ outline لا يُقصّ ويُحترم في forced-colors. */
 *:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(143, 92, 177, 0.4);
-  border-radius: 4px;
+  /* المتصفّحات ترسم الـoutline متتبّعةً border-radius الخاص بالعنصر، فلا
+     حاجة لفرض استدارة هنا — وفرضها كان يشوّه أي عنصر لا يملك استدارة من
+     قاعدة أعلى تخصيصاً (الأزرار الحبّية مثلاً) لحظة التركيز فقط. */
+  outline: 3px solid var(--primary);
+  outline-offset: 3px;
 }
 
+/* حلقة داخلية بيضاء تضمن ظهور الحلقة فوق الخلفيات البنفسجية الداكنة أيضاً */
 button:focus-visible,
 a:focus-visible,
 input:focus-visible,
 textarea:focus-visible,
-select:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(143, 92, 177, 0.4) !important;
+select:focus-visible,
+[tabindex]:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 1px var(--card-bg);
 }
 
-/* Skip link for keyboard navigation */
+@media (forced-colors: active) {
+  *:focus-visible {
+    outline: 3px solid Highlight;
+  }
+}
+
+/* رابط تخطّي التنقل: كان منسّقاً هنا بالكامل وغير مُصيَّر في أي مكوّن،
+   فكان مستخدم لوحة المفاتيح يمرّ على شريط التنقل كاملاً في كل صفحة. */
 .skip-link {
-  position: absolute;
-  top: -100%;
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--gradient);
-  color: white;
-  padding: 12px 24px;
-  border-radius: var(--btn-radius);
-  z-index: 9999;
-  transition: top 0.3s ease;
-}
-
-.skip-link:focus {
-  top: 10px;
-}
-
-/* ============== GLASSMORPHISM UTILITIES ============== */
-.glass-card {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: var(--card-radius);
-}
-
-:root[data-theme='light'] .glass-card {
-  background: rgba(255, 255, 255, 0.7);
-  border: 1px solid rgba(143, 92, 177, 0.1);
-}
-
-.glass-button {
-  background: rgba(143, 92, 177, 0.1);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(143, 92, 177, 0.2);
-  transition: var(--transition-smooth);
-}
-
-.glass-button:hover {
-  background: rgba(143, 92, 177, 0.2);
-  border-color: var(--primary);
-}
-
-/* ============== ENHANCED BUTTON STYLES ============== */
-.btn-primary {
-  background: var(--gradient);
-  color: var(--text-light);
-  padding: 14px 32px;
-  border-radius: 50px;
-  border: none;
-  font-weight: 700;
-  font-size: 1rem;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  transition: var(--transition-smooth);
-  box-shadow: 0 6px 24px rgba(143, 92, 177, 0.35);
-  position: relative;
-  overflow: hidden;
-}
-
-.btn-primary::before {
-  content: '';
-  position: absolute;
+  position: fixed;
   top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: left 0.5s ease;
+  inset-inline-start: 50%;
+  transform: translateX(-50%) translateY(-120%);
+  padding: 12px 24px;
+  border-radius: 0 0 var(--btn-radius) var(--btn-radius);
+  background: var(--gradient-surface);
+  color: var(--on-primary);
+  font-weight: 700;
+  text-decoration: none;
+  z-index: var(--z-skiplink);
+  transition: transform 250ms ease;
 }
 
-.btn-primary:hover {
-  transform: translateY(-4px) scale(1.02);
-  box-shadow: 0 12px 36px rgba(143, 92, 177, 0.45);
+.skip-link:focus-visible {
+  transform: translateX(-50%) translateY(0);
 }
 
-.btn-primary:hover::before {
-  left: 100%;
-}
-
-.btn-primary:active {
-  transform: translateY(-2px) scale(1);
+/* هدف رابط التخطّي يجب ألا يختفي خلف الشريط الثابت عند القفز إليه */
+#main {
+  scroll-margin-top: 90px;
 }
 
 .btn-primary.pulse {
-  animation: pulse-glow 2s infinite;
-}
-
-.btn-secondary {
-  background: transparent;
-  color: var(--primary);
-  padding: 14px 32px;
-  border-radius: 50px;
-  border: 2px solid var(--primary);
-  font-weight: 700;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: var(--transition-smooth);
-}
-
-.btn-secondary:hover {
-  background: var(--gradient);
-  color: var(--text-light);
-  border-color: transparent;
-  transform: translateY(-3px);
-  box-shadow: 0 8px 24px rgba(143, 92, 177, 0.3);
-}
-
-.btn-icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  cursor: pointer;
-  transition: var(--transition-smooth);
-}
-
-.btn-icon:hover {
-  background: var(--gradient);
-  color: white;
-  border-color: transparent;
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-hover);
-}
-
-/* ============== INTERACTIVE CARD ENHANCEMENTS ============== */
-.card-interactive {
-  transition: var(--transition-smooth);
-  cursor: pointer;
-}
-
-.card-interactive:hover {
-  transform: translateY(-8px);
-  box-shadow: var(--shadow-hover);
-  border-color: var(--primary-light);
-}
-
-.card-interactive:hover .card-icon {
-  transform: scale(1.1);
-  color: var(--primary);
-}
-
-.card-shine {
-  position: relative;
-  overflow: hidden;
-}
-
-.card-shine::after {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(
-    45deg,
-    transparent 30%,
-    rgba(255, 255, 255, 0.05) 50%,
-    transparent 70%
-  );
-  transform: rotate(45deg);
-  transition: transform 0.6s ease;
-}
-
-.card-shine:hover::after {
-  transform: rotate(45deg) translateY(-100%);
-}
-
-/* ============== FORM ENHANCEMENTS ============== */
-.input-enhanced {
-  position: relative;
-}
-
-.input-enhanced input,
-.input-enhanced textarea {
-  transition: var(--transition-smooth);
-}
-
-.input-enhanced input:focus,
-.input-enhanced textarea:focus {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 4px rgba(143, 92, 177, 0.1);
+  animation: pulse-glow 2.5s infinite;
 }
 
 .input-enhanced.success input,
@@ -1193,92 +2431,6 @@ select:focus-visible {
 .input-enhanced.error textarea {
   border-color: #ef4444;
   box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
-}
-
-.input-label {
-  position: absolute;
-  left: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--text-muted);
-  pointer-events: none;
-  transition: var(--transition-smooth);
-  background: var(--card-bg);
-  padding: 0 4px;
-}
-
-.input-enhanced input:focus + .input-label,
-.input-enhanced input:not(:placeholder-shown) + .input-label {
-  top: 0;
-  font-size: 0.75rem;
-  color: var(--primary);
-}
-
-/* ============== LOADING STATES ============== */
-.skeleton {
-  background: linear-gradient(
-    90deg,
-    var(--border-color) 25%,
-    rgba(143, 92, 177, 0.1) 50%,
-    var(--border-color) 75%
-  );
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
-  border-radius: var(--btn-radius);
-}
-
-.loading-spinner {
-  width: 24px;
-  height: 24px;
-  border: 3px solid var(--border-color);
-  border-top-color: var(--primary);
-  border-radius: 50%;
-  animation: rotate-icon 0.8s linear infinite;
-}
-
-.btn-loading {
-  position: relative;
-  color: transparent !important;
-  pointer-events: none;
-}
-
-.btn-loading::after {
-  content: '';
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  top: 50%;
-  left: 50%;
-  margin-left: -10px;
-  margin-top: -10px;
-  border: 2px solid transparent;
-  border-top-color: white;
-  border-radius: 50%;
-  animation: rotate-icon 0.8s linear infinite;
-}
-
-/* ============== ICON ANIMATIONS ============== */
-.icon-hover-rotate:hover {
-  animation: rotate-icon 0.6s ease;
-}
-
-.icon-hover-bounce:hover {
-  animation: bounce-subtle 0.5s ease;
-}
-
-.icon-hover-scale:hover {
-  transform: scale(1.15);
-}
-
-.icon-hover-glow:hover {
-  filter: drop-shadow(0 0 8px var(--primary));
-}
-
-/* ============== SCROLL ANIMATIONS ============== */
-.animate-on-scroll {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
 .animate-on-scroll.visible {
@@ -1303,14 +2455,51 @@ select:focus-visible {
     font-size: 1rem;
   }
 
-  .partner-cta-panel {
-    flex-direction: column;
-    align-items: stretch;
-    text-align: center;
+}
+
+@media (max-width: 520px) {
+  .hero-visual-wrap {
+    min-height: 360px;
   }
 
-  .partner-primary-cta {
-    width: 100%;
+  .hero-phone-back img,
+  .hero-phone-front img {
+    max-width: min(78%, 250px);
+  }
+
+  .home-service-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .home-provider-panel {
+    min-height: auto;
+    padding: 22px;
+  }
+
+  .home-provider-step {
+    grid-template-columns: auto 1fr;
+  }
+
+  .home-provider-step svg {
+    display: none;
+  }
+
+  .app-info-service-grid,
+  .app-info-flow-grid,
+  .app-info-benefit-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .app-info-phone-scene {
+    min-height: 360px;
+  }
+
+  .app-info-phone-scene img {
+    max-width: min(58%, 230px);
+  }
+
+  .app-info-download-phones img {
+    max-width: 138px;
   }
 
 }
@@ -1323,4 +2512,185 @@ select:focus-visible {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* ===============================================
+   ACCORDION — الأسئلة الشائعة، مصدر واحد
+   =============================================== */
+.accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 860px;
+  margin-inline: auto;
+}
+
+.accordion-item {
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-card);
+  background: var(--card-bg);
+  box-shadow: var(--shadow-sm);
+  transition: border-color 250ms ease, box-shadow 250ms ease;
+}
+
+.accordion-item.is-open,
+.accordion-item:hover {
+  border-color: var(--primary);
+  box-shadow: var(--shadow-md);
+}
+
+.accordion-heading {
+  margin: 0;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+.accordion-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  min-height: 60px;
+  padding: 18px 22px;
+  border: 0;
+  border-radius: var(--radius-card);
+  background: transparent;
+  color: var(--text-dark);
+  font-family: inherit;
+  font-size: 1.02rem;
+  font-weight: 700;
+  line-height: 1.6;
+  text-align: start;
+}
+
+.accordion-icon {
+  position: relative;
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: rgba(143, 92, 177, 0.1);
+}
+
+.accordion-icon::before,
+.accordion-icon::after {
+  content: '';
+  position: absolute;
+  inset-inline-start: 50%;
+  top: 50%;
+  width: 12px;
+  height: 2px;
+  border-radius: 8px;
+  background: var(--primary);
+  transform: translate(-50%, -50%);
+  transition: transform 250ms ease, opacity 250ms ease;
+}
+
+.accordion-icon::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.accordion-item.is-open .accordion-icon::after {
+  opacity: 0;
+  transform: translate(-50%, -50%) rotate(0deg);
+}
+
+.accordion-panel {
+  padding: 0 22px 20px;
+}
+
+.accordion-panel p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.98rem;
+  line-height: 1.85;
+}
+
+/* ===============================================
+   حقول نموذج التواصل — لكل حقل تسمية مرئية الآن
+   =============================================== */
+.contact-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+}
+
+.contact-field label {
+  color: var(--text-dark);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.contact-form-status {
+  min-height: 1.4em;
+  margin: 0;
+  color: var(--primary-text);
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* حالات نموذج التواصل: خطأ صريح وملاحظة تشرح ما سيحدث عند الضغط */
+.contact-form-error {
+  margin: 0;
+  padding: 12px 16px;
+  border: 1px solid rgba(180, 40, 30, 0.35);
+  border-radius: 12px;
+  background: rgba(180, 40, 30, 0.08);
+  color: #b4281e;
+  font-size: 0.94rem;
+  font-weight: 600;
+  line-height: 1.7;
+}
+
+:root[data-theme='dark'] .contact-form-error,
+:root.dark .contact-form-error {
+  border-color: rgba(255, 157, 149, 0.35);
+  background: rgba(255, 157, 149, 0.1);
+  color: #ff9d95;
+}
+
+.contact-form-note {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.75;
+  text-align: center;
+}
+
+/* هياكل التحميل: نبضة هادئة تشير إلى أن شيئاً قادم، بلا وميض مزعج */
+.stat-skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(143, 92, 177, 0.07) 25%,
+    rgba(143, 92, 177, 0.14) 37%,
+    rgba(143, 92, 177, 0.07) 63%
+  );
+  background-size: 400% 100%;
+  animation: stat-shimmer 1.4s ease-in-out infinite;
+}
+
+@keyframes stat-shimmer {
+  0%   { background-position: 100% 50%; }
+  100% { background-position: 0 50%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stat-skeleton { animation: none; }
+}
+
+/* حالة «قريباً» ليست دعوة للنقر — فلا تُعرض كزر */
+.app-info-download-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 14px;
+  padding: 8px 16px;
+  border: 1px dashed var(--border-color);
+  border-radius: var(--radius-pill);
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  font-weight: 700;
 }

@@ -1,11 +1,10 @@
 {
+  "common": {
+    "loading": "Sending...",
+    "success": "Sent successfully ✓"
+  },
   "home": "Home",
-  "features": "Features",
-  "screenshot": "Screenshots",
-  "team": "Team",
   "contact": "Contact",
-  "download1": "Download",
-
   "appScreenshots": {
     "title": "App Screenshots",
     "subtitle": "Take a look at the Car Hero app and discover its powerful features",
@@ -13,23 +12,6 @@
     "feature2": "Real-time Tracking",
     "feature3": "24/7 Support"
   },
-
-  "hero": {
-    "title": {
-      "line1": "Your Roadside",
-      "line2": "Assistance",
-      "line3": "Partner"
-    },
-    "download": "Download"
-  },
-
-  "download": {
-    "title": "GET THE APP NOW",
-    "subtitle": "Download Car Hero from your favorite mobile store and stay prepared for any roadside emergency.",
-    "updates": "STAY UPDATED WITH NEW FEATURES",
-    "emailPlaceholder": "Enter your email address..."
-  },
-
   "footer": {
     "logoAlt": "Car Hero Logo",
     "tagline": "Your trusted roadside assistance partner. Providing fast, reliable, and professional help wherever you are.",
@@ -53,27 +35,20 @@
     "termsConditions": "Terms & Conditions",
     "copyright": "© 2025 Car Hero. All rights reserved."
   },
-
   "service": {
     "title": "Our Services",
     "subtitle": "Professional assistance to keep you moving safely",
-
     "feature1_title": "24/7 Road Assistance",
     "feature1_desc": "Expert mechanics available around the clock to help you on the road, ensuring you're never stranded.",
-
     "feature2_title": "Complete Services",
     "feature2_desc": "Full range of maintenance and repair services delivered wherever you are — fast, simple, and reliable.",
-
     "feature3_title": "Certified Mechanics",
     "feature3_desc": "Our professional, certified mechanics provide trusted, high-quality service you can count on.",
-
     "feature4_title": "Transparent Pricing",
     "feature4_desc": "Premium service at competitive prices. No hidden fees, just honest and transparent pricing.",
-
     "feature5_title": "Quality Guarantee",
     "feature5_desc": "We ensure quality and safety with every service. Our dedicated support team is always ready to help."
   },
-
   "why": {
     "title": "WHY CHOOSE CAR HERO?",
     "subtitle": "Experience the difference with our premium roadside assistance services.",
@@ -96,40 +71,6 @@
       }
     }
   },
-
-  "salient_title": "KEY FEATURES",
-  "salient_description": "We understand your vehicle is essential to your daily life. Our comprehensive roadside services are available anytime, anywhere — so you're never left stranded.",
-
-  "left_features": [
-    {
-      "title": "Car Breakdown",
-      "text": "Unexpected breakdowns happen. Our team responds quickly to get you back on the road safely."
-    },
-    {
-      "title": "Flat Tire",
-      "text": "Tire troubles? We provide fast tire change and repair services right where you are."
-    },
-    {
-      "title": "Fuel Delivery",
-      "text": "Ran out of fuel? We deliver fuel to your location so you can continue your journey."
-    }
-  ],
-
-  "right_features": [
-    {
-      "title": "Locked Out",
-      "text": "Keys locked inside? Our experts safely unlock your vehicle without damage."
-    },
-    {
-      "title": "Engine Trouble",
-      "text": "Smoke or warning lights? Park safely and request immediate expert assistance."
-    },
-    {
-      "title": "Battery Service",
-      "text": "Dead battery? We provide quick jumpstart and battery replacement services."
-    }
-  ],
-
   "contact1": {
     "title": "Get in Touch",
     "subtitle": "Have questions or interested in partnering with us? We'd love to hear from you!",
@@ -142,7 +83,6 @@
     "partner_title": "Become a Service Partner",
     "register_btn": "Register as Partner"
   },
-
   "contact_faq": [
     {
       "q": "How can I contact support?",
@@ -163,24 +103,20 @@
     {
       "q": "Can I schedule services in advance?",
       "a": "Yes! You can book scheduled maintenance or services through our app at your convenience."
-    }
-  ],
-
-  "partner_cards": [
-    {
-      "title": "Easy Registration",
-      "desc": "Download our partner app from Google Play. Receive service notifications for your area. Payments are processed after job approval — no upfront costs."
     },
     {
-      "title": "Increase Your Income",
-      "desc": "Garage owners, mechanics, spare parts shops, and insurance professionals can partner with Car Hero. Valid credentials required. Minimal startup investment."
+      "q": "Do I request service from the website or the app?",
+      "a": "The website explains the service and handles provider registration. Requesting and tracking a service happen in the app."
     },
     {
-      "title": "Flexible Schedule",
-      "desc": "You're in control. Accept jobs that fit your schedule. Maintain good ratings for priority access. Weekly payment settlements."
+      "q": "How is the provider who reaches me chosen?",
+      "a": "The request is routed to a provider near your location, available at the time of the request, who offers the service you selected."
+    },
+    {
+      "q": "How do I register my workshop or service as a provider?",
+      "a": "Use the “Join as Provider” button at the top of the site. You fill in your business details, services, and working hours, then the data is reviewed before you start receiving requests."
     }
   ],
-
   "stats": {
     "title": "Our Impact in Numbers",
     "subtitle": "Trusted by thousands across Syria to keep them moving.",
@@ -189,7 +125,6 @@
     "cities": "Cities Covered",
     "response_time": "Min Avg. Response"
   },
-
   "testimonials": {
     "title": "What Our Clients Say",
     "subtitle": "Real experiences from real users across the country",
@@ -213,132 +148,6 @@
         "rating": 5
       }
     ]
-  },
-
-  "team1": {
-    "title": "Our Team",
-    "subtitle": "Professional Automotive Service Experts",
-
-    "name1": "David Wilson",
-    "role1": "Senior Auto Technician",
-    "desc1": "Expert in diagnostics and engine repairs with 10+ years of automotive experience.",
-
-    "name2": "Adam Collins",
-    "role2": "Mechanical Specialist",
-    "desc2": "Specializing in electrical systems, braking systems, and ECU diagnostics.",
-
-    "name3": "Maya Johnson",
-    "role3": "Field Rescue Lead",
-    "desc3": "On-site emergency specialist for tires, towing coordination, and quick repairs."
-  },
-
-  "register": {
-    "notice": "Registration is currently available for service providers across Syria",
-    "title": "Partner Registration",
-    "subtitle": "Join our professional network of service providers",
-
-    "section_account": "Account Information",
-    "section_business": "Business Details",
-    "owner_name": "Full Owner Name",
-    "workshop_name": "Workshop / Business Name",
-    "email": "Business Email",
-    "email_helper": "We'll use this for official communications",
-    "password": "Create Password",
-    "password_hint": "Minimum 8 characters with numbers",
-
-    "location": "Location",
-    "location_details": "Location Details",
-    "service_area": "Select your service area...",
-    "select_region": "Select Region...",
-    "address": "Detailed Address",
-    "detailed_address": "Street address / Landmarks",
-    "set_location_map": "Set precise location on map",
-
-    "homs_city": "Homs City",
-    "rastan": "Rastan",
-    "talkalakh": "Talkalakh",
-    "qusayr": "Qusayr",
-
-    "whatsapp_number": "WhatsApp Number (for notifications)",
-    "facebook_page": "Facebook Business Page",
-    "instagram_link": "Instagram / Portfolio Link",
-
-    "services_title": "Services Offered",
-    "mechanics": "Mechanical Repair",
-    "electrical": "Electrical & Computer Diagnostics",
-    "towing": "Towing & Recovery",
-    "fuel": "Fuel Delivery",
-    "painting": "Body Work & Painting",
-    "tire": "Tire Services",
-
-    "amenities_title": "Available Facilities",
-    "facility_wifi": "Free WiFi",
-    "facility_waiting": "Air-conditioned Waiting Area",
-    "facility_parts": "OEM Parts Available",
-
-    "documents_title": "Documents & Media",
-    "documents_desc": "Please upload clear photos of your workshop (exterior and interior) and any business documentation.",
-    "upload_hint": "Click or drag files to upload",
-    "upload_types": "Logo, License, Workshop photos",
-    "upload_limit": "Max: 5MB (JPEG, PNG, WebP)",
-    "price_approx": "Approximate Price (SYP)",
-    "files_rejected": "file(s) rejected",
-    "files_uploaded": "file(s) uploaded successfully",
-
-    "experience": "Years of Experience",
-    "staff_title": "Number of Technicians",
-    "about": "Tell us about your workshop and expertise...",
-    "commercial_registration": "Commercial Registration (optional)",
-    "commercial_registration_tooltip": "Verify your business with registration number",
-
-    "schedule_title": "Weekly Schedule",
-    "open": "Open",
-    "closed": "Closed",
-    "from": "From",
-    "to": "To",
-    "emergency_active": "24/7 Emergency Support",
-
-    "step1_label": "Account Info",
-    "step2_label": "Contact & Location",
-    "step3_label": "Services",
-    "step4_label": "Schedule",
-    "step_info": "Step {{current}} of {{total}}",
-    "motivation_step_1": "Let's get started! 🚀",
-    "motivation_step_2": "Almost there! Tell us where you're located 📍",
-    "motivation_step_3": "Show us what you offer 🔧",
-    "motivation_step_4": "Final step! Set your hours ⏰",
-
-    "submit": "Submit Registration",
-    "submit_request": "Submit Registration Request",
-    "next": "Next",
-    "previous": "Previous",
-    "back": "← Back to Home",
-
-    "chars": "chars",
-    "number": "number",
-    "symbol": "symbol",
-
-    "validation": {
-      "ownerName_required": "Owner name is required",
-      "ownerName_min": "Name must be at least 3 characters",
-      "workshopName_required": "Workshop name is required",
-      "workshopName_min": "Workshop name must be at least 3 characters",
-      "email_required": "Email is required",
-      "email_invalid": "Please enter a valid email address",
-      "password_required": "Password is required",
-      "password_min": "Password must be at least 8 characters",
-      "password_pattern": "Password must contain letters and numbers",
-      "phone_invalid": "Invalid phone number (must start with 9)",
-      "region_required": "Service area is required",
-      "address_required": "Detailed address is required",
-      "services_required": "Please select at least one service",
-      "please_fix_errors": "Please fix errors before continuing"
-    },
-    "password_weak": "Weak",
-    "password_medium": "Medium",
-    "password_strong": "Strong",
-    "password_very_strong": "Very Strong",
-    "success": "Registration submitted successfully!"
   },
   "how_it_works": {
     "title": "How Car Hero Works",
@@ -371,7 +180,6 @@
     "title": "Service Coverage Map",
     "subtitle": "Explore our interactive map to see service availability across all Syrian governorates. We are expanding rapidly to reach you wherever you are."
   },
-
   "pricing": {
     "title": "User Plans",
     "subtitle": "Choose the plan that fits your driving needs.",
@@ -396,8 +204,8 @@
     },
     "premium": {
       "name": "Premium Plan",
-      "price_monthly": "5",
-      "price_yearly": "50",
+      "price_monthly": "15,000",
+      "price_yearly": "150,000",
       "features": [
         "Full Services (Maintenance, Wash, etc.)",
         "Double Reward Points",
@@ -406,6 +214,17 @@
         "Unlimited Vehicles",
         "1 Free Annual Service",
         "Highest Priority"
+      ]
+    },
+    "compare": {
+      "rows": [
+        "Service scope",
+        "Reward points",
+        "Provider communication",
+        "Provider matching",
+        "Vehicles",
+        "Request priority",
+        "Free annual service"
       ]
     }
   },

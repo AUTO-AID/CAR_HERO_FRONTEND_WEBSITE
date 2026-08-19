@@ -1,308 +1,189 @@
-// import React from "react";
-// import { Box, Button, Typography, Container } from "@mui/material";
-// import { motion } from "framer-motion";
-// import AndroidIcon from "@mui/icons-material/Android";
-// import roadBg from "../assets/header-bg.jpg";
-
-// const HeroSection = () => {
-//   return (
-//     <Box
-//     id="home" 
-//       sx={{
-//             // width: "100vw",
-//        maxWidth: "100%",
-//         backgroundImage: `linear-gradient(to right, #B57EDC, #111111), url(${roadBg})`,
-//         backgroundBlendMode: "overlay",
-//         backgroundSize: "cover",
-//         backgroundPosition: "center",
-//         color: "#ffffff",
-//         minHeight: "100vh",
-//         display: "flex",
-//         alignItems: "center",
-//         position: "relative",
-//         overflow: "hidden",
-//         padding: { xs: "60px 0", md: 0 },
-//       }}
-//     >
-//       <Container
-//         sx={{
-//           display: "flex",
-//           flexDirection: { xs: "column", md: "row" },
-//           justifyContent: "space-between",
-//           alignItems: { xs: "center", md: "center" },
-//           gap: 5,
-//           zIndex: 2,
-//           textAlign: { xs: "center", md: "left" },
-//         }}
-//       >
-//         {/* Text Section */}
-//         <Box sx={{ maxWidth: 600 }}>
-//           <motion.div
-//             initial={{ opacity: 0, y: 40 }}
-//             animate={{ opacity: 1, y: 0 }}
-//             transition={{ duration: 1 }}
-//           >
-//             <Typography
-//               variant="h2"
-//               sx={{
-//                 color: "#ffffff",
-//                 fontSize: { xs: "34px", sm: "40px", md: "64px" },
-//                 lineHeight: { xs: "45px", sm: "55px", md: "85px" },
-//                 fontWeight: 700,
-//               }}
-//             >
-//               Your assistance <br /> when you are <br /> on the Road
-//             </Typography>
-//           </motion.div>
-
-//           <motion.div
-//             initial={{ opacity: 0, y: 40 }}
-//             animate={{ opacity: 1, y: 0 }}
-//             transition={{ delay: 0.5, duration: 1 }}
-//           >
-//             <Box
-//               sx={{
-//                 display: "flex",
-//                 justifyContent: { xs: "center", md: "flex-start" },
-//                 gap: 2,
-//                 mt: 5,
-//               }}
-//             >
-//               <Button
-//                 variant="outlined"
-//                 startIcon={<AndroidIcon sx={{ fontSize: 26 }} />}
-//                 sx={{
-//                   padding: { xs: "12px 30px", md: "14px 40px" },
-//                   color: "#fff",
-//                   textTransform: "uppercase",
-//                   letterSpacing: "1.5px",
-//                   borderColor: "#fff",
-//                   borderWidth: "2px",
-//                   borderRadius: "30px",
-//                   fontWeight: 500,
-//                   fontSize: { xs: "14px", md: "16px" },
-//                   transition: "all 0.3s ease",
-//                   "&:hover": {
-//                     backgroundColor: "#fff",
-//                     color: "#B57EDC",
-//                     borderColor: "#fff",
-//                   },
-//                 }}
-//               >
-//                 Download
-//               </Button>
-//             </Box>
-//           </motion.div>
-//         </Box>
-//       </Container>
-//     </Box>
-//   );
-// };
-
-// export default HeroSection;
 import React from "react";
-import { Box, Button, Typography, Container } from "@mui/material";
-import { motion } from "framer-motion";
-import AndroidIcon from "@mui/icons-material/Android";
-import roadBg from "@/assets/header-bg.jpg";
-import sideImg from "@/assets/hero-pg.png";
-import backImg from "@/assets/hero-pg2.png";
-import { useTranslation } from "react-i18next"; 
+import { Box, Button, Tooltip, Typography, useMediaQuery } from "@mui/material";
+import { motion as Motion } from "framer-motion";
+import { Android, Handshake, KeyboardArrowDown } from "@mui/icons-material";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import HeroTrustStrip from "@/presentation/components/landing/HeroTrustStrip";
+import roadBg from "@/assets/header-bg.webp";
+import roadBgSmall from "@/assets/header-bg-sm.webp";
+import sideImg from "@/assets/hero-pg.webp";
+import backImg from "@/assets/hero-pg2.webp";
+
+const heroCopy = {
+  ar: {
+    title: "Car Hero",
+    // العنوان الأول يحمل الوعد لا الاسم وحده: محرّكات البحث وقارئ الشاشة
+    // يقرآن «Car Hero» فقط فلا يعرفان ما الذي تقدّمه الصفحة.
+    tagline: "مساعدة الطريق تصل إليك أينما كنت",
+    subtitle: "اطلب خدمة لسيارتك من موقعك، وسيصلك أقرب مزود متاح بسرعة.",
+    primary: "تعرّف على التطبيق",
+    secondary: "انضم كمزود",
+    providerTooltip: "سجّل ورشتك أو خدمتك لتستقبل طلبات السائقين عبر Car Hero.",
+    scrollCue: "كيف تعمل الخدمة",
+  },
+  en: {
+    title: "Car Hero",
+    tagline: "Roadside help that reaches you wherever you are",
+    subtitle: "A platform that connects drivers with the nearest available provider for roadside emergencies and scheduled vehicle services.",
+    primary: "Explore the app",
+    secondary: "Join as Provider",
+    providerTooltip: "Register your workshop or service to receive driver requests through Car Hero.",
+    scrollCue: "See how it works",
+  },
+};
 
 const HeroSection = () => {
-  const { t } = useTranslation(); 
+  const { i18n } = useTranslation();
+  const navigate = useNavigate();
+  const isArabic = i18n.language === "ar";
+  const text = isArabic ? heroCopy.ar : heroCopy.en;
+  // الطفو اللانهائي يُوقَف لمن يطلب تقليل الحركة — لا يكفي إيقافه في CSS
+  // لأن framer-motion يكتب التحويل مباشرةً على النمط السطري.
+  const reducedMotion = useMediaQuery("(prefers-reduced-motion: reduce)");
+  const float = (distance, duration) => (reducedMotion ? {} : { y: [0, distance, 0], transition: { duration, repeat: Infinity, ease: "easeInOut" } });
 
   return (
     <Box
       id="home"
+      dir={isArabic ? "rtl" : "ltr"}
       sx={{
         maxWidth: "100%",
-        backgroundImage: `linear-gradient(to right, var(--primary), var(--bg-light)), url(${roadBg})`,
-        backgroundBlendMode: "overlay",
+        // نسخة الجوال ٣٧ ك.ب مقابل ١٥٣ للنسخة العريضة — والصورة تقع خلف
+        // تدرّج معتم بنسبة ٧٥٪ فلا يُلحَظ فرق التفاصيل أصلاً.
+        backgroundImage: `linear-gradient(135deg, rgba(13, 8, 21, 0.72), rgba(80, 38, 116, 0.78)), url(${roadBgSmall})`,
+        "@media (min-width: 900px)": {
+          backgroundImage: `linear-gradient(135deg, rgba(13, 8, 21, 0.72), rgba(80, 38, 116, 0.78)), url(${roadBg})`,
+        },
         backgroundSize: "cover",
         backgroundPosition: "center",
         color: "var(--text-light)",
-        minHeight: "100dvh",
-        "@media (min-width: 1280px)": {
-          height: "calc(100dvh / 0.85)",
-          minHeight: "calc(100dvh / 0.85)",
-        },
+        minHeight: "min(860px, 100dvh)",
         display: "flex",
         alignItems: "center",
         position: "relative",
         overflow: "hidden",
-        padding: { xs: "60px 0", md: 0 },
+        // الحشوة السفلية تحجز مكان إشارة التمرير فلا تركب على شريط الثقة
+        padding: { xs: "112px 0 56px", md: "118px 0 104px" },
       }}
     >
-      <Container
+      {/* الحاوية من الرمز الموحّد: حافة Hero اليسرى صارت على محاذاة حواف
+          الأقسام العريضة تحتها بدل أن تنفرد بـ maxWidth="xl" وحشوة خاصة */}
+      <Box
+        className="section-container is-wide"
         sx={{
-          display: "flex",
-          flexDirection: { xs: "column", md: "row" },
-          justifyContent: "space-between",
+          display: "grid",
+          gridTemplateColumns: { xs: "1fr", lg: "minmax(0, 0.95fr) minmax(420px, 0.8fr)" },
           alignItems: "center",
-          gap: 5,
+          gap: { xs: 5, lg: 8 },
           zIndex: 2,
-          textAlign: { xs: "center", md: "left" },
         }}
       >
-        {/* TEXT */}
-        <Box sx={{ maxWidth: 600 }}>
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-          >
+        <Box sx={{ maxWidth: 720, textAlign: { xs: "center", lg: isArabic ? "right" : "left" } }}>
+          <Motion.div initial={{ opacity: 0, y: 28 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
             <Typography
-              variant="h2"
+              component="h1"
+              className="hero-brand-title"
               sx={{
-                color: "inherit",
-                fontSize: { xs: "34px", sm: "40px", md: "64px" },
-                lineHeight: { xs: "45px", sm: "55px", md: "85px" },
+                fontSize: { xs: "3.2rem", sm: "4.3rem", lg: "6.1rem" },
+                lineHeight: 0.95,
                 fontWeight: 700,
+                letterSpacing: 0,
+                mb: 2.5,
               }}
             >
-              {t("hero.title.line1")} <br />
-              {t("hero.title.line2")} <br />
-              {t("hero.title.line3")}
+              <span className="hero-brand-word">{text.title}</span>
+              {/* الوعد جزء من h1 دلالياً، وبحجم يناسب دوره بصرياً */}
+              <span className="hero-tagline">{text.tagline}</span>
             </Typography>
-          </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 1 }}
-          >
+            <Typography
+              className={isArabic ? "hero-subtitle-text hero-subtitle-text-rtl" : "hero-subtitle-text"}
+              dir={isArabic ? "rtl" : "ltr"}
+              sx={{
+                maxWidth: 650,
+                mx: { xs: "auto", lg: 0 },
+                color: "rgba(255,255,255,0.82)",
+                fontSize: { xs: "1.05rem", md: "1.28rem" },
+                lineHeight: 1.9,
+                fontWeight: 600,
+              }}
+            >
+              {text.subtitle}
+            </Typography>
+          </Motion.div>
+
+          <Motion.div initial={{ opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.18, duration: 0.65 }}>
             <Box
               sx={{
                 display: "flex",
-                justifyContent: { xs: "center", md: "flex-start" },
-                mt: 5,
+                flexWrap: "wrap",
+                justifyContent: { xs: "center", lg: "flex-start" },
+                gap: 1.5,
+                mt: 4,
               }}
             >
               <Button
                 variant="contained"
-                startIcon={<AndroidIcon sx={{ fontSize: 26 }} />}
-                sx={{
-                  padding: { xs: "16px 36px", md: "18px 48px" },
-                  background: "var(--gradient)",
-                  color: "var(--text-light)",
-                  textTransform: "uppercase",
-                  letterSpacing: "1.5px",
-                  borderRadius: "50px",
-                  fontWeight: 700,
-                  fontSize: { xs: "16px", md: "18px" },
-                  boxShadow: "0 8px 24px rgba(143, 92, 177, 0.4)",
-                  transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-                  position: "relative",
-                  overflow: "hidden",
-                  animation: "pulse-glow 2.5s ease-in-out infinite",
-                  "&::before": {
-                    content: '""',
-                    position: "absolute",
-                    top: 0,
-                    left: "-100%",
-                    width: "100%",
-                    height: "100%",
-                    background: "linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent)",
-                    transition: "left 0.6s ease",
-                  },
-                  "&:hover": {
-                    background: "var(--gradient)",
-                    transform: "translateY(-5px) scale(1.05)",
-                    boxShadow: "0 16px 40px rgba(143, 92, 177, 0.5)",
-                    animation: "none",
-                    "&::before": {
-                      left: "100%",
-                    },
-                  },
-                  "&:active": {
-                    transform: "translateY(-2px) scale(1.02)",
-                  },
-                }}
+                startIcon={<Android />}
+                className="hero-main-button"
+                onClick={() => navigate("/app")}
               >
-                {t("hero.download")}
+                {text.primary}
               </Button>
+              <Tooltip title={text.providerTooltip} arrow placement="top" enterDelay={250}>
+                <Button
+                  variant="outlined"
+                  startIcon={<Handshake />}
+                  className="hero-outline-button"
+                  onClick={() => navigate("/register")}
+                >
+                  {text.secondary}
+                </Button>
+              </Tooltip>
             </Box>
-          </motion.div>
+          </Motion.div>
+
+          {/* الدليل قبل الطلب: أربعة مؤشّرات فوق الطيّة بدل أن ينتظر الزائر
+              ثلاثة آلاف بكسل من التمرير ليصل إلى أول سبب للثقة */}
+          <Motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.32, duration: 0.6 }}>
+            <HeroTrustStrip />
+          </Motion.div>
         </Box>
 
-        {/* IMAGES */}
-        <Box
-          sx={{
-            position: "relative",
-            width: "420px",
-            height: "500px",
-            display: { xs: "none", sm: "none", md: "none", lg: "block" },
-          }}
-        >
-          {/* Back Phone */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ 
-              opacity: 1, 
-              y: [0, -20, 0] // Floating effect
-            }}
-            transition={{ 
-              opacity: { duration: 1 },
-              y: { 
-                duration: 5, 
-                repeat: Infinity, 
-                ease: "easeInOut" 
-              }
-            }}
+        <Box className="hero-visual-wrap">
+          <Motion.div
+            className="hero-phone-back"
+            initial={{ opacity: 0, y: 42, rotate: -7 }}
+            animate={{ opacity: 0.72, rotate: -7, ...float(-12, 5) }}
+            transition={{ opacity: { duration: 0.65 }, y: reducedMotion ? {} : { duration: 5, repeat: Infinity, ease: "easeInOut" } }}
           >
-            <Box
-              component="img"
-              src={backImg}
-              alt="Hero Back Phone"
-              sx={{
-                position: "absolute",
-                top: "40px",
-                left: "40px",
-                width: "70%",
-                opacity: 0.7,
-                transform: "rotate(-5deg)",
-                filter: "blur(1px)",
-              }}
-            />
-          </motion.div>
-
-          {/* Front Phone */}
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ 
-              opacity: 1, 
-              y: [0, -15, 0] // Floating effect
-            }}
-            transition={{ 
-              opacity: { duration: 1, delay: 0.2 },
-              y: { 
-                duration: 4, 
-                repeat: Infinity, 
-                ease: "easeInOut",
-                delay: 0.2
-              }
-            }}
+            <Box component="img" src={backImg} alt="" aria-hidden="true" width={720} height={1080} fetchPriority="high" decoding="async" />
+          </Motion.div>
+          <Motion.div
+            className="hero-phone-front"
+            initial={{ opacity: 0, y: 42, rotate: 3 }}
+            animate={{ opacity: 1, rotate: 3, ...float(-10, 4.5) }}
+            transition={{ opacity: { duration: 0.65, delay: 0.1 }, y: reducedMotion ? {} : { duration: 4.5, repeat: Infinity, ease: "easeInOut" } }}
           >
-            <Box
-              component="img"
-              src={sideImg}
-              alt="Hero Front Phone"
-              sx={{
-                position: "absolute",
-                top: 0,
-                left: "100px",
-                width: "85%",
-                zIndex: 2,
-                transform: "rotate(2deg)",
-              }}
-            />
-          </motion.div>
+            <Box component="img" src={sideImg} alt="" aria-hidden="true" width={720} height={1080} fetchPriority="high" decoding="async" />
+          </Motion.div>
         </Box>
-      </Container>
+      </Box>
+
+      {/* إشارة أن تحت الطيّة محتوى: الـHero يملأ الشاشة كاملة فلا حافة مقطوعة
+          تدل على الاستمرار. الرابط حقيقي ويعمل بلوحة المفاتيح. */}
+      <Box
+        component="a"
+        href="#how-it-works"
+        className="hero-scroll-cue"
+        aria-label={text.scrollCue}
+      >
+        <span>{text.scrollCue}</span>
+        <KeyboardArrowDown fontSize="small" aria-hidden="true" />
+      </Box>
     </Box>
   );
 };
 
 export default HeroSection;
-

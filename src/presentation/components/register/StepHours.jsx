@@ -149,18 +149,18 @@ const StepHours = ({ formData, updateFormData, nextStep, prevStep, lang, t }) =>
   };
 
   return (
-    <div className="space-y-5 lg:space-y-6 animate-in zoom-in-95 duration-700">
+    <div className="space-y-5 lg:space-y-6 animate-in zoom-in-95 duration-500">
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-4">
-          <div className="p-3 bg-emerald-500/10 dark:bg-[#8f5cb1]/10 rounded-2xl text-emerald-600 dark:text-[#8f5cb1] shadow-sm">
+          <div className="p-3 bg-[var(--primary)]/10 rounded-2xl text-[var(--primary)] shadow-sm">
             <Clock size={26} />
           </div>
-          <h2 className="text-2xl font-black text-[var(--text-dark)] uppercase tracking-tight">{t.hours.title}</h2>
+          <h2 className="text-2xl font-bold text-[var(--text-dark)] uppercase tracking-tight">{t.hours.title}</h2>
         </div>
       </div>
 
       {error && (
-        <div className="p-4 bg-rose-500/10 border border-rose-500/20 text-rose-500 rounded-xl text-center font-bold">
+        <div role="alert" className="p-4 bg-rose-500/10 border border-rose-500/20 text-rose-500 rounded-xl text-center font-bold">
           {error}
         </div>
       )}
@@ -174,36 +174,43 @@ const StepHours = ({ formData, updateFormData, nextStep, prevStep, lang, t }) =>
           }`}>
             <div className="flex items-center justify-between sm:justify-start gap-3">
               <div className="flex items-center gap-2.5">
-                <div className={`w-3.5 h-3.5 rounded-full transition-all duration-500 ${config.closed ? 'bg-rose-500 grayscale' : 'bg-emerald-500 dark:bg-[#8f5cb1] shadow-[0_0_12px_rgba(16,185,129,0.3)] dark:shadow-[0_0_12px_#8f5cb1] animate-pulse'}`}></div>
+                <div className={`w-3.5 h-3.5 rounded-full transition-all duration-500 ${config.closed ? 'bg-rose-500 grayscale' : 'bg-emerald-500 dark:bg-[var(--primary)] shadow-[0_0_12px_rgba(16,185,129,0.3)] dark:shadow-[0_0_12px_var(--primary)] animate-pulse'}`}></div>
                 <span className={`font-bold text-sm uppercase tracking-tight ${config.closed ? 'text-[var(--text-muted)]' : 'text-[var(--text-dark)]'}`}>{t.hours.days[day] || day}</span>
               </div>
             </div>
             
-            <div className={`flex items-center justify-center gap-2.5 lg:gap-4 transition-all duration-700 ${config.closed ? 'grayscale pointer-events-none opacity-20' : ''}`}>
+            <div className={`flex items-center justify-center gap-2.5 lg:gap-4 transition-all duration-500 ${config.closed ? 'grayscale pointer-events-none opacity-20' : ''}`}>
               <div className="relative flex-1 max-w-[150px]">
-                <input 
-                  type="time" 
+                {/* أربع عشرة خانة وقت كانت بلا اسم: قارئ الشاشة يعلن «الوقت»
+                    أربع عشرة مرّة بلا ذكر اليوم ولا إن كانت فتحاً أم إغلاقاً */}
+                <input
+                  type="time"
+                  aria-label={`${t.hours.days[day] || day} — ${lang === 'ar' ? 'وقت الفتح' : 'opening time'}`}
                   disabled={config.closed}
                   value={config.start}
                   onChange={(e) => handleTimeChange(day, 'start', e.target.value)}
-                  className="w-full bg-[var(--input-bg)] border border-[var(--border-color)] rounded-lg px-2.5 py-2 text-xs font-bold text-[var(--text-dark)] outline-none focus:border-[#8f5cb1] transition-colors"
+                  className="h-11 w-full bg-[var(--input-bg)] border border-[var(--border-color)] rounded-lg px-2.5 text-xs font-bold text-[var(--text-dark)] outline-none focus:border-[var(--primary)] focus:ring-4 focus:ring-[var(--primary-a10)] transition-colors"
                 />
               </div>
               <span className="text-[var(--text-muted)] text-xs font-bold uppercase">{t.hours.to}</span>
               <div className="relative flex-1 max-w-[150px]">
-                <input 
-                  type="time" 
+                <input
+                  type="time"
+                  aria-label={`${t.hours.days[day] || day} — ${lang === 'ar' ? 'وقت الإغلاق' : 'closing time'}`}
                   disabled={config.closed}
                   value={config.end}
                   onChange={(e) => handleTimeChange(day, 'end', e.target.value)}
-                  className="w-full bg-[var(--input-bg)] border border-[var(--border-color)] rounded-lg px-2.5 py-2 text-xs font-bold text-[var(--text-dark)] outline-none focus:border-[#8f5cb1] transition-colors"
+                  className="h-11 w-full bg-[var(--input-bg)] border border-[var(--border-color)] rounded-lg px-2.5 text-xs font-bold text-[var(--text-dark)] outline-none focus:border-[var(--primary)] focus:ring-4 focus:ring-[var(--primary-a10)] transition-colors"
                 />
               </div>
             </div>
 
-            <button 
+            {/* الزرّ يبدّل حالة اليوم، فحالته المضغوطة جزء من معناه */}
+            <button
+              type="button"
+              aria-pressed={config.closed}
               onClick={() => handleToggle(day)}
-              className={`w-full sm:w-auto px-4 py-2 rounded-lg text-[10px] font-bold transition-all border duration-300 uppercase ${config.closed ? 'bg-[var(--input-bg)] text-[var(--text-muted)] border-[var(--border-color)]' : 'bg-rose-500/5 text-rose-500 dark:text-rose-400 border-rose-500/10'}`}
+              className={`min-h-[44px] w-full sm:w-auto px-4 py-2 rounded-lg text-[11px] font-bold transition-all border duration-300 ${config.closed ? 'bg-[var(--input-bg)] text-[var(--text-muted)] border-[var(--border-color)]' : 'bg-rose-500/5 text-rose-500 dark:text-rose-400 border-rose-500/10'}`}
             >
               {config.closed ? t.hours.closed : t.hours.disable}
             </button>
@@ -212,10 +219,11 @@ const StepHours = ({ formData, updateFormData, nextStep, prevStep, lang, t }) =>
       </div>
 
       <div className="flex flex-col sm:flex-row gap-4 pt-4">
-        <button 
+        <button
+          type="button"
           onClick={handleSubmit}
           disabled={isSubmitting}
-          className={`order-1 flex-1 group relative inline-flex items-center justify-center gap-3 px-12 py-3.5 bg-emerald-600 dark:bg-[#8f5cb1] hover:bg-emerald-700 dark:hover:bg-[#d1b3ff] text-white font-black rounded-[12px] shadow-2xl shadow-emerald-600/20 dark:shadow-[#8f5cb1]/20 transition-all active:scale-[0.98] ${isSubmitting ? 'opacity-70 pointer-events-none' : ''}`}
+          className={`order-1 flex-1 group relative inline-flex items-center justify-center gap-3 px-12 py-3.5 bg-[var(--primary-surface)] hover:bg-[var(--primary-surface-hover)] text-[var(--on-primary)] font-bold rounded-[12px] shadow-2xl shadow-[var(--shadow-hover)] transition-all active:scale-[0.98] ${isSubmitting ? 'opacity-70 pointer-events-none' : ''}`}
         >
           {isSubmitting ? (
             <Loader2 className="animate-spin w-5 h-5" />
@@ -228,7 +236,7 @@ const StepHours = ({ formData, updateFormData, nextStep, prevStep, lang, t }) =>
         </button>
         <button 
           onClick={prevStep}
-          className="order-2 px-10 py-3.5 text-slate-500 dark:text-white/40 hover:text-slate-800 dark:hover:text-white font-black transition-all text-center border-2 border-slate-200/50 dark:border-white/5 rounded-[12px] hover:bg-slate-200/50 dark:hover:bg-white/5 uppercase tracking-widest text-[10px]"
+          className="order-2 px-10 py-3.5 text-[var(--text-muted)] hover:text-[var(--primary)] font-bold transition-all text-center border-2 border-[var(--border-color)] rounded-[12px] hover:bg-[var(--bg-section-alt)] uppercase tracking-widest text-[10px]"
         >
           {t.common.prev}
         </button>

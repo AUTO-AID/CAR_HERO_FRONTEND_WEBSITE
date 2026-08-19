@@ -2,13 +2,12 @@ import React, { useState } from "react";
 import {
   Box,
   Typography,
-  Container,
   Grid,
   Paper,
   Switch,
   Tooltip,
 } from "@mui/material";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion as Motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import {
   CheckCircle,
@@ -31,42 +30,18 @@ const PricingPlans = () => {
   const premiumFeatures = t("pricing.premium.features", {
     returnObjects: true,
   });
+  // كانت عناوين الصفوف تُقرأ من `pricing.free.features.N` — أي من نصّ خانة
+  // «المجاني» ذاتها، فيظهر النص نفسه في عمودين متجاورين ويفقد الجدول
+  // وظيفته. العناوين الآن مفاتيح مستقلة تصف الميزة لا الخطة.
+  const rowLabels = t("pricing.compare.rows", { returnObjects: true });
   const comparisonRows = [
-    {
-      label: t("pricing.free.features.0", "Services"),
-      free: freeFeatures[0],
-      premium: premiumFeatures[0],
-    },
-    {
-      label: t("pricing.free.features.1", "Rewards"),
-      free: freeFeatures[1],
-      premium: premiumFeatures[1],
-    },
-    {
-      label: t("pricing.free.features.2", "Chat"),
-      free: freeFeatures[2],
-      premium: premiumFeatures[2],
-    },
-    {
-      label: t("pricing.free.features.3", "Matching"),
-      free: freeFeatures[3],
-      premium: premiumFeatures[3],
-    },
-    {
-      label: t("pricing.free.features.4", "Vehicles"),
-      free: freeFeatures[4],
-      premium: premiumFeatures[4],
-    },
-    {
-      label: t("pricing.free.features.5", "Priority"),
-      free: freeFeatures[5],
-      premium: premiumFeatures[6],
-    },
-    {
-      label: premiumFeatures[5],
-      free: "—",
-      premium: premiumFeatures[5],
-    },
+    { label: rowLabels[0], free: freeFeatures[0], premium: premiumFeatures[0] },
+    { label: rowLabels[1], free: freeFeatures[1], premium: premiumFeatures[1] },
+    { label: rowLabels[2], free: freeFeatures[2], premium: premiumFeatures[2] },
+    { label: rowLabels[3], free: freeFeatures[3], premium: premiumFeatures[3] },
+    { label: rowLabels[4], free: freeFeatures[4], premium: premiumFeatures[4] },
+    { label: rowLabels[5], free: freeFeatures[5], premium: premiumFeatures[6] },
+    { label: rowLabels[6], free: "—", premium: premiumFeatures[5] },
   ];
 
   const cardVariants = {
@@ -86,7 +61,7 @@ const PricingPlans = () => {
         py: { xs: 8, md: 15 },
         px: { xs: 2, sm: 4, md: 8 },
         background: "var(--bg-light)",
-        transition: "background-color 0.4s ease",
+        transition: "background-color 400ms ease",
         width: "100%",
         position: "relative",
         overflow: "hidden",
@@ -106,36 +81,26 @@ const PricingPlans = () => {
         }}
       />
 
-      <Container maxWidth="lg">
+      <Box className="section-container">
         {/* Header */}
         <Box sx={{ textAlign: "center", mb: 8 }}>
-          <motion.div
+          <Motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
+            {/* أوّل قسم في صفحة الأسعار: كانت الصفحة تبدأ من h2 بلا h1 */}
             <Typography
-              variant="h3"
-              sx={{
-                fontWeight: 800,
-                color: "var(--primary)",
-                mb: 2,
-                fontSize: { xs: "32px", sm: "42px", md: "48px" },
-                letterSpacing: "-1px",
-              }}
+              component="h1"
+              className="section-title"
+              sx={{ mx: "auto", mb: 2.5, display: "block", width: "fit-content" }}
             >
               {t("pricing.title")}
             </Typography>
             <Typography
-              sx={{
-                color: "var(--text-muted)",
-                fontSize: "1.1rem",
-                maxWidth: 600,
-                mx: "auto",
-                lineHeight: 1.7,
-                mb: 4,
-              }}
+              className="section-subtitle"
+              sx={{ mx: "auto", mb: 4 }}
             >
               {t("pricing.subtitle")}
             </Typography>
@@ -148,7 +113,7 @@ const PricingPlans = () => {
                   alignItems: "center",
                   backgroundColor: "var(--card-bg)",
                   padding: "4px",
-                  borderRadius: "100px",
+                  borderRadius: "999px",
                   position: "relative",
                   border: "1px solid var(--border-color)",
                   minWidth: "240px",
@@ -156,7 +121,7 @@ const PricingPlans = () => {
               >
                 {/* Sliding Background */}
                 <Box
-                  component={motion.div}
+                  component={Motion.div}
                   animate={{
                     left: isRtl
                       ? isYearly
@@ -173,7 +138,7 @@ const PricingPlans = () => {
                     bottom: "4px",
                     width: "calc(50% - 6px)",
                     backgroundColor: "var(--primary)",
-                    borderRadius: "100px",
+                    borderRadius: "999px",
                     zIndex: 1,
                   }}
                 />
@@ -190,7 +155,7 @@ const PricingPlans = () => {
                     zIndex: 2,
                     color: !isYearly ? "#fff" : "var(--text-muted)",
                     fontWeight: 700,
-                    transition: "color 0.3s ease",
+                    transition: "color 250ms ease",
                     cursor: "pointer",
                     userSelect: "none",
                   }}
@@ -210,7 +175,7 @@ const PricingPlans = () => {
                     zIndex: 2,
                     color: isYearly ? "#fff" : "var(--text-muted)",
                     fontWeight: 700,
-                    transition: "color 0.3s ease",
+                    transition: "color 250ms ease",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -222,13 +187,13 @@ const PricingPlans = () => {
                   {t("pricing.yearly")}
                   <Box
                     sx={{
-                      background: "#10b981",
+                      background: "var(--status-success)",
                       color: "#fff",
                       px: 0.8,
                       py: 0.2,
-                      borderRadius: "4px",
+                      borderRadius: "8px",
                       fontSize: "11px",
-                      fontWeight: 800,
+                      fontWeight: 700,
                     }}
                   >
                     -20%
@@ -236,14 +201,14 @@ const PricingPlans = () => {
                 </Box>
               </Box>
             </Box>
-          </motion.div>
+          </Motion.div>
         </Box>
 
         {/* Mobile Comparison Table */}
         <Box
           sx={{
             display: { xs: "block", md: "none" },
-            borderRadius: "22px",
+            borderRadius: "20px",
             overflow: "hidden",
             border: "1px solid var(--border-color)",
             background: "var(--card-bg)",
@@ -261,10 +226,10 @@ const PricingPlans = () => {
           >
             <Box sx={{ p: 1.5 }} />
             <Box sx={{ p: 1.5, textAlign: "center" }}>
-              <Typography sx={{ color: "var(--text-dark)", fontWeight: 800, fontSize: "0.86rem" }}>
+              <Typography sx={{ color: "var(--text-dark)", fontWeight: 700, fontSize: "0.86rem" }}>
                 {t("pricing.free.name")}
               </Typography>
-              <Typography sx={{ color: "var(--text-dark)", fontWeight: 900, fontSize: "1.45rem", lineHeight: 1.2 }}>
+              <Typography sx={{ color: "var(--text-dark)", fontWeight: 700, fontSize: "1.45rem", lineHeight: 1.2 }}>
                 $0
               </Typography>
             </Box>
@@ -275,11 +240,13 @@ const PricingPlans = () => {
                 background: "rgba(143, 92, 177, 0.14)",
               }}
             >
-              <Typography sx={{ color: "var(--primary)", fontWeight: 800, fontSize: "0.86rem" }}>
+              <Typography sx={{ color: "var(--primary-text)", fontWeight: 700, fontSize: "0.86rem" }}>
                 {t("pricing.premium.name")}
               </Typography>
-              <Typography sx={{ color: "var(--text-dark)", fontWeight: 900, fontSize: "1.45rem", lineHeight: 1.2 }}>
-                ${isYearly ? t("pricing.premium.price_yearly") : t("pricing.premium.price_monthly")}
+              <Typography sx={{ color: "var(--text-dark)", fontWeight: 700, fontSize: "1.45rem", lineHeight: 1.2 }}>
+                {isRtl ? "" : "SYP "}
+                {isYearly ? t("pricing.premium.price_yearly") : t("pricing.premium.price_monthly")}
+                {isRtl ? " ل.س" : ""}
               </Typography>
             </Box>
           </Box>
@@ -311,7 +278,7 @@ const PricingPlans = () => {
                   }}
                 >
                   {value === "—" ? (
-                    <Typography sx={{ color: "var(--text-muted)", opacity: 0.55, fontWeight: 800 }}>—</Typography>
+                    <Typography sx={{ color: "var(--text-muted)", opacity: 0.55, fontWeight: 700 }}>—</Typography>
                   ) : (
                     <Typography
                       sx={{
@@ -339,14 +306,8 @@ const PricingPlans = () => {
             }}
           >
             <button
-              className="register-btn"
-              style={{
-                width: "100%",
-                padding: "10px 6px",
-                fontSize: "12px",
-                opacity: 0.85,
-                background: "var(--text-muted)",
-              }}
+              className="register-btn is-secondary"
+              style={{ width: "100%", padding: "10px 6px", fontSize: "12px" }}
             >
               {t("pricing.cta_app")}
             </button>
@@ -371,7 +332,7 @@ const PricingPlans = () => {
             size={{ xs: 6, sm: 5, md: 5, lg: 4.5 }}
             sx={{ display: "flex", justifyContent: "center" }}
           >
-            <motion.div
+            <Motion.div
               variants={cardVariants}
               initial="hidden"
               whileInView="visible"
@@ -392,7 +353,7 @@ const PricingPlans = () => {
                   backgroundColor: "var(--card-bg)",
                   border: "1px solid var(--border-color)",
                   transition:
-                    "all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+                    "all 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275)",
                   position: "relative",
                   "&:hover": {
                     borderColor: "var(--primary)",
@@ -401,7 +362,7 @@ const PricingPlans = () => {
                 }}
               >
                 <Typography
-                  variant="h5"
+                  component="h2"
                   sx={{
                     fontWeight: 700,
                     mb: 1,
@@ -413,14 +374,14 @@ const PricingPlans = () => {
                 </Typography>
                 <Box sx={{ display: "flex", alignItems: "baseline", mb: { xs: 2.5, md: 4 } }}>
                   <Typography
-                    variant="h3"
+                    component="p"
                     sx={{
-                      fontWeight: 800,
+                      fontWeight: 700,
                       color: "var(--text-dark)",
                       fontSize: { xs: "1.8rem", sm: "2.2rem", md: "3rem" },
                     }}
                   >
-                    $0
+                    {isRtl ? "" : "SYP "}0{isRtl ? " ل.س" : ""}
                   </Typography>
                   <Typography
                     sx={{
@@ -446,7 +407,7 @@ const PricingPlans = () => {
                     >
                       <CheckCircle
                         sx={{
-                          color: "var(--primary)",
+                          color: "var(--primary-text)",
                           opacity: 0.6,
                           fontSize: { xs: 16, md: 20 },
                           mt: { xs: "2px", md: 0 },
@@ -516,12 +477,11 @@ const PricingPlans = () => {
 
                 <Box sx={{ mt: "auto", pt: { xs: 2, md: 4 } }}>
                   <button
-                    className="register-btn"
+                    className="register-btn is-secondary"
                     style={{
                       width: "100%",
-                      opacity: 0.8,
-                      background: "var(--text-muted)",
-                      padding: "10px 8px",
+                      padding: "12px 8px",
+                      minHeight: 44,
                       fontSize: "clamp(11px, 3vw, 15px)",
                     }}
                   >
@@ -529,7 +489,7 @@ const PricingPlans = () => {
                   </button>
                 </Box>
               </Paper>
-            </motion.div>
+            </Motion.div>
           </Grid>
 
           {/* Premium Plan */}
@@ -537,7 +497,7 @@ const PricingPlans = () => {
             size={{ xs: 6, sm: 5, md: 5, lg: 4.5 }}
             sx={{ display: "flex", justifyContent: "center" }}
           >
-            <motion.div
+            <Motion.div
               variants={cardVariants}
               initial="hidden"
               whileInView="visible"
@@ -558,7 +518,7 @@ const PricingPlans = () => {
                   backgroundColor: "var(--card-bg)",
                   border: "2px solid var(--primary)",
                   transition:
-                    "all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+                    "all 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275)",
                   position: "relative",
                   overflow: "hidden",
                   cursor: "pointer",
@@ -588,7 +548,7 @@ const PricingPlans = () => {
                     WebkitMaskComposite: "xor",
                     maskComposite: "exclude",
                     opacity: 0,
-                    transition: "opacity 0.4s ease",
+                    transition: "opacity 400ms ease",
                   },
                   "&:before": {
                     content: '""',
@@ -600,7 +560,7 @@ const PricingPlans = () => {
                     background:
                       "radial-gradient(circle, rgba(143, 92, 177, 0.2) 0%, transparent 70%)",
                     zIndex: 0,
-                    transition: "transform 0.6s ease",
+                    transition: "transform 400ms ease",
                   },
                 }}
               >
@@ -616,16 +576,16 @@ const PricingPlans = () => {
                     background:
                       "linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent)",
                     transform: "skewX(-20deg)",
-                    transition: "left 0.8s ease",
+                    transition: "left 400ms ease",
                     zIndex: 1,
                   }}
                 />
                 <Typography
-                  variant="h5"
+                  component="h2"
                   sx={{
                     fontWeight: 700,
                     mb: 1,
-                    color: "var(--primary)",
+                    color: "var(--primary-text)",
                     position: "relative",
                     zIndex: 1,
                     fontSize: { xs: "1rem", sm: "1.25rem", md: "1.5rem" },
@@ -644,7 +604,7 @@ const PricingPlans = () => {
                   }}
                 >
                   <AnimatePresence mode="wait">
-                    <motion.div
+                    <Motion.div
                       key={isYearly ? "yearly" : "monthly"}
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -653,17 +613,18 @@ const PricingPlans = () => {
                       style={{ display: "flex", alignItems: "baseline" }}
                     >
                       <Typography
-                        variant="h3"
+                        component="p"
                         sx={{
-                          fontWeight: 800,
+                          fontWeight: 700,
                           color: "var(--text-dark)",
                           fontSize: { xs: "1.8rem", sm: "2.2rem", md: "3rem" },
                         }}
                       >
-                        $
+                        {isRtl ? "" : "SYP "}
                         {isYearly
                           ? t("pricing.premium.price_yearly")
                           : t("pricing.premium.price_monthly")}
+                        {isRtl ? " ل.س" : ""}
                       </Typography>
                       <Typography
                         sx={{
@@ -677,7 +638,7 @@ const PricingPlans = () => {
                           ? t("pricing.yearly").toLowerCase()
                           : t("pricing.monthly").toLowerCase()}
                       </Typography>
-                    </motion.div>
+                    </Motion.div>
                   </AnimatePresence>
                 </Box>
 
@@ -694,7 +655,7 @@ const PricingPlans = () => {
                     >
                       <CheckCircle
                         sx={{
-                          color: "var(--primary)",
+                          color: "var(--primary-text)",
                           fontSize: { xs: 16, md: 22 },
                           mt: { xs: "2px", md: 0 },
                           flexShrink: 0,
@@ -727,7 +688,8 @@ const PricingPlans = () => {
                     className="register-btn"
                     style={{
                       width: "100%",
-                      padding: "10px 8px",
+                      padding: "12px 8px",
+                      minHeight: 44,
                       fontSize: "clamp(11px, 3vw, 15px)",
                     }}
                   >
@@ -763,7 +725,7 @@ const PricingPlans = () => {
                       <InfoOutlined
                         sx={{
                           fontSize: { xs: 12, md: 14 },
-                          color: "var(--primary)",
+                          color: "var(--primary-text)",
                           cursor: "pointer",
                           flexShrink: 0,
                         }}
@@ -772,10 +734,10 @@ const PricingPlans = () => {
                   </Box>
                 </Box>
               </Paper>
-            </motion.div>
+            </Motion.div>
           </Grid>
         </Grid>
-      </Container>
+      </Box>
     </Box>
   );
 };

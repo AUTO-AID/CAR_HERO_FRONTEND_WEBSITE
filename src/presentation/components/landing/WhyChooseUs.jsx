@@ -1,15 +1,27 @@
 import React from "react";
 import { Box, Typography, Paper } from "@mui/material";
-import { motion } from "framer-motion";
+import { motion as Motion } from "framer-motion";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import BuildIcon from "@mui/icons-material/Build";
 import VerifiedIcon from "@mui/icons-material/Verified";
-import Inventory2Icon from "@mui/icons-material/Inventory2";
+import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import { useTranslation } from "react-i18next";
+import Section from "@/presentation/components/ui/Section";
+import SectionHead from "@/presentation/components/ui/SectionHead";
 
+/**
+ * قسم «لماذا Car Hero».
+ *
+ * كان هذا القسم و`ServiceSection` يعرضان القائمة نفسها تقريباً في صفحة
+ * واحدة: «مساعدة على مدار الساعة» و«أسعار شفافة» و«فنيون معتمدون» مكرّرة
+ * حرفياً في الاثنين. دُمجا هنا في قائمة واحدة من خمسة عناصر، والعنصران
+ * الفريدان في `ServiceSection` (ضمان الجودة، الخدمات المتكاملة) نُقلا إلى
+ * هذه القائمة قبل حذف الملف.
+ */
 const WhyChooseUs = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isArabic = i18n.language === "ar";
 
   const features = [
     {
@@ -32,81 +44,20 @@ const WhyChooseUs = () => {
       title: t("why.features.certified.title"),
       description: t("why.features.certified.desc"),
     },
+    {
+      icon: WorkspacePremiumIcon,
+      title: t("service.feature5_title"),
+      description: t("service.feature5_desc"),
+    },
   ];
 
   return (
-    <Box
-      id="features"
-      sx={{
-        py: { xs: 8, md: 12 },
-        px: { xs: 2, sm: 4, md: 8 },
-        overflowX: "hidden",
-        backgroundColor: "var(--bg-light)",
-        textAlign: "center",
-        transition: "background-color 0.4s ease",
-      }}
-    >
-      {/* Section Icon */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.8 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
-      >
-        <Box
-          sx={{
-            width: 72,
-            height: 72,
-            borderRadius: "50%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            background: "var(--gradient)",
-            mx: "auto",
-            mb: 2,
-            boxShadow: "0 8px 24px rgba(143, 92, 177, 0.25)",
-          }}
-        >
-          <Inventory2Icon sx={{ fontSize: 32, color: "#fff" }} />
-        </Box>
-      </motion.div>
-
-      {/* Title */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5, delay: 0.1 }}
-      >
-        <Typography
-          variant="h4"
-          sx={{
-            fontWeight: 700,
-            mb: 1.5,
-            letterSpacing: "0.5px",
-            background: "var(--gradient)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            fontSize: { xs: "26px", sm: "34px", md: "40px" },
-          }}
-        >
-          {t("why.title")}
-        </Typography>
-
-        {/* Subtitle */}
-        <Typography
-          sx={{
-            color: "var(--text-muted)",
-            mb: { xs: 5, md: 7 },
-            maxWidth: 550,
-            mx: "auto",
-            fontSize: { xs: "1rem", md: "1.1rem" },
-            lineHeight: 1.7,
-          }}
-        >
-          {t("why.subtitle")}
-        </Typography>
-      </motion.div>
+    <Section id="features">
+      <SectionHead
+        eyebrow={isArabic ? "الفرق الذي تلمسه" : "The difference you feel"}
+        title={t("why.title")}
+        subtitle={t("why.subtitle")}
+      />
 
       {/* Features Cards */}
       <Box
@@ -118,11 +69,11 @@ const WhyChooseUs = () => {
         }}
       >
         {features.map((feature, index) => (
-          <motion.div
-            key={index}
+          <Motion.div
+            key={feature.title}
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
             whileHover={{ y: -6 }}
             style={{
@@ -143,15 +94,22 @@ const WhyChooseUs = () => {
                 alignItems: "flex-start",
                 position: "relative",
                 height: "100%",
-                textAlign: "left",
-                transition: "all 0.35s cubic-bezier(0.4, 0, 0.2, 1)",
+                textAlign: "start",
+                transition: "all 250ms cubic-bezier(0.4, 0, 0.2, 1)",
                 border: "1px solid var(--border-color)",
-                cursor: "pointer",
+                backdropFilter: "blur(10px)",
                 "&:hover": {
-                  boxShadow: "var(--shadow-hover)",
+                  boxShadow: "var(--shadow-hover), 0 0 0 1px rgba(143, 92, 177, 0.3)",
                   borderColor: "var(--primary-light)",
                   "& .why-icon": {
                     transform: "scale(1.1)",
+                    background: "var(--gradient)",
+                    color: "#fff",
+                    borderColor: "transparent",
+                    boxShadow: "0 8px 20px rgba(143, 92, 177, 0.3)",
+                  },
+                  "& .why-divider": {
+                    background: "var(--gradient)",
                   },
                 },
               }}
@@ -160,17 +118,19 @@ const WhyChooseUs = () => {
               <Box
                 className="why-icon"
                 sx={{
-                  fontSize: { xs: "42px", md: "48px" },
-                  color: "var(--primary)",
-                  width: { xs: "52px", md: "60px" },
+                  fontSize: { xs: "38px", md: "42px" },
+                  color: "var(--primary-text)",
+                  width: { xs: "56px", md: "64px" },
+                  height: { xs: "56px", md: "64px" },
                   display: "flex",
+                  alignItems: "center",
                   justifyContent: "center",
                   mt: 0.5,
                   flexShrink: 0,
-                  transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
-                  "&:hover": {
-                    animation: "bounce-subtle 0.5s ease",
-                  },
+                  borderRadius: "16px",
+                  background: "rgba(143, 92, 177, 0.08)",
+                  border: "1.5px solid rgba(143, 92, 177, 0.2)",
+                  transition: "all 400ms cubic-bezier(0.4, 0, 0.2, 1)",
                 }}
               >
                 <feature.icon fontSize="inherit" />
@@ -178,18 +138,21 @@ const WhyChooseUs = () => {
 
               {/* Divider */}
               <Box
+                className="why-divider"
                 sx={{
-                  width: "2px",
+                  width: "2.5px",
                   minHeight: "100%",
                   background: "var(--border-color)",
                   mx: { xs: "16px", md: "22px" },
+                  borderRadius: "8px",
+                  transition: "background 400ms ease",
                 }}
               />
 
               {/* Text */}
               <Box sx={{ flexGrow: 1 }}>
                 <Typography
-                  variant="h6"
+                  component="h3"
                   sx={{
                     fontWeight: 600,
                     mb: 1,
@@ -213,10 +176,10 @@ const WhyChooseUs = () => {
                 </Typography>
               </Box>
             </Paper>
-          </motion.div>
+          </Motion.div>
         ))}
       </Box>
-    </Box>
+    </Section>
   );
 };
 

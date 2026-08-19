@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from '@/assets/logo_carHero.png';
+import logo from '@/assets/logo_carHero.webp';
 
 const colors = {
   primary: '#8f5cb1',
@@ -43,10 +43,10 @@ const Header = ({ title, subtitle, pending }) => (
     <div style={{ position: 'absolute', width: 230, height: 230, borderRadius: '50%', background: '#e7d5f1', opacity: 0.55, top: -150, left: -80 }} />
     <div style={{ position: 'relative', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 28 }}>
       <div>
-        <div style={{ color: colors.primary, fontSize: 13, fontWeight: 900, letterSpacing: 1.2, marginBottom: 6 }}>CAR HERO</div>
-        <h1 style={{ margin: 0, color: colors.text, fontSize: 32, fontWeight: 900 }}>{title}</h1>
+        <div style={{ color: colors.primary, fontSize: 13, fontWeight: 700, letterSpacing: 1.2, marginBottom: 6 }}>CAR HERO</div>
+        <h1 style={{ margin: 0, color: colors.text, fontSize: 32, fontWeight: 700 }}>{title}</h1>
         <div style={{ marginTop: 8, color: colors.muted, fontSize: 13, fontWeight: 700 }}>{subtitle}</div>
-        {pending && <span style={{ display: 'inline-block', marginTop: 12, padding: '7px 14px', borderRadius: 999, background: '#fff5dc', border: '1px solid #f4d98a', color: '#986c00', fontSize: 11, fontWeight: 900 }}>{pending}</span>}
+        {pending && <span style={{ display: 'inline-block', marginTop: 12, padding: '7px 14px', borderRadius: 999, background: '#fff5dc', border: '1px solid #f4d98a', color: '#986c00', fontSize: 11, fontWeight: 700 }}>{pending}</span>}
       </div>
       <div style={{ width: 250, height: 125, borderRadius: 20, background: '#fff', border: `1px solid ${colors.border}`, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 10 }}>
         <img src={logo} alt="Car Hero" style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} />
@@ -60,7 +60,7 @@ const Section = ({ title, subtitle, children, compact = false }) => (
     <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: compact ? 12 : 16 }}>
       <div style={{ width: 7, height: 32, borderRadius: 99, background: `linear-gradient(180deg, ${colors.primary}, ${colors.primaryDark})` }} />
       <div>
-        <h2 style={{ margin: 0, color: colors.primaryDark, fontSize: 20, fontWeight: 900 }}>{title}</h2>
+        <h2 style={{ margin: 0, color: colors.primaryDark, fontSize: 20, fontWeight: 700 }}>{title}</h2>
         {subtitle && <div style={{ color: colors.muted, fontSize: 10, fontWeight: 700, marginTop: 1 }}>{subtitle}</div>}
       </div>
       <div style={{ flex: 1, height: 1, background: colors.border }} />
@@ -71,15 +71,15 @@ const Section = ({ title, subtitle, children, compact = false }) => (
 
 const InfoCard = ({ label, value, wide = false, emphasis = false }) => (
   <div style={{ gridColumn: wide ? '1 / -1' : undefined, padding: emphasis ? '20px 22px' : '15px 17px', minHeight: emphasis ? 68 : 54, borderRadius: 16, border: `1px solid ${emphasis ? '#d9c1e8' : colors.border}`, background: emphasis ? 'linear-gradient(135deg, #ffffff 0%, #f8f1fb 100%)' : '#fff', boxShadow: emphasis ? '0 10px 24px rgba(95, 52, 121, 0.07)' : 'none' }}>
-    <div style={{ color: colors.muted, fontSize: 11, fontWeight: 800, marginBottom: 5 }}>{label}</div>
-    <div style={{ color: colors.text, fontSize: emphasis ? 18 : 15, fontWeight: 900, overflowWrap: 'anywhere', whiteSpace: 'pre-wrap' }}>{value || '-'}</div>
+    <div style={{ color: colors.muted, fontSize: 11, fontWeight: 700, marginBottom: 5 }}>{label}</div>
+    <div style={{ color: colors.text, fontSize: emphasis ? 18 : 15, fontWeight: 700, overflowWrap: 'anywhere', whiteSpace: 'pre-wrap' }}>{value || '-'}</div>
   </div>
 );
 
 const Tags = ({ items, emptyText }) => (
   <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
     {items.length ? items.map((item) => (
-      <span key={item} style={{ padding: '7px 12px', borderRadius: 999, background: colors.primarySoft, border: `1px solid ${colors.border}`, color: colors.primaryDark, fontSize: 11, fontWeight: 800 }}>
+      <span key={item} style={{ padding: '7px 12px', borderRadius: 999, background: colors.primarySoft, border: `1px solid ${colors.border}`, color: colors.primaryDark, fontSize: 11, fontWeight: 700 }}>
         {item}
       </span>
     )) : <span style={{ color: colors.muted, fontWeight: 700 }}>{emptyText}</span>}
@@ -160,16 +160,16 @@ const RegistrationReceipt = React.forwardRef(({ lang, t, formData }, ref) => {
         <Header title={text.detailsTitle} subtitle={text.detailsSubtitle} />
         <main style={{ flex: 1, padding: '18px 38px 30px', display: 'flex', flexDirection: 'column', justifyContent: 'space-evenly', gap: 26 }}>
           <Section title={text.coverage}>
-            <div style={{ padding: 15, borderRadius: 14, background: colors.primarySoft, border: `1px solid ${colors.border}` }}>
+            <div style={{ padding: 15, borderRadius: 12, background: colors.primarySoft, border: `1px solid ${colors.border}` }}>
               <Tags items={formData.coverageAreas || []} emptyText="-" />
             </div>
           </Section>
           <Section title={text.services}>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 9 }}>
               {services.map((service) => (
-                <div key={service.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 10, padding: '12px 14px', borderRadius: 13, border: `1px solid ${colors.border}`, background: '#fff' }}>
+                <div key={service.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 10, padding: '12px 14px', borderRadius: 12, border: `1px solid ${colors.border}`, background: '#fff' }}>
                   <strong style={{ color: colors.text, fontSize: 13 }}>{service.name}</strong>
-                  <span style={{ color: colors.primaryDark, fontSize: 12, fontWeight: 900 }}>{service.price ? `${Number(service.price).toLocaleString()} SYP` : '-'}</span>
+                  <span style={{ color: colors.primaryDark, fontSize: 12, fontWeight: 700 }}>{service.price ? `${Number(service.price).toLocaleString()} SYP` : '-'}</span>
                 </div>
               ))}
             </div>
@@ -179,7 +179,7 @@ const RegistrationReceipt = React.forwardRef(({ lang, t, formData }, ref) => {
               <InfoCard label={text.experience} value={`${formData.experienceYears || 0} ${text.year}`} />
               <InfoCard label={text.technicians} value={formData.techCount || 0} />
               <InfoCard label={text.emergency} value={formData.is_emergency ? text.yes : text.no} />
-              <div style={{ padding: '15px 17px', borderRadius: 14, border: `1px solid ${colors.border}`, background: '#fff' }}>
+              <div style={{ padding: '15px 17px', borderRadius: 12, border: `1px solid ${colors.border}`, background: '#fff' }}>
                 <div style={{ color: colors.muted, fontSize: 11, fontWeight: 700, marginBottom: 7 }}>{text.facilities}</div>
                 <Tags items={facilities} emptyText="-" />
               </div>
@@ -195,15 +195,15 @@ const RegistrationReceipt = React.forwardRef(({ lang, t, formData }, ref) => {
           <Section title={text.hours} compact>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 11 }}>
               {Object.entries(formData.workingHours).map(([day, config]) => (
-                <div key={day} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 18px', borderRadius: 13, background: config.closed ? '#fff1f3' : '#effcf7', border: `1px solid ${config.closed ? '#fecdd3' : '#bbf7d0'}` }}>
-                  <div style={{ color: colors.text, fontWeight: 900, fontSize: 13 }}>{t.hours.days[day] || day}</div>
-                  <div style={{ color: config.closed ? colors.rose : colors.green, fontSize: 11, fontWeight: 900 }}>{config.closed ? text.closed : `${config.start} - ${config.end}`}</div>
+                <div key={day} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 18px', borderRadius: 12, background: config.closed ? '#fff1f3' : '#effcf7', border: `1px solid ${config.closed ? '#fecdd3' : '#bbf7d0'}` }}>
+                  <div style={{ color: colors.text, fontWeight: 700, fontSize: 13 }}>{t.hours.days[day] || day}</div>
+                  <div style={{ color: config.closed ? colors.rose : colors.green, fontSize: 11, fontWeight: 700 }}>{config.closed ? text.closed : `${config.start} - ${config.end}`}</div>
                 </div>
               ))}
             </div>
           </Section>
           <Section title={text.attachments} compact>
-            <div style={{ padding: 15, borderRadius: 14, background: '#fbf9fc', border: `1px solid ${colors.border}` }}>
+            <div style={{ padding: 15, borderRadius: 12, background: '#fbf9fc', border: `1px solid ${colors.border}` }}>
               <Tags items={attachmentNames} emptyText={text.noAttachments} />
               {attachments.length > 0 && (
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 10, marginTop: 14 }}>

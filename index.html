@@ -1,24 +1,41 @@
 <!doctype html>
-<html lang="en">
+<!-- كان lang="en" مكتوباً هنا رغم أن اللغة الافتراضية عربية، ولم يُصحَّح إلا
+     بعد إقلاع جافاسكربت — أي بعد أن يكون الزاحف وقارئ الشاشة قد قرآ الخطأ. -->
+<html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/logo_carHero.png"  />
+    <link rel="icon" type="image/png" href="/logo_carHero.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
-<!-- CSS is imported in main.jsx -->
-<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/themify-icons@1.0.1/css/themify-icons.css"/> -->
-  <script type="importmap">
-{
-  "imports": {
-    "react": "https://aistudiocdn.com/react@^19.2.0",
-    "react-dom/client": "https://aistudiocdn.com/react-dom@^19.2.0/client",
-    "react-router-dom": "https://aistudiocdn.com/react-router-dom@^6.25.1",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-    "react/": "https://aistudiocdn.com/react@^19.2.0/"
-  }
-}
-</script>
-    <title>CarHero</title>
+    <meta name="theme-color" content="#8f5cb1" />
+    <meta name="description" content="Car Hero — منصة تربط السائقين بأقرب مزوّد متاح لخدمات الطوارئ على الطريق والصيانة المجدولة في سوريا." />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Car Hero" />
+    <meta property="og:title" content="Car Hero — مساعدة الطريق تصل إليك أينما كنت" />
+    <meta property="og:description" content="اطلب خدمة لسيارتك من موقعك، وسيصلك أقرب مزوّد متاح بسرعة." />
+    <meta property="og:image" content="/logo_carHero.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- كان Poppins يُحمَّل هنا بأوزانه الستّة دائماً، حتى والواجهة عربية
+         بالكامل ولا يظهر منه محرف واحد. صار يُحقَن عند التبديل للإنجليزية
+         فقط — انظر RootProvider. -->
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- يضبط السمة قبل أول رسم لمنع وميض التبديل بين الوضعين -->
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem('theme');
+          var mode = stored || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+          document.documentElement.setAttribute('data-theme', mode);
+          document.documentElement.classList.toggle('dark', mode === 'dark');
+        } catch (e) { /* التخزين المحلي محجوب — الافتراضي الفاتح */ }
+      })();
+    </script>
+
+    <title>Car Hero — مساعدة الطريق تصل إليك أينما كنت</title>
   </head>
   <body>
     <div id="root"></div>

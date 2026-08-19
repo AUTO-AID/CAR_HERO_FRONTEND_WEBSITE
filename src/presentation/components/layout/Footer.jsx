@@ -1,8 +1,10 @@
 import React from "react";
-import { Box, Container, Divider, IconButton, Link, Typography } from "@mui/material";
+import { Box, Divider, IconButton, Link, Typography } from "@mui/material";
 import { Email, Facebook, Instagram, LocationOn, Phone, Twitter, YouTube } from "@mui/icons-material";
+import { Link as RouterLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import logo from "@/assets/logo_carHero.png";
+import logo from "@/assets/logo_carHero.webp";
+import { contactDetails } from "@/presentation/content/contactDetails";
 
 const Footer = () => {
   const { t, i18n } = useTranslation();
@@ -15,6 +17,9 @@ const Footer = () => {
     { Icon: YouTube, label: "YouTube", color: "#FF0000" },
   ];
 
+  // كانت كل هذه الروابط مراسيَ داخلية (`#services`, `#contact`, `#home`)
+  // موجودة في صفحة واحدة فقط لكل منها، بينما الفوتر يظهر في كل الصفحات —
+  // فكانت النقرة لا تفعل شيئاً في معظم الحالات. صارت مسارات حقيقية.
   const serviceLinks = [
     t("footer.servicesItems.roadside"),
     t("footer.servicesItems.towing"),
@@ -24,35 +29,41 @@ const Footer = () => {
   ];
 
   const quickLinks = [
-    { label: t("home"), href: "#home" },
-    { label: t("service.title"), href: "#services" },
-    { label: isRtl ? "التغطية" : "Coverage", href: "#coverage-map-section" },
-    { label: t("contact"), href: "#contact" },
-    { label: t("footer.quickLinksItems.partner"), href: "/register" },
+    { label: t("home"), to: "/" },
+    { label: t("service.title"), to: "/services" },
+    { label: isRtl ? "التطبيق" : "The App", to: "/app" },
+    { label: isRtl ? "التغطية" : "Coverage", to: "/#coverage-map-section" },
+    { label: t("contact"), to: "/contact" },
+    { label: t("footer.quickLinksItems.partner"), to: "/register" },
   ];
 
   const contactInfo = [
-    { Icon: Phone, text: "+963 956868573", label: "Phone", forceLtr: true },
-    { Icon: Email, text: "support@carhero.app", label: "Email", forceLtr: true },
+    { Icon: Phone, text: contactDetails.phone, label: "Phone", forceLtr: true },
+    { Icon: Email, text: contactDetails.email, label: "Email", forceLtr: true },
     { Icon: LocationOn, text: t("footer.contactItems.address"), label: "Address" },
   ];
 
   const sectionTitleSx = {
     color: "var(--primary-light)",
     fontSize: "1.05rem",
-    fontWeight: 900,
+    fontWeight: 700,
     mb: 2.5,
     letterSpacing: 0.2,
   };
 
+  // كانت مساحة اللمس ٢١–٢٣ بكسل ارتفاعاً: النص وحده بلا أي حشوة. الحد
+  // الموصى به ٤٤، والروابط هنا متراصّة عمودياً فالخطأ يقع على الرابط المجاور.
   const linkSx = {
     width: "fit-content",
+    display: "inline-flex",
+    alignItems: "center",
+    minHeight: 44,
     color: "var(--footer-muted)",
     textDecoration: "none",
     fontSize: "0.96rem",
     fontWeight: 500,
     lineHeight: 1.5,
-    transition: "all 0.25s ease",
+    transition: "color 250ms ease, transform 250ms ease",
     "&:hover": {
       color: "var(--primary-light)",
       transform: isRtl ? "translateX(-4px)" : "translateX(4px)",
@@ -68,9 +79,19 @@ const Footer = () => {
         overflow: "hidden",
         background: "var(--footer-bg)",
         color: "var(--footer-text)",
-        borderTop: "1px solid rgba(143, 92, 177, 0.55)",
+        borderTop: "none",
         pt: { xs: 7, md: 9 },
         pb: { xs: 4, md: 5 },
+        "&::before": {
+          content: '""',
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          height: "4px",
+          background: "linear-gradient(90deg, var(--primary-dark), var(--primary), var(--primary-light), var(--primary), var(--primary-dark))",
+          zIndex: 1,
+        },
       }}
     >
       <Box
@@ -87,13 +108,9 @@ const Footer = () => {
         }}
       />
 
-      <Container
-        maxWidth="xl"
-        sx={{
-          position: "relative",
-          zIndex: 1,
-          px: { xs: "22px !important", sm: "34px !important", lg: "64px !important" },
-        }}
+      <Box
+        className="section-container is-wide"
+        sx={{ position: "relative", zIndex: 1 }}
       >
         <Box
           sx={{
@@ -121,6 +138,10 @@ const Footer = () => {
               component="img"
               src={logo}
               alt={t("footer.logoAlt")}
+              width={560}
+              height={220}
+              loading="lazy"
+              decoding="async"
               sx={{
                 display: "block",
                 width: { xs: 210, md: 245 },
@@ -152,12 +173,12 @@ const Footer = () => {
                     color: "var(--footer-text)",
                     background: "var(--footer-surface)",
                     border: "1px solid var(--border-color)",
-                    transition: "all 0.25s ease",
+                    transition: "all 250ms ease",
                     "&:hover": {
                       color: "#fff",
                       background: color,
                       borderColor: color,
-                      transform: "translateY(-4px)",
+                      transform: "translateY(-4px) scale(1.1)",
                       boxShadow: `0 10px 24px ${color}55`,
                     },
                   }}
@@ -181,17 +202,17 @@ const Footer = () => {
           >
             <Box>
               <Typography sx={sectionTitleSx}>{t("footer.services")}</Typography>
-              <Box sx={{ display: "flex", flexDirection: "column", gap: 1.6 }}>
+              <Box sx={{ display: "flex", flexDirection: "column", gap: 0.25 }}>
                 {serviceLinks.map((label) => (
-                  <Link key={label} href="#services" sx={linkSx}>{label}</Link>
+                  <Link key={label} component={RouterLink} to="/services" sx={linkSx}>{label}</Link>
                 ))}
               </Box>
             </Box>
             <Box>
               <Typography sx={sectionTitleSx}>{t("footer.quickLinks")}</Typography>
-              <Box sx={{ display: "flex", flexDirection: "column", gap: 1.6 }}>
+              <Box sx={{ display: "flex", flexDirection: "column", gap: 0.25 }}>
                 {quickLinks.map((link) => (
-                  <Link key={link.label} href={link.href} sx={linkSx}>{link.label}</Link>
+                  <Link key={link.label} component={RouterLink} to={link.to} sx={linkSx}>{link.label}</Link>
                 ))}
               </Box>
             </Box>
@@ -206,7 +227,7 @@ const Footer = () => {
             }}
           >
             <Typography sx={sectionTitleSx}>{t("footer.contact")}</Typography>
-            <Box sx={{ display: "flex", flexDirection: "column", gap: 1.6 }}>
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 0.25 }}>
               {contactInfo.map(({ Icon, text, label, forceLtr }) => (
                 <Box
                   key={label}
@@ -218,7 +239,7 @@ const Footer = () => {
                     width: "fit-content",
                     maxWidth: "100%",
                     color: "var(--footer-muted)",
-                    transition: "color 0.25s ease, transform 0.25s ease",
+                    transition: "color 250ms ease, transform 250ms ease",
                     "&:hover": {
                       color: "var(--primary-light)",
                       transform: isRtl ? "translateX(-3px)" : "translateX(3px)",
@@ -280,7 +301,7 @@ const Footer = () => {
             ))}
           </Box>
         </Box>
-      </Container>
+      </Box>
     </Box>
   );
 };

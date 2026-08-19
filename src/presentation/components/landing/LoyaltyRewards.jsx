@@ -2,13 +2,12 @@ import React from "react";
 import {
   Box,
   Typography,
-  Container,
   Grid,
   Paper,
   LinearProgress,
   Tooltip,
 } from "@mui/material";
-import { motion } from "framer-motion";
+import { motion as Motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import {
   Stars,
@@ -22,8 +21,7 @@ import {
 } from "@mui/icons-material";
 
 const LoyaltyRewards = () => {
-  const { t, i18n } = useTranslation();
-  const isRtl = i18n.language === "ar";
+  const { t } = useTranslation();
 
   const steps = [
     {
@@ -55,7 +53,7 @@ const LoyaltyRewards = () => {
       sx={{
         py: { xs: 8, md: 15 },
         background: "var(--bg-light)",
-        transition: "background-color 0.4s ease",
+        transition: "background-color 400ms ease",
         width: "100%",
         position: "relative",
         overflow: "hidden",
@@ -75,45 +73,32 @@ const LoyaltyRewards = () => {
         }}
       />
 
-      <Container maxWidth="lg">
+      <Box className="section-container">
         {/* Header */}
         <Box sx={{ textAlign: "center", mb: 10 }}>
-          <motion.div
+          <Motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
             <Typography
-              variant="h3"
-              sx={{
-                fontWeight: 800,
-                color: "var(--primary)",
-                mb: 2,
-                fontSize: { xs: "32px", md: "48px" },
-                letterSpacing: "-1px",
-              }}
+              component="h2"
+              className="section-title"
+              sx={{ mx: "auto", mb: 2.5, display: "block", width: "fit-content" }}
             >
               {t("loyalty.title")}
             </Typography>
-            <Typography
-              sx={{
-                color: "var(--text-muted)",
-                fontSize: "1.1rem",
-                maxWidth: 600,
-                mx: "auto",
-                lineHeight: 1.7,
-              }}
-            >
+            <Typography className="section-subtitle" sx={{ mx: "auto" }}>
               {t("loyalty.subtitle")}
             </Typography>
-          </motion.div>
+          </Motion.div>
         </Box>
 
         {/* How it Works Visualization */}
         <Grid container spacing={6} sx={{ mb: 12 }} justifyContent="center">
           {steps.map((step, index) => (
-            <Grid item xs={12} sm={6} md={4} key={index}>
-              <motion.div
+            <Grid size={{ xs: 12, sm: 6, md: 4 }} key={index}>
+              <Motion.div
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -139,11 +124,11 @@ const LoyaltyRewards = () => {
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      color: "var(--primary)",
+                      color: "var(--primary-text)",
                       mx: "auto",
                       mb: 3,
                       boxShadow: "var(--shadow-sm)",
-                      transition: "all 0.3s ease",
+                      transition: "all 250ms ease",
                       "&:hover": {
                         transform: "scale(1.1)",
                         borderColor: "var(--primary)",
@@ -155,7 +140,7 @@ const LoyaltyRewards = () => {
                     {step.icon}
                   </Box>
                   <Typography
-                    variant="h6"
+                    component="h3"
                     sx={{
                       fontWeight: 700,
                       mb: 2,
@@ -178,7 +163,7 @@ const LoyaltyRewards = () => {
                     {step.desc}
                   </Typography>
                 </Box>
-              </motion.div>
+              </Motion.div>
             </Grid>
           ))}
         </Grid>
@@ -193,12 +178,10 @@ const LoyaltyRewards = () => {
         >
           {/* Free Plan Rewards */}
           <Grid
-            item
-            xs={12}
-            md={5}
+            size={{ xs: 12, md: 5 }}
             sx={{ display: "flex", alignItems: "stretch" }}
           >
-            <motion.div
+            <Motion.div
               variants={cardVariants}
               initial="hidden"
               whileInView="visible"
@@ -225,7 +208,7 @@ const LoyaltyRewards = () => {
                   sx={{ display: "flex", alignItems: "center", gap: 2, mb: 2.5 }}
                 >
                   <TrendingUp sx={{ color: "var(--text-muted)" }} />
-                  <Typography variant="h6" sx={{ fontWeight: 700 }}>
+                  <Typography component="h3" sx={{ fontWeight: 700 }}>
                     {t("loyalty.comparison.free.name")}
                   </Typography>
                 </Box>
@@ -253,7 +236,7 @@ const LoyaltyRewards = () => {
                     value={25}
                     sx={{
                       height: 8,
-                      borderRadius: 4,
+                      borderRadius: 8,
                       backgroundColor: "var(--border-color)",
                       "& .MuiLinearProgress-bar": {
                         backgroundColor: "var(--text-muted)",
@@ -311,29 +294,22 @@ const LoyaltyRewards = () => {
 
                 <Box sx={{ mt: "auto" }}>
                   <button
-                    className="register-btn"
-                    style={{
-                      width: "100%",
-                      padding: "12px",
-                      background: "var(--border-color)",
-                      color: "var(--text-dark)",
-                    }}
+                    className="register-btn is-secondary"
+                    style={{ width: "100%", padding: "12px" }}
                   >
                     {t("loyalty.cta_get_app")}
                   </button>
                 </Box>
               </Paper>
-            </motion.div>
+            </Motion.div>
           </Grid>
 
           {/* Premium Plan Rewards */}
           <Grid
-            item
-            xs={12}
-            md={5}
+            size={{ xs: 12, md: 5 }}
             sx={{ display: "flex", alignItems: "stretch" }}
           >
-            <motion.div
+            <Motion.div
               variants={cardVariants}
               initial="hidden"
               whileInView="visible"
@@ -372,10 +348,10 @@ const LoyaltyRewards = () => {
                 <Box
                   sx={{ display: "flex", alignItems: "center", gap: 2, mb: 2.5 }}
                 >
-                  <WorkspacePremium sx={{ color: "var(--primary)" }} />
+                  <WorkspacePremium sx={{ color: "var(--primary-text)" }} />
                   <Typography
-                    variant="h6"
-                    sx={{ fontWeight: 700, color: "var(--primary)" }}
+                    component="h3"
+                    sx={{ fontWeight: 700, color: "var(--primary-text)" }}
                   >
                     {t("loyalty.comparison.premium.name")}
                   </Typography>
@@ -391,13 +367,13 @@ const LoyaltyRewards = () => {
                   >
                     <Typography
                       variant="body2"
-                      sx={{ color: "var(--primary)", fontWeight: 600 }}
+                      sx={{ color: "var(--primary-text)", fontWeight: 600 }}
                     >
                       {t("loyalty.comparison.premium.multiplier")}
                     </Typography>
                     <Typography
                       variant="body2"
-                      sx={{ fontWeight: 800, color: "var(--primary)" }}
+                      sx={{ fontWeight: 700, color: "var(--primary-text)" }}
                     >
                       100% Full
                     </Typography>
@@ -428,7 +404,7 @@ const LoyaltyRewards = () => {
                       mb: 1.5,
                     }}
                   >
-                    <Stars sx={{ color: "var(--primary)", fontSize: 24 }} />
+                    <Stars sx={{ color: "var(--primary-text)", fontSize: 24 }} />
                     <Typography
                       sx={{ color: "var(--text-dark)", fontWeight: 600 }}
                     >
@@ -444,7 +420,7 @@ const LoyaltyRewards = () => {
                     }}
                   >
                     <TrendingUp
-                      sx={{ color: "var(--primary)", fontSize: 24 }}
+                      sx={{ color: "var(--primary-text)", fontSize: 24 }}
                     />
                     <Typography
                       sx={{ color: "var(--text-dark)", fontWeight: 600 }}
@@ -461,7 +437,7 @@ const LoyaltyRewards = () => {
                     }}
                   >
                     <InfoOutlined
-                      sx={{ fontSize: 16, color: "var(--primary)" }}
+                      sx={{ fontSize: 16, color: "var(--primary-text)" }}
                     />
                     <Typography
                       variant="caption"
@@ -481,10 +457,10 @@ const LoyaltyRewards = () => {
                   </button>
                 </Box>
               </Paper>
-            </motion.div>
+            </Motion.div>
           </Grid>
         </Grid>
-      </Container>
+      </Box>
     </Box>
   );
 };
