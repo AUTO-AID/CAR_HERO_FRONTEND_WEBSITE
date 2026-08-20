@@ -26,6 +26,19 @@ const appScreenshots = [
   "/photo_car_hero/photo_12_2026-03-23_17-28-16.jpg",
 ];
 
+/** مرئي لقارئ الشاشة فقط — يمنح العدّاد سياقاً بدل رقمين مجرّدين. */
+const srOnly = {
+  position: "absolute",
+  width: 1,
+  height: 1,
+  padding: 0,
+  margin: -1,
+  overflow: "hidden",
+  clip: "rect(0 0 0 0)",
+  whiteSpace: "nowrap",
+  border: 0,
+};
+
 const AppScreenshots = () => {
   const { t, i18n } = useTranslation();
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -73,8 +86,47 @@ const AppScreenshots = () => {
 
   const handleDotClick = (index) => {
     setIsAutoPlaying(false);
+    // النقر على النقطة النشطة كان يُعيد تشغيل الحركة كاملةً باتجاه خاطئ
+    if (index === currentIndex) return;
     setDirection(index > currentIndex ? 1 : -1);
     setCurrentIndex(index);
+  };
+
+  // أسهم لوحة المفاتيح — سلوك متوقَّع في أي معرض شرائح، ولم يكن موجوداً.
+  // المعالج على الحاوية لا على عنصر قابل للتركيز، فيلتقط الضغط من الأزرار
+  // والنقاط بالتصعيد دون أن يضيف محطّة تنقّل جديدة.
+  const handleKeyDown = (event) => {
+    if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+    event.preventDefault();
+    const goesBack = isRtl ? event.key === "ArrowRight" : event.key === "ArrowLeft";
+    if (goesBack) handlePrev();
+    else handleNext();
+  };
+
+  // كل شريحة تُركَّب وحدها (AnimatePresence بمفتاح الفهرس)، فصورة اللقطة
+  // التالية لا تبدأ تحميلها إلا لحظة ظهورها — ومع تقدّم تلقائي كل أربع ثوانٍ
+  // يرى الزائر إطاراً فارغاً ثم قفزة. نُحمّل الجارتين مسبقاً.
+  useEffect(() => {
+    const preload = (index) => {
+      const image = new Image();
+      image.src = appScreenshots[index];
+    };
+    preload((currentIndex + 1) % appScreenshots.length);
+    preload((currentIndex - 1 + appScreenshots.length) % appScreenshots.length);
+  }, [currentIndex]);
+
+  // كان `backgroundColor` يحمل تدرّجاً — والخاصية لا تقبل التدرّجات فتُلغى
+  // القيمة بصمت؛ السطر التالي (background) هو الذي كان يرسم فعلاً.
+  const mobileArrowSx = {
+    background: "linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%)",
+    color: "#fff",
+    width: 56,
+    height: 56,
+    boxShadow: "0 8px 20px rgba(143, 92, 177, 0.4)",
+    transition: "box-shadow 250ms ease, transform 150ms ease",
+    "&:hover": { boxShadow: "0 12px 30px rgba(143, 92, 177, 0.6)" },
+    "&:active": { transform: "scale(0.94)" },
+    "@media (prefers-reduced-motion: reduce)": { transition: "none" },
   };
 
   const slideVariants = {
@@ -283,6 +335,7 @@ const AppScreenshots = () => {
         onMouseLeave={() => setIsPaused(false)}
         onFocusCapture={() => setIsPaused(true)}
         onBlurCapture={() => setIsPaused(false)}
+        onKeyDown={handleKeyDown}
         sx={{
           display: "flex",
           flexDirection: "column",
@@ -335,7 +388,10 @@ const AppScreenshots = () => {
           <Box
             sx={{
               position: "relative",
-              borderRadius: "999px",
+              // 999px على صندوق عرضه ٢٨٠ يُقصَّ إلى ١٤٠ لكل زاوية، فيصير
+              // الإطار كبسولة نصفاها العلوي والسفلي دائرتان — تبتلعان أعلى
+              // اللقطة وأسفلها. ٤٠ هو نصف قطر الهاتف الفعلي.
+              borderRadius: "40px",
               overflow: "hidden",
               border: "4px solid #3a3a5e",
               boxShadow: `
@@ -366,7 +422,11 @@ const AppScreenshots = () => {
               <Motion.img
                 key={currentIndex}
                 src={appScreenshots[currentIndex]}
-                alt={`App screenshot ${currentIndex + 1}`}
+                alt={
+                  isRtl
+                    ? `لقطة من تطبيق Car Hero — ${currentIndex + 1} من ${appScreenshots.length}`
+                    : `Car Hero app screenshot ${currentIndex + 1} of ${appScreenshots.length}`
+                }
                 custom={direction}
                 variants={slideVariants}
                 initial="enter"
@@ -551,48 +611,12 @@ const AppScreenshots = () => {
             mt: 3,
           }}
         >
-          <Motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-            <IconButton
-              onClick={handlePrev}
-              aria-label={prevLabel}
-              sx={{
-                backgroundColor:
-                  "linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%)",
-                background:
-                  "linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%)",
-                color: "#fff",
-                width: 56,
-                height: 56,
-                boxShadow: "0 8px 20px rgba(143, 92, 177, 0.4)",
-                "&:hover": {
-                  boxShadow: "0 12px 30px rgba(143, 92, 177, 0.6)",
-                },
-              }}
-            >
-              {isRtl ? <ChevronRight /> : <ChevronLeft />}
-            </IconButton>
-          </Motion.div>
-          <Motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-            <IconButton
-              onClick={handleNext}
-              aria-label={nextLabel}
-              sx={{
-                backgroundColor:
-                  "linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%)",
-                background:
-                  "linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%)",
-                color: "#fff",
-                width: 56,
-                height: 56,
-                boxShadow: "0 8px 20px rgba(143, 92, 177, 0.4)",
-                "&:hover": {
-                  boxShadow: "0 12px 30px rgba(143, 92, 177, 0.6)",
-                },
-              }}
-            >
-              {isRtl ? <ChevronLeft /> : <ChevronRight />}
-            </IconButton>
-          </Motion.div>
+          <IconButton onClick={handlePrev} aria-label={prevLabel} sx={mobileArrowSx}>
+            {isRtl ? <ChevronRight /> : <ChevronLeft />}
+          </IconButton>
+          <IconButton onClick={handleNext} aria-label={nextLabel} sx={mobileArrowSx}>
+            {isRtl ? <ChevronLeft /> : <ChevronRight />}
+          </IconButton>
         </Box>
 
         {/* Screenshot Counter */}
@@ -602,7 +626,13 @@ const AppScreenshots = () => {
           viewport={{ once: true }}
           transition={{ delay: 0.3 }}
         >
+          {/* «1 / 12» في فقرة عربية يُعرض «12 / 1»: الأرقام ضعيفة الاتجاه
+              والمسافات والشرطة محايدة، فتتبع اتجاه الفقرة وينقلب الترتيب.
+              <bdi> يعزل العدّاد كوحدة LTR — نفس علاج رقم الهاتف.
+              وaria-live يجعل تغيّر الشريحة مسموعاً بدل أن يمرّ بصمت. */}
           <Typography
+            aria-live="polite"
+            aria-atomic="true"
             sx={{
               mt: 4,
               color: "rgba(255,255,255,0.4)",
@@ -611,7 +641,12 @@ const AppScreenshots = () => {
               letterSpacing: "1px",
             }}
           >
-            {currentIndex + 1} / {appScreenshots.length}
+            <Box component="span" sx={srOnly}>
+              {isRtl ? "اللقطة " : "Screenshot "}
+            </Box>
+            <bdi dir="ltr">
+              {currentIndex + 1} / {appScreenshots.length}
+            </bdi>
           </Typography>
         </Motion.div>
       </Box>
