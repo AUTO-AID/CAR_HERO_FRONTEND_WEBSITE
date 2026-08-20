@@ -97,8 +97,8 @@ const ContactSection = () => {
   };
 
   const contactCards = [
-    { icon: Mail, label: text.emailLabel, value: text.emailValue },
-    { icon: Phone, label: text.callLabel, value: text.phoneValue },
+    { icon: Mail, label: text.emailLabel, value: text.emailValue, ltr: true },
+    { icon: Phone, label: text.callLabel, value: text.phoneValue, ltr: true },
     { icon: MapPin, label: text.locationLabel, value: text.locationValue },
   ];
 
@@ -136,7 +136,12 @@ const ContactSection = () => {
                     <Icon size={26} strokeWidth={2.4} />
                   </span>
                   <strong>{card.label}</strong>
-                  <p>{card.value}</p>
+                  {/* داخل بطاقة عربية يُعرض ‎+963 956868573‎ مقلوباً
+                      «956868573 963+»: علامة '+' والمسافة محرفان محايدان
+                      اتجاهياً فيرثان اتجاه الفقرة، ويُعاد ترتيب المقطعين.
+                      <bdi> يعزل السلسلة كوحدة LTR مستقلّة عمّا حولها —
+                      وهو نفس ما يفعله الفوتر أصلاً. التوسيط لا يتأثّر. */}
+                  <p>{card.ltr ? <bdi dir="ltr">{card.value}</bdi> : card.value}</p>
                 </Motion.div>
               );
             })}
