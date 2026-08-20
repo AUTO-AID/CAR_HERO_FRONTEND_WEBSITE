@@ -14,7 +14,7 @@ const copy = {
     driverEyebrow: "للسائقين",
     driverTitle: "حمّل التطبيق واطلب الخدمة من مكانك",
     driverText: "احتفظ بـ Car Hero في هاتفك لتكون جاهزًا لأي موقف على الطريق.",
-    driverCta: "تعرّف على التطبيق",
+    driverCta: "تحميل التطبيق",
     providerEyebrow: "للمصلحين والورش",
     providerTitle: "سجّل ورشتك أو خدمتك داخل Car Hero",
     providerSubtitle:
@@ -30,7 +30,7 @@ const copy = {
     driverEyebrow: "For drivers",
     driverTitle: "Download the app and request service from your location",
     driverText: "Keep Car Hero on your phone so you are ready for anything on the road.",
-    driverCta: "Explore the app",
+    driverCta: "Download the app",
     providerEyebrow: "For mechanics and workshops",
     providerTitle: "Register your workshop or field service on Car Hero",
     providerSubtitle:
@@ -113,7 +113,11 @@ export default function HomeProviderCta() {
             <Typography component="h2">{text.driverTitle}</Typography>
             <Typography component="p">{text.driverText}</Typography>
           </div>
-          <Button className="home-primary-action" endIcon={<ArrowForward />} onClick={() => navigate("/app")}>
+          {/* التطبيق لم يُنشر بعد، فالزر معطّل مؤقتاً بدل أن ينقل إلى صفحة
+              لا تحوي رابط تحميل. `disabled` يُخرجه من ترتيب التنقّل ويُظهره
+              معطّلاً بصرياً، فلا يَعِد بما لا يستطيع. يُعاد `onClick` عند
+              توفّر روابط المتاجر. */}
+          <Button className="home-primary-action" endIcon={<ArrowForward />} disabled>
             {text.driverCta}
           </Button>
         </MotionBox>
