@@ -45,31 +45,7 @@
     "feature3_title": "Certified Mechanics",
     "feature3_desc": "Our professional, certified mechanics provide trusted, high-quality service you can count on.",
     "feature4_title": "Transparent Pricing",
-    "feature4_desc": "Premium service at competitive prices. No hidden fees, just honest and transparent pricing.",
-    "feature5_title": "Quality Guarantee",
-    "feature5_desc": "We ensure quality and safety with every service. Our dedicated support team is always ready to help."
-  },
-  "why": {
-    "title": "WHY CHOOSE CAR HERO?",
-    "subtitle": "Experience the difference with our premium roadside assistance services.",
-    "features": {
-      "assistance": {
-        "title": "24/7 Road Assistance",
-        "desc": "Round-the-clock support for your vehicle emergencies. We provide immediate on-road assistance anywhere, anytime, so you never have to worry about being stranded."
-      },
-      "pricing": {
-        "title": "Competitive Pricing",
-        "desc": "Quality service at fair prices. We believe premium assistance shouldn't break the bank. Get professional help without unexpected costs."
-      },
-      "come_to_you": {
-        "title": "We Come to You",
-        "desc": "Whether you're at work, the gym, or enjoying time with family — schedule a service and we'll come to you. Real-time tracking keeps you informed every step of the way."
-      },
-      "certified": {
-        "title": "Certified Experts",
-        "desc": "Our team of certified technicians and mechanics specialize in emergency and garage services. Trust your vehicle with professionals who deliver excellence quickly."
-      }
-    }
+    "feature4_desc": "Premium service at competitive prices. No hidden fees, just honest and transparent pricing."
   },
   "contact1": {
     "title": "Get in Touch",

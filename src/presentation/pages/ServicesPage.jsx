@@ -1,7 +1,6 @@
 import React from "react";
 import Navbar from "@/presentation/components/layout/Navbar";
 import ServicesCatalog from "@/presentation/components/landing/ServicesCatalog";
-import WhyChooseUs from "@/presentation/components/landing/WhyChooseUs";
 import Footer from "@/presentation/components/layout/Footer";
 
 const SectionTone = ({ tone, children }) => (
@@ -19,9 +18,6 @@ const ServicesPage = () => {
       <main id="main">
         <SectionTone tone="a">
           <ServicesCatalog />
-        </SectionTone>
-        <SectionTone tone="b">
-          <WhyChooseUs />
         </SectionTone>
       </main>
       <Footer />
