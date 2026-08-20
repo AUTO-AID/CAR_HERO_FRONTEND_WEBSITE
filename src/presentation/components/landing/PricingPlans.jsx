@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import { motion as Motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "react-i18next";
+import SectionHead from "@/presentation/components/ui/SectionHead";
 import {
   CheckCircle,
   Star,
@@ -90,20 +91,15 @@ const PricingPlans = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            {/* أوّل قسم في صفحة الأسعار: كانت الصفحة تبدأ من h2 بلا h1 */}
-            <Typography
-              component="h1"
-              className="section-title"
-              sx={{ mx: "auto", mb: 2.5, display: "block", width: "fit-content" }}
-            >
-              {t("pricing.title")}
-            </Typography>
-            <Typography
-              className="section-subtitle"
-              sx={{ mx: "auto", mb: 4 }}
-            >
-              {t("pricing.subtitle")}
-            </Typography>
+            {/* أوّل قسم في صفحة الأسعار: كانت الصفحة تبدأ من h2 بلا h1.
+                وكان العنوان `Typography` بلا variant فيرث body1 وتفوز
+                `font-size: 1rem` على `.section-title` — أنماط MUI تُحقن
+                بعد index.css فتغلبها عند تساوي الأولوية. */}
+            <SectionHead
+              as="h1"
+              title={t("pricing.title")}
+              subtitle={t("pricing.subtitle")}
+            />
 
             {/* Billing Toggle */}
             <Box sx={{ display: "flex", justifyContent: "center", mb: 8 }}>

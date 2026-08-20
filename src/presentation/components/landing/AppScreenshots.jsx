@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Box, Typography, IconButton, Chip, useMediaQuery } from "@mui/material";
 import { motion as Motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "react-i18next";
+import SectionHead from "@/presentation/components/ui/SectionHead";
 import {
   ChevronLeft,
   ChevronRight,
@@ -255,17 +256,13 @@ const AppScreenshots = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.1 }}
         >
-          <Typography
-            component="h2"
-            className="section-title"
-            sx={{ mx: "auto", mb: 2.5, display: "block", width: "fit-content" }}
-          >
-            {t("appScreenshots.title")}
-          </Typography>
-
-          <Typography className="section-subtitle" sx={{ mx: "auto" }}>
-            {t("appScreenshots.subtitle")}
-          </Typography>
+          {/* `Typography` بلا variant ترث body1، وأنماط MUI تُحقن في <head>
+              بعد index.css فتفوز `font-size: 1rem` على `.section-title`
+              عند تساوي الأولوية — فكان عنوان القسم بحجم نصّ عادي. */}
+          <SectionHead
+            title={t("appScreenshots.title")}
+            subtitle={t("appScreenshots.subtitle")}
+          />
 
           <Motion.div
             initial={{ opacity: 0, y: 20 }}

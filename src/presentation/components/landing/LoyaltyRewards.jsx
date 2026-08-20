@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import { motion as Motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
+import SectionHead from "@/presentation/components/ui/SectionHead";
 import {
   Stars,
   CardGiftcard,
@@ -75,24 +76,18 @@ const LoyaltyRewards = () => {
 
       <Box className="section-container">
         {/* Header */}
-        <Box sx={{ textAlign: "center", mb: 10 }}>
-          <Motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <Typography
-              component="h2"
-              className="section-title"
-              sx={{ mx: "auto", mb: 2.5, display: "block", width: "fit-content" }}
-            >
-              {t("loyalty.title")}
-            </Typography>
-            <Typography className="section-subtitle" sx={{ mx: "auto" }}>
-              {t("loyalty.subtitle")}
-            </Typography>
-          </Motion.div>
-        </Box>
+        {/* كان العنوان `Typography` بلا variant، أي body1 — و MUI تحقن
+            أنماطها في <head> بعد index.css، فتفوز `font-size: 1rem` على
+            `.section-title` عند تساوي الأولوية ويُعرض عنوان القسم بحجم نصّ
+            عادي. SectionHead يرسم عنصراً بسيطاً لا يزاحمه شيء، وهو مكوّن
+            رأس القسم الموحّد في الموقع أصلاً. */}
+        <Motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          <SectionHead title={t("loyalty.title")} subtitle={t("loyalty.subtitle")} />
+        </Motion.div>
 
         {/* How it Works Visualization */}
         <Grid container spacing={6} sx={{ mb: 12 }} justifyContent="center">
