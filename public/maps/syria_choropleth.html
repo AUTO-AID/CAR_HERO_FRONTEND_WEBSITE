@@ -3,6 +3,15 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+      /* يعمل قبل أول رسم عمداً: ضبط السمة بعد الرسم يُنتج وميض لوح فاتح. */
+      (function () {
+        var theme = new URLSearchParams(location.search).get('theme');
+        theme = theme === 'light' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', theme);
+        document.documentElement.style.colorScheme = theme;
+      })();
+    </script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <style>
@@ -11,6 +20,11 @@
             padding: 0;
             box-sizing: border-box;
         }
+        /* المستند شفّاف بالكامل ليظهر لون القسم خلفه. لكن الشفافية تكشف
+           «لوح» المتصفّح الافتراضي، ولونه يتبع color-scheme — وهو غير معلن
+           هنا، فكان المتصفّح يفترض الوضع الفاتح ويرسم لوحاً أبيض تحت
+           الخريطة: مستطيل أبيض ساطع وسط صفحة داكنة، وأسماء المدن الفاتحة
+           تختفي عليه. السكربت في <head> يضبطه من ?theme قبل أول رسم. */
         html, body {
             width: 100%;
             height: 100%;
@@ -49,6 +63,30 @@
             text-shadow: 0 1px 4px rgba(0,0,0,0.9), 0 0 8px rgba(0,0,0,0.5);
             white-space: nowrap;
             pointer-events: none;
+        }
+
+        /* الوضع الفاتح: نصّ فاتح بظلّ داكن ينقلب إلى نصّ غير مقروء فوق
+           خلفية القسم الفاتحة. تُقلب الأدوار بدل الاعتماد على الظلّ وحده. */
+        html[data-theme='light'] .city-label {
+            color: #2a1a3d;
+            text-shadow: 0 1px 3px rgba(255,255,255,0.95), 0 0 8px rgba(255,255,255,0.7);
+        }
+
+        html[data-theme='light'] .city-marker {
+            background: #7c3aed;
+            border-color: rgba(255,255,255,0.95);
+            box-shadow: 0 0 10px rgba(124, 58, 237, 0.45);
+        }
+
+        html[data-theme='light'] .map-legend {
+            color: #3b2a52;
+            background: rgba(255,255,255,0.82);
+            border-color: rgba(124, 58, 237, 0.25);
+        }
+
+        html[data-theme='light'] .legend-dot.inactive {
+            background: #ffffff;
+            border-color: rgba(124, 58, 237, 0.45);
         }
         
         @media (max-width: 768px) {

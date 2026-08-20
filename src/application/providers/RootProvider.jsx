@@ -20,8 +20,11 @@ export default function RootProvider() {
     return window.matchMedia?.("(prefers-color-scheme: dark)").matches ? "dark" : "light";
   });
 
+  // `mode` منشور مع المبدّل: كان السياق يعطي المبدّل وحده، فلا يستطيع أي
+  // مكوّن معرفة السمة الحالية — والخريطة تحتاجها لتمرّرها إلى الـ iframe.
   const colorMode = useMemo(
     () => ({
+      mode,
       toggleColorMode: () => {
         setMode((prevMode) => {
           const newMode = prevMode === "light" ? "dark" : "light";
@@ -30,7 +33,7 @@ export default function RootProvider() {
         });
       },
     }),
-    [],
+    [mode],
   );
 
   useEffect(() => {

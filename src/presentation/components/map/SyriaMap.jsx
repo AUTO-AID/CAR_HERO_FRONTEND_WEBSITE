@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { Box, Typography, TextField, Button, Chip } from '@mui/material';
 import { motion as Motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
 import { CheckCircle, Schedule, Map as MapIcon } from '@mui/icons-material';
+import { ColorModeContext } from '@/application/contexts/color-mode.context';
 
 const governorateNames = {
   'Damascus': { en: 'Damascus', ar: 'دمشق' },
@@ -321,6 +322,9 @@ const normalizeGovernorateData = (data) => {
 
 const SyriaMap = () => {
   const { i18n } = useTranslation();
+  // الخريطة داخل iframe، فلا ترث CSS الصفحة ولا سمتها. تُمرَّر في العنوان
+  // ليضبطها المستند قبل أول رسم بدل أن يومض فاتحاً ثم يتحوّل.
+  const { mode } = useContext(ColorModeContext);
   const iframeRef = useRef(null);
   const [selectedGov, setSelectedGov] = useState(null);
   const [previewGov, setPreviewGov] = useState(null);
@@ -494,7 +498,7 @@ const SyriaMap = () => {
         <Box
           ref={iframeRef}
           component="iframe"
-            src="/maps/syria_choropleth.html?v=5"
+            src={`/maps/syria_choropleth.html?v=6&theme=${mode === 'light' ? 'light' : 'dark'}`}
           sx={{
             width: '100%',
               height: { xs: '460px', sm: '540px', md: '650px' },
