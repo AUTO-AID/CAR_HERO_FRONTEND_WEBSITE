@@ -1394,25 +1394,6 @@ button {
   }
 }
 
-/* ===== روابط أسفل لوحة التحميل في صفحة التطبيق ===== */
-.app-info-download-note {
-  margin-top: 10px;
-  color: var(--text-muted);
-  font-size: 0.92rem;
-  line-height: 1.7;
-}
-
-.app-info-steps-link {
-  margin-inline-start: 10px;
-}
-
-@media (max-width: 620px) {
-  .app-info-steps-link {
-    margin-inline-start: 0;
-    margin-top: 10px;
-  }
-}
-
 .home-feature-panel.accent {
   background:
     linear-gradient(135deg, rgba(34, 197, 94, 0.12), rgba(143, 92, 177, 0.1)),
@@ -1446,10 +1427,8 @@ button {
   align-items: center;
   gap: clamp(36px, 6vw, 86px);
 }
-
 .app-info-eyebrow,
-.app-info-section-head span,
-.app-info-download-panel span {
+.app-info-section-head span {
   display: inline-flex;
   width: fit-content;
   align-items: center;
@@ -1598,73 +1577,6 @@ button {
   max-height: 180px;
   padding-top: 6px;
 }
-
-.app-info-download-section {
-  padding: clamp(72px, 8vw, 112px) 0;
-  background: var(--section-tone-a);
-}
-
-.app-info-download-panel {
-  min-height: 280px;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.7fr);
-  align-items: center;
-  gap: 30px;
-  padding: clamp(28px, 5vw, 48px) !important;
-  border-radius: 34px;
-  color: white;
-  /* الدرجة السماوية #0ea5e9 كانت أوّل التدرّج وتحمل نصّاً أبيض: 2.77:1 فقط.
-     #0369a1 يحفظ الطابع السماوي ويعطي 5.93، فتصير أفتح درجة في اللوحة
-     هي #8f5cb1 عند 4.85 — فوق الحدّ. */
-  background: linear-gradient(135deg, #0369a1, #8f5cb1 72%, #6a1b9a);
-  overflow: hidden;
-}
-
-.app-info-download-panel span {
-  color: white;
-  background: rgba(255, 255, 255, 0.13);
-  border-color: rgba(255, 255, 255, 0.26);
-}
-
-.app-info-download-panel h2 {
-  max-width: 650px;
-  margin: 18px 0 10px;
-  font-size: clamp(1.85rem, 4vw, 3.1rem);
-  line-height: 1.12;
-  font-weight: 700;
-}
-
-.app-info-download-panel p {
-  max-width: 630px;
-  margin: 0 0 22px;
-  color: rgba(255, 255, 255, 0.86);
-  line-height: 1.8;
-  font-weight: 600;
-}
-
-.app-info-download-phones {
-  position: relative;
-  min-height: 255px;
-}
-
-.app-info-download-phones img {
-  position: absolute;
-  max-width: 170px;
-  filter: drop-shadow(0 22px 30px rgba(13, 8, 21, 0.28));
-}
-
-.app-info-download-phones img:first-child {
-  inset-inline-start: 14%;
-  top: 12px;
-  transform: rotate(-8deg);
-}
-
-.app-info-download-phones img:last-child {
-  inset-inline-end: 10%;
-  top: -14px;
-  transform: rotate(6deg);
-}
-
 .section-title {
   text-align: center;
   color: var(--primary-text);
@@ -1931,8 +1843,6 @@ button {
   justify-content: flex-start;
   text-align: right;
 }
-
-
 
 .contact-submit-btn {
   min-width: 210px;
@@ -2211,8 +2121,7 @@ button {
     min-height: 150px;
   }
 
-  .app-info-hero-grid,
-  .app-info-download-panel {
+  .app-info-hero-grid {
     grid-template-columns: 1fr;
   }
 
@@ -2288,20 +2197,6 @@ button {
   .app-info-eyebrow {
     margin-inline: auto;
   }
-
-  .app-info-download-panel {
-    text-align: center;
-  }
-
-  .app-info-download-panel p,
-  .app-info-download-panel span {
-    margin-inline: auto;
-  }
-
-  .app-info-download-phones {
-    min-height: 230px;
-  }
-
   .home-service-card {
     min-height: 172px;
     padding: 18px;
@@ -2497,11 +2392,6 @@ select:focus-visible,
   .app-info-phone-scene img {
     max-width: min(58%, 230px);
   }
-
-  .app-info-download-phones img {
-    max-width: 138px;
-  }
-
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2679,18 +2569,4 @@ select:focus-visible,
 
 @media (prefers-reduced-motion: reduce) {
   .stat-skeleton { animation: none; }
-}
-
-/* حالة «قريباً» ليست دعوة للنقر — فلا تُعرض كزر */
-.app-info-download-status {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin: 0 0 14px;
-  padding: 8px 16px;
-  border: 1px dashed var(--border-color);
-  border-radius: var(--radius-pill);
-  color: var(--text-muted);
-  font-size: 0.92rem;
-  font-weight: 700;
 }

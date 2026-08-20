@@ -8,7 +8,6 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
 import Navbar from "@/presentation/components/layout/Navbar";
 import Footer from "@/presentation/components/layout/Footer";
 import SectionHead from "@/presentation/components/ui/SectionHead";
@@ -43,12 +42,6 @@ const content = {
       { icon: CalendarClock, title: "خدمات فورية ومجدولة", text: "اطلب طوارئ الطريق أو رتب خدمة صيانة في وقت مناسب." },
       { icon: LifeBuoy, title: "تجربة مصممة للطريق", text: "الخطوات مختصرة ومناسبة للحظات التي تحتاج فيها للمساعدة بسرعة." },
     ],
-    stepsLink: "الرحلة كاملة من اختيار الخدمة حتى وصول المزود موضّحة في الصفحة الرئيسية.",
-    stepsCta: "اطّلع على طريقة العمل",
-    downloadTitle: "حمّل التطبيق واطلب الخدمة من مكانك",
-    downloadText: "احتفظ بـ Car Hero في هاتفك لتكون جاهزًا لأي موقف على الطريق.",
-    downloadCta: "تفاصيل التحميل قريبًا",
-    soon: "متاح قريبًا",
   },
   en: {
     hero: {
@@ -67,18 +60,11 @@ const content = {
       { icon: CalendarClock, title: "Instant and scheduled", text: "Request roadside help or arrange maintenance for later." },
       { icon: LifeBuoy, title: "Built for the road", text: "Short steps for moments when drivers need help quickly." },
     ],
-    stepsLink: "The full journey from choosing a service to provider arrival is laid out on the home page.",
-    stepsCta: "See how it works",
-    downloadTitle: "Download the app and request service from your location",
-    downloadText: "Keep Car Hero on your phone so you are ready for the road.",
-    downloadCta: "Download details soon",
-    soon: "Available soon",
   },
 };
 
 export default function AppPage() {
   const { i18n } = useTranslation();
-  const navigate = useNavigate();
   const isArabic = i18n.language === "ar";
   const text = isArabic ? content.ar : content.en;
 
@@ -126,30 +112,6 @@ export default function AppPage() {
                   </Motion.article>
                 );
               })}
-            </div>
-          </div>
-        </section>
-
-        <section className="app-info-download-section">
-          <div className="section-container app-info-download-panel">
-            <div>
-              <span>{text.soon}</span>
-              <h2>{text.downloadTitle}</h2>
-              <p>{text.downloadText}</p>
-              <p className="app-info-download-note">{text.stepsLink}</p>
-              {/* كان زراً بلا `onClick`: يبدو قابلاً للنقر ويخيّب من ينقره.
-                  التطبيق لم يُنشر بعد، فالصادق أن يُعرض كحالة لا كدعوة. */}
-              <p className="app-info-download-status">{text.downloadCta}</p>
-              <Button
-                className="home-primary-action app-info-steps-link"
-                onClick={() => navigate("/#how-it-works")}
-              >
-                {text.stepsCta}
-              </Button>
-            </div>
-            <div className="app-info-download-phones">
-              <img src={secondPhone} alt="" aria-hidden="true" width={720} height={1080} loading="lazy" decoding="async" />
-              <img src={heroPhone} alt="" aria-hidden="true" width={720} height={1080} loading="lazy" decoding="async" />
             </div>
           </div>
         </section>
