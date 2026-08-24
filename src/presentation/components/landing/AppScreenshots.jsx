@@ -374,22 +374,6 @@ const AppScreenshots = () => {
             }}
           />
 
-          {/* Phone Notch */}
-          <Box
-            sx={{
-              position: "absolute",
-              top: "-6px",
-              left: "50%",
-              transform: "translateX(-50%)",
-              width: "140px",
-              height: "28px",
-              background: "linear-gradient(180deg, #1a1a2e 0%, #2a2a3e 100%)",
-              borderRadius: "0 0 18px 18px",
-              zIndex: 10,
-              boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
-            }}
-          />
-
           {/* Phone Frame */}
           <Box
             sx={{
