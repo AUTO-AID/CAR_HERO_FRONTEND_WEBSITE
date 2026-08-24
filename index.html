@@ -26,12 +26,15 @@
     <!-- يضبط السمة قبل أول رسم لمنع وميض التبديل بين الوضعين -->
     <script>
       (function () {
+        // الداكن هو الافتراضي: لا يُستشار تفضيل النظام، ولا يُقرَأ إلا
+        // اختيار صريح سابق من الزائر عبر مبدّل السمة.
+        var mode = 'dark';
         try {
           var stored = localStorage.getItem('theme');
-          var mode = stored || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-          document.documentElement.setAttribute('data-theme', mode);
-          document.documentElement.classList.toggle('dark', mode === 'dark');
-        } catch (e) { /* التخزين المحلي محجوب — الافتراضي الفاتح */ }
+          if (stored === 'light' || stored === 'dark') mode = stored;
+        } catch (e) { /* التخزين المحلي محجوب — يبقى الافتراضي الداكن */ }
+        document.documentElement.setAttribute('data-theme', mode);
+        document.documentElement.classList.toggle('dark', mode === 'dark');
       })();
     </script>
 

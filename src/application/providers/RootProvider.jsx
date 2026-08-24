@@ -12,12 +12,18 @@ import { getTheme } from "@/presentation/theme/index.js";
 
 export default function RootProvider() {
   const [lang, setLang] = useState(i18n.language || "ar");
-  // كان الوضع الداكن افتراضياً دائماً ويتجاهل تفضيل النظام. السكربت في
-  // <head> يضبط data-theme قبل الرسم، وهنا نقرأ القرار ذاته لا نناقضه.
+  // الداكن هو الافتراضي، ولا يُزيحه إلا اختيار صريح سابق عبر المبدّل.
+  // السكربت في <head> يطبّق القرار نفسه قبل الرسم، وهذا يقرأه لا يناقضه —
+  // فأيّ اختلاف بين الاثنين يعني وميضاً عند الإقلاع. القراءة داخل try لأن
+  // localStorage يرمي لا يعيد null حين يحجبه المتصفّح، فتسقط الشجرة كلها.
   const [mode, setMode] = useState(() => {
-    const stored = localStorage.getItem("theme");
-    if (stored === "light" || stored === "dark") return stored;
-    return window.matchMedia?.("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    try {
+      const stored = localStorage.getItem("theme");
+      if (stored === "light" || stored === "dark") return stored;
+    } catch {
+      /* التخزين المحلي محجوب */
+    }
+    return "dark";
   });
 
   // `mode` منشور مع المبدّل: كان السياق يعطي المبدّل وحده، فلا يستطيع أي
@@ -28,7 +34,11 @@ export default function RootProvider() {
       toggleColorMode: () => {
         setMode((prevMode) => {
           const newMode = prevMode === "light" ? "dark" : "light";
-          localStorage.setItem("theme", newMode);
+          try {
+            localStorage.setItem("theme", newMode);
+          } catch {
+            /* التخزين المحلي محجوب — يبدّل للجلسة دون أن يُحفظ */
+          }
           return newMode;
         });
       },
