@@ -12,19 +12,28 @@ import {
   PlayArrow,
 } from "@mui/icons-material";
 
+import shotOnboarding from "@/assets/app-screens/01-onboarding.webp";
+import shotHome from "@/assets/app-screens/02-home.webp";
+import shotServices from "@/assets/app-screens/03-services.webp";
+import shotServiceDetail from "@/assets/app-screens/04-service-detail.webp";
+import shotPickLocation from "@/assets/app-screens/05-pick-location.webp";
+import shotConfirmOrder from "@/assets/app-screens/06-confirm-order.webp";
+import shotProviderFound from "@/assets/app-screens/07-provider-found.webp";
+import shotLiveTracking from "@/assets/app-screens/08-live-tracking.webp";
+import shotProviderProfile from "@/assets/app-screens/09-provider-profile.webp";
+import shotOffers from "@/assets/app-screens/10-offers.webp";
+
 const appScreenshots = [
-  "/photo_car_hero/photo_1_2026-03-23_17-28-16.jpg",
-  "/photo_car_hero/photo_2_2026-03-23_17-28-16.jpg",
-  "/photo_car_hero/photo_3_2026-03-23_17-28-16.jpg",
-  "/photo_car_hero/photo_4_2026-03-23_17-28-16.jpg",
-  "/photo_car_hero/photo_5_2026-03-23_17-28-16.jpg",
-  "/photo_car_hero/photo_6_2026-03-23_17-28-16.jpg",
-  "/photo_car_hero/photo_7_2026-03-23_17-28-16.jpg",
-  "/photo_car_hero/photo_8_2026-03-23_17-28-16.jpg",
-  "/photo_car_hero/photo_9_2026-03-23_17-28-16.jpg",
-  "/photo_car_hero/photo_10_2026-03-23_17-28-16.jpg",
-  "/photo_car_hero/photo_11_2026-03-23_17-28-16.jpg",
-  "/photo_car_hero/photo_12_2026-03-23_17-28-16.jpg",
+  { src: shotOnboarding, ar: "البداية", en: "Welcome" },
+  { src: shotHome, ar: "الرئيسية", en: "Home" },
+  { src: shotServices, ar: "دليل الخدمات", en: "Service catalogue" },
+  { src: shotServiceDetail, ar: "تفاصيل الخدمة", en: "Service details" },
+  { src: shotPickLocation, ar: "تحديد الموقع", en: "Pin your location" },
+  { src: shotConfirmOrder, ar: "تأكيد الطلب", en: "Confirm the order" },
+  { src: shotProviderFound, ar: "قبول الطلب", en: "Request accepted" },
+  { src: shotLiveTracking, ar: "تتبّع مباشر", en: "Live tracking" },
+  { src: shotProviderProfile, ar: "ملف المزوّد وتقييماته", en: "Provider profile" },
+  { src: shotOffers, ar: "العروض والكوبونات", en: "Offers and coupons" },
 ];
 
 /** مرئي لقارئ الشاشة فقط — يمنح العدّاد سياقاً بدل رقمين مجرّدين. */
@@ -110,7 +119,7 @@ const AppScreenshots = () => {
   useEffect(() => {
     const preload = (index) => {
       const image = new Image();
-      image.src = appScreenshots[index];
+      image.src = appScreenshots[index].src;
     };
     preload((currentIndex + 1) % appScreenshots.length);
     preload((currentIndex - 1 + appScreenshots.length) % appScreenshots.length);
@@ -418,11 +427,11 @@ const AppScreenshots = () => {
             <AnimatePresence mode="wait" custom={direction}>
               <Motion.img
                 key={currentIndex}
-                src={appScreenshots[currentIndex]}
+                src={appScreenshots[currentIndex].src}
                 alt={
                   isRtl
-                    ? `لقطة من تطبيق Car Hero — ${currentIndex + 1} من ${appScreenshots.length}`
-                    : `Car Hero app screenshot ${currentIndex + 1} of ${appScreenshots.length}`
+                    ? `${appScreenshots[currentIndex].ar} — لقطة من تطبيق Car Hero (${currentIndex + 1} من ${appScreenshots.length})`
+                    : `${appScreenshots[currentIndex].en} — Car Hero app screenshot (${currentIndex + 1} of ${appScreenshots.length})`
                 }
                 custom={direction}
                 variants={slideVariants}
@@ -463,9 +472,14 @@ const AppScreenshots = () => {
               right: 0,
               display: "flex",
               justifyContent: "center",
-              gap: 1.5,
+              // صندوق الهاتف عرضه ٢٨٠ بينما صفّ النقاط أعرض منه، وكان
+              // `wrap` يلفّ نصف النقاط إلى سطر يقع فوق الأوّل — أي خلف
+              // أسفل الهاتف فلا تُرى. الصفّ الآن سطر واحد يفيض بالتساوي
+              // على جانبَي الإطار، وفجوة ٤ بكسل تُبقي عشر نقاط داخل شاشة
+              // عرضها ٣٢٠ بكسل دون أن تتلامس أهداف اللمس.
+              gap: 0.5,
               zIndex: 5,
-              flexWrap: "wrap",
+              flexWrap: "nowrap",
               px: 2,
             }}
           >
@@ -473,13 +487,13 @@ const AppScreenshots = () => {
                 MUI لا يفهمها عنصر framer-motion، فكانت كل أنماط النقاط
                 تُتجاهَل بصمت ولا تُرسم أصلاً. وكانت `div` بـ onClick أيضاً:
                 لا تُركَّز بلوحة المفاتيح ولا تُعلن كعنصر تفاعلي. */}
-            {appScreenshots.map((_, index) => (
+            {appScreenshots.map((shot, index) => (
               <Box
                 component="button"
                 type="button"
                 key={index}
                 onClick={() => handleDotClick(index)}
-                aria-label={isRtl ? `الانتقال إلى اللقطة ${index + 1}` : `Go to screenshot ${index + 1}`}
+                aria-label={isRtl ? `الانتقال إلى: ${shot.ar}` : `Go to: ${shot.en}`}
                 aria-current={index === currentIndex ? "true" : undefined}
                 // النقطة تبقى ١٠ بكسل بصرياً — وهو المقاس الصحيح لمؤشّر شرائح —
                 // لكن مساحة اللمس كانت ١٠×١٠ أيضاً، أي ربع الحد الموصى به وسط
