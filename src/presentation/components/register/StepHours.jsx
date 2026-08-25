@@ -1,40 +1,21 @@
 import React, { useState } from 'react';
 import { Clock, Loader2 } from 'lucide-react';
 import { applyProvider } from '@/infrastructure/services/providers.service';
+import { services as serviceCatalog } from '@/presentation/content/services';
 
 const StepHours = ({ formData, updateFormData, nextStep, prevStep, lang, t }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
 
-  const serviceCategoryMap = {
-    mechanical: 'maintenance',
-    electrical: 'maintenance',
-    towing: 'towing',
-    fuel: 'fuel',
-    body: 'maintenance',
-    tires: 'tire',
-    oil: 'maintenance',
-    ac: 'maintenance',
-    detailing: 'car_wash',
-    brakes: 'maintenance',
-    battery: 'battery',
-    suspension: 'maintenance',
-  };
-
-  const serviceMetaMap = {
-    mechanical: { name: 'ميكانيك عام', unit: 'خدمة' },
-    electrical: { name: 'كهرباء وكمبيوتر', unit: 'خدمة' },
-    towing: { name: 'سطحة / إنقاذ', unit: 'خدمة' },
-    fuel: { name: 'توصيل وقود', unit: 'خدمة' },
-    body: { name: 'تجليس وبخ', unit: 'خدمة' },
-    tires: { name: 'إطارات وميزان', unit: 'خدمة' },
-    oil: { name: 'غيار زيت وفلاتر', unit: 'خدمة' },
-    ac: { name: 'تكييف وتبريد', unit: 'خدمة' },
-    detailing: { name: 'غسيل وتلميع', unit: 'خدمة' },
-    brakes: { name: 'فرامل وديسك', unit: 'خدمة' },
-    battery: { name: 'بطاريات وتغيير بطارية', unit: 'خدمة' },
-    suspension: { name: 'دوزان وهيدروليك', unit: 'خدمة' },
-  };
+  /**
+   * لم تعد هناك خريطة تُترجم معرّفات النموذج إلى فئات الخادم: `serviceType`
+   * يحمل الآن `category` حرفياً (`towing`, `oil`, `car_wash`…) لأن الخطوة
+   * السابقة تبني قائمتها من الكتالوج نفسه. ما بقي هو الاسم العربي المرافق،
+   * ويُقرأ من الكتالوج أيضاً بدل نسخة ثالثة مكتوبة هنا.
+   */
+  const serviceMetaMap = Object.fromEntries(
+    serviceCatalog.map((service) => [service.id, { name: service.ar.title, unit: 'خدمة' }]),
+  );
 
   const canonicalDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
@@ -103,9 +84,7 @@ const StepHours = ({ formData, updateFormData, nextStep, prevStep, lang, t }) =>
         throw new Error('Invalid working hours');
       }
 
-      const serviceCategories = Array.from(
-        new Set(formData.serviceType.map((service) => serviceCategoryMap[service]).filter(Boolean))
-      );
+      const serviceCategories = Array.from(new Set(formData.serviceType));
       const servicesList = buildServicesList();
 
       if (!servicesList.length || servicesList.some((service) => !Number.isFinite(service.price) || service.price <= 0)) {

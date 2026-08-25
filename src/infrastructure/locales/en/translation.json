@@ -16,13 +16,6 @@
     "logoAlt": "Car Hero Logo",
     "tagline": "Your trusted roadside assistance partner. Providing fast, reliable, and professional help wherever you are.",
     "services": "Our Services",
-    "servicesItems": {
-      "roadside": "Roadside Assistance",
-      "towing": "Towing & Recovery",
-      "battery": "Battery Jumpstart",
-      "fuel": "Fuel Delivery",
-      "tire": "Tire Change"
-    },
     "quickLinks": "Quick Links",
     "quickLinksItems": {
       "partner": "Partner Registration"

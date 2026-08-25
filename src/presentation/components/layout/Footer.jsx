@@ -5,6 +5,7 @@ import { Link as RouterLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import logo from "@/assets/logo_carHero.webp";
 import { contactDetails } from "@/presentation/content/contactDetails";
+import { serviceTitles } from "@/presentation/content/services";
 
 const Footer = () => {
   const { t, i18n } = useTranslation();
@@ -20,13 +21,10 @@ const Footer = () => {
   // كانت كل هذه الروابط مراسيَ داخلية (`#services`, `#contact`, `#home`)
   // موجودة في صفحة واحدة فقط لكل منها، بينما الفوتر يظهر في كل الصفحات —
   // فكانت النقرة لا تفعل شيئاً في معظم الحالات. صارت مسارات حقيقية.
-  const serviceLinks = [
-    t("footer.servicesItems.roadside"),
-    t("footer.servicesItems.towing"),
-    t("footer.servicesItems.battery"),
-    t("footer.servicesItems.fuel"),
-    t("footer.servicesItems.tire"),
-  ];
+  // ويُشتقّ عمود الخدمات من الكتالوج نفسه بدل نسخة خامسة في ملفّي الترجمة:
+  // تلك النسخة كانت تعرض «المساعدة على الطريق» (ليست خدمة في الكتالوج) وتغفل
+  // أربعاً من التسع — أي أن التذييل كان يعِد بغير ما تعرضه صفحة الخدمات.
+  const serviceLinks = serviceTitles(i18n.language);
 
   const quickLinks = [
     { label: t("home"), to: "/" },

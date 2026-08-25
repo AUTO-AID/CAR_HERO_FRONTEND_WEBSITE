@@ -1,29 +1,37 @@
 import React, { useRef, useState } from 'react';
 import FileUpload from '@/presentation/components/register/FileUpload';
-import { 
-  Wrench, Check, Zap, Truck, Settings, Layout, Wifi, Coffee, Package, 
-  Droplet, Plus, Minus, Thermometer, Sparkles, Disc, 
-  Battery, Construction, Coins, ArrowLeft, ArrowRight, X, Star, User
+import {
+  Check, Zap, Settings, Wifi, Coffee, Package,
+  Plus, Minus, Coins, ArrowLeft, ArrowRight, X, Star, User
 } from 'lucide-react';
+import { services as serviceCatalog } from '@/presentation/content/services';
 
 const StepServices = ({ formData, updateFormData, nextStep, prevStep, lang, t }) => {
   const [summaryError, setSummaryError] = useState('');
   const rootRef = useRef(null);
 
-  const mainServices = [
-    { id: 'mechanical', name: t.services.mainServices.mechanical, icon: <Wrench size={24} /> },
-    { id: 'electrical', name: t.services.mainServices.electrical, icon: <Zap size={24} /> },
-    { id: 'towing', name: t.services.mainServices.towing, icon: <Truck size={24} /> },
-    { id: 'fuel', name: t.services.mainServices.fuel, icon: <Droplet size={24} /> },
-    { id: 'body', name: t.services.mainServices.body, icon: <Construction size={24} /> },
-    { id: 'tires', name: t.services.mainServices.tires, icon: <Settings size={24} /> },
-    { id: 'oil', name: t.services.mainServices.oil, icon: <Droplet size={24} /> },
-    { id: 'ac', name: t.services.mainServices.ac, icon: <Thermometer size={24} /> },
-    { id: 'detailing', name: t.services.mainServices.detailing, icon: <Sparkles size={24} /> },
-    { id: 'brakes', name: t.services.mainServices.brakes, icon: <Disc size={24} /> },
-    { id: 'battery', name: t.services.mainServices.battery, icon: <Battery size={24} /> },
-    { id: 'suspension', name: t.services.mainServices.suspension, icon: <Layout size={24} /> },
-  ];
+  /**
+   * الخدمات تأتي من الكتالوج نفسه الذي تعرضه صفحة الخدمات ويطلبه العميل من
+   * التطبيق — لا من قائمة ثانية خاصّة بالنموذج.
+   *
+   * كانت هنا اثنتا عشرة «تخصّصاً» بلغة الورشة (`mechanical`, `tires`,
+   * `detailing`) لا يعرفها الخادم، فيُترجمها عند الاستلام إلى فئاته وتضيع
+   * التفاصيل في الطريق: يختار المزوّد «فرامل وديسك» بسعر، ثم يفتح «خدماتي
+   * وأسعاري» في لوحته فلا يجد لها أثراً. المعرّف الآن هو `category` حرفياً،
+   * فما يختاره هنا هو ما يظهر له هناك وما يراه العميل.
+   *
+   * `Icon` بحرف كبير مقصود: ESLint هنا بلا `eslint-plugin-react`، فمعرّف
+   * يُستعمل داخل JSX وحده يُقرأ «غير مستخدم» ما لم يبدأ بحرف كبير.
+   */
+  const mainServices = serviceCatalog.map((service) => {
+    const Icon = service.icon;
+    return {
+      id: service.id,
+      name: (lang === 'ar' ? service.ar : service.en).title,
+      color: service.color,
+      icon: <Icon size={24} />,
+    };
+  });
 
   const facilities = [
     { id: 'wifi', name: t.services.facilities.wifi, icon: <Wifi size={20} /> },
@@ -117,7 +125,8 @@ const StepServices = ({ formData, updateFormData, nextStep, prevStep, lang, t })
       </button>
 
       {/* Services Grid with Prices */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-4">
+      {/* تسع خدمات ← ثلاثة أعمدة تملأ ثلاثة صفوف تامّة؛ أربعة أعمدة كانت تترك صفاً أخيراً بخانة واحدة */}
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 lg:gap-4">
         {mainServices.map((service) => {
           const isSelected = formData.serviceType.includes(service.id);
           return (
@@ -137,11 +146,16 @@ const StepServices = ({ formData, updateFormData, nextStep, prevStep, lang, t })
                     : 'bg-[var(--card-bg)] border-[var(--border-color)] hover:border-[var(--primary-a40)] hover:bg-[var(--bg-section-alt)] shadow-sm'}
                 `}
               >
-                <div className={`p-3 rounded-xl mb-2.5 transition-all duration-300 border ${
-                  isSelected 
-                    ? 'bg-[var(--primary)] text-white border-[var(--primary)] scale-110 shadow-lg' 
-                    : 'bg-[var(--input-bg)] border-[var(--border-color)] text-[var(--primary-a60)] group-hover:scale-110 group-hover:text-[var(--primary)] group-hover:border-[var(--primary-a30)]'
-                }`}>
+                {/* لون الخدمة يميّزها وهي غير مختارة؛ عند الاختيار تعود إلى
+                    لون الهوية كي تبقى حالة «مُختار» قراءة واحدة لا تسعاً. */}
+                <div
+                  style={isSelected ? undefined : { color: service.color }}
+                  className={`p-3 rounded-xl mb-2.5 transition-all duration-300 border ${
+                    isSelected
+                      ? 'bg-[var(--primary)] text-white border-[var(--primary)] scale-110 shadow-lg'
+                      : 'bg-[var(--input-bg)] border-[var(--border-color)] group-hover:scale-110 group-hover:border-[var(--primary-a30)]'
+                  }`}
+                >
                   {service.icon}
                 </div>
                 <span className={`font-bold text-[11px] lg:text-xs uppercase transition-colors duration-300 text-center ${isSelected ? 'text-[var(--primary)] dark:text-[var(--primary-light)] drop-shadow-sm' : 'text-[var(--text-muted)] group-hover:text-[var(--primary)] dark:group-hover:text-[var(--primary-light)]'}`}>

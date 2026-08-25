@@ -100,19 +100,13 @@ export const translations = {
       }
     },
     services: {
-      title: 'قائمة الخدمات التخصصية',
+      title: 'الخدمات التي تقدّمها',
       emergency: 'دعم خدمات الطوارئ 24/7',
       pricePlac: 'السعر التقريبي (ل.س)',
       facilitiesTitle: 'المرافق المتاحة للعملاء',
       experience: 'سنوات الخبرة',
       techCount: 'عدد الفنيين المختصين',
       bioPlac: 'أخبرنا المزيد عن ورشتك، التخصصات، وتاريخك المهني...',
-      mainServices: {
-        mechanical: 'ميكانيك عام', electrical: 'كهرباء وكمبيوتر', towing: 'سطحة / إنقاذ',
-        fuel: 'توصيل وقود', body: 'تجليس وبخ', tires: 'إطارات وميزان',
-        oil: 'غيار زيت وفلاتر', ac: 'تكييف وتبريد', detailing: 'غسيل وتلميع',
-        brakes: 'فرامل وديسك', battery: 'بطاريات وتغيير بطارية', suspension: 'دوزان وهيدروليك'
-      },
       facilities: { wifi: 'إنترنت مجاني', waiting: 'غرفة انتظار مكيفة', parts: 'متجر قطع غيار' }
     },
     hours: {
@@ -210,7 +204,7 @@ export const translations = {
         'Idlib': ['Inside City Center', 'Sarmada', 'Dana', 'Ariha', 'Maarrat Nu\'man', 'Jisr Shughur', 'Harem', 'Salqin', 'Kafr Nubl', 'Khan Shaykhun', 'Other']
       }
     },
-    services: { title: 'Services', emergency: '24/7', pricePlac: 'Price', facilitiesTitle: 'Facilities', experience: 'Years', techCount: 'Techs', bioPlac: 'Bio...', mainServices: { mechanical: 'Mechanical', electrical: 'Electrical', towing: 'Towing', fuel: 'Fuel', body: 'Body', tires: 'Tires', oil: 'Oil', ac: 'A/C', detailing: 'Detailing', brakes: 'Brakes', battery: 'Battery', suspension: 'Suspension' }, facilities: { wifi: 'Wi-Fi', waiting: 'Waiting', parts: 'Store' } },
+    services: { title: 'Services you provide', emergency: '24/7', pricePlac: 'Price', facilitiesTitle: 'Facilities', experience: 'Years', techCount: 'Techs', bioPlac: 'Bio...', facilities: { wifi: 'Wi-Fi', waiting: 'Waiting', parts: 'Store' } },
     hours: { title: 'Hours', to: 'to', closed: 'Closed', disable: 'Disable', days: { 'الأحد': 'Sunday', 'الإثنين': 'Monday', 'الثلاثاء': 'Tuesday', 'الأربعاء': 'Wednesday', 'الخميس': 'Thursday', 'الجمعة': 'Friday', 'السبت': 'Saturday' } },
     success: { title: 'Success!', message: 'Thank you for choosing Car Hero. We are reviewing your registration details to ensure the best quality for our mutual clients.', nextTitle: 'What\'s Next?', nextDesc: 'You will receive an SMS once your dashboard is activated.', visionTitle: 'Be Ready', visionDesc: 'Prepare your shop photos to showcase them to your future customers.', backBtn: 'Back to Home', downloadBtn: 'Download Request Copy' }
   }
