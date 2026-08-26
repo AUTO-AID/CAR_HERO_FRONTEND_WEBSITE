@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { CheckCircle, ArrowRight, ArrowLeft, Download, Loader2, Award, ShieldCheck, Briefcase } from 'lucide-react';
 import RegistrationReceipt from './RegistrationReceipt';
+import { services as serviceCatalog } from '@/presentation/content/services';
 
 const StepSuccess = ({ lang, t, formData }) => {
   const [isDownloading, setIsDownloading] = useState(false);
@@ -12,8 +13,11 @@ const StepSuccess = ({ lang, t, formData }) => {
 
     const fileName = `CarHero_Registration_${formData.businessName.replace(/\s+/g, '_')}.html`;
 
-    const providerType = t.contact.categoryOptions?.[formData.category] || formData.category;
-    const servicesList = formData.serviceType.map(s => t.services.mainServices[s] || s);
+    const providerType = t.contact.providerOptions?.[formData.category] || formData.category;
+    const serviceNameById = Object.fromEntries(
+      serviceCatalog.map((service) => [service.id, (lang === 'ar' ? service.ar : service.en).title]),
+    );
+    const servicesList = (formData.serviceType || []).map(s => serviceNameById[s] || s);
     const photosCount = formData.shopPhotos?.length || 0;
 
     const htmlContent = `

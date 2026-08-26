@@ -1,5 +1,6 @@
 import React from 'react';
 import logo from '@/assets/logo_carHero.webp';
+import { services as serviceCatalog } from '@/presentation/content/services';
 
 const colors = {
   primary: '#8f5cb1',
@@ -129,7 +130,13 @@ const RegistrationReceipt = React.forwardRef(({ lang, t, formData }, ref) => {
   };
 
   const providerType = t.contact.providerOptions?.[formData.category] || formData.category;
-  const services = formData.serviceType.map((serviceId) => ({ id: serviceId, name: t.services.mainServices[serviceId] || serviceId, price: formData.servicePrices?.[serviceId] }));
+  // أسماء الخدمات مصدرها كتالوج الموقع نفسه (`services.js`) لا `t.services` —
+  // فترجمات التسجيل لا تحمل خريطة أسماء خدمات، وكان `t.services.mainServices`
+  // غير معرّف فينهار الرسم عند فهرسته بمعرّف خدمة مثل `towing`.
+  const serviceNameById = Object.fromEntries(
+    serviceCatalog.map((service) => [service.id, (isArabic ? service.ar : service.en).title]),
+  );
+  const services = (formData.serviceType || []).map((serviceId) => ({ id: serviceId, name: serviceNameById[serviceId] || serviceId, price: formData.servicePrices?.[serviceId] }));
   const facilities = formData.facilities.map((facility) => t.services.facilities?.[facility] || facility);
   const attachments = formData.shopPhotos || [];
   const attachmentNames = attachments.map((photo) => photo.name || (isArabic ? 'ملف مرفق' : 'Attachment'));
