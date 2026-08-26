@@ -13,7 +13,6 @@ import SectionHead from "@/presentation/components/ui/SectionHead";
 import {
   CheckCircle,
   Star,
-  Chat,
   Speed,
   DirectionsCar,
   EmojiEvents,
@@ -34,15 +33,21 @@ const PricingPlans = () => {
   // كانت عناوين الصفوف تُقرأ من `pricing.free.features.N` — أي من نصّ خانة
   // «المجاني» ذاتها، فيظهر النص نفسه في عمودين متجاورين ويفقد الجدول
   // وظيفته. العناوين الآن مفاتيح مستقلة تصف الميزة لا الخطة.
+  //
+  // المطابقة هنا **بالفهرس** لا بالمعنى: بعد حذف صفّ «التواصل مع المزوّد»
+  // (كانت خانتاه المتقابلتان "دردشة نصية فقط"/"دردشة نصية وصوتية" — ميزة لا
+  // وجود لها في التطبيق) من `free.features`/`premium.features`/`compare.rows`
+  // الثلاثة معاً، تحرّكت كل الفهارس بعدها خانةً واحدة إلى الأمام. ميزة
+  // premium الإضافية («خدمة سنوية مجانية») ليس لها نظير في free، فتبقى
+  // معاملة كصفّ يتيم في النهاية بفهرسها الخاص لا فهرس مطابق.
   const rowLabels = t("pricing.compare.rows", { returnObjects: true });
   const comparisonRows = [
     { label: rowLabels[0], free: freeFeatures[0], premium: premiumFeatures[0] },
     { label: rowLabels[1], free: freeFeatures[1], premium: premiumFeatures[1] },
     { label: rowLabels[2], free: freeFeatures[2], premium: premiumFeatures[2] },
     { label: rowLabels[3], free: freeFeatures[3], premium: premiumFeatures[3] },
-    { label: rowLabels[4], free: freeFeatures[4], premium: premiumFeatures[4] },
-    { label: rowLabels[5], free: freeFeatures[5], premium: premiumFeatures[6] },
-    { label: rowLabels[6], free: "—", premium: premiumFeatures[5] },
+    { label: rowLabels[4], free: freeFeatures[4], premium: premiumFeatures[5] },
+    { label: rowLabels[5], free: "—", premium: premiumFeatures[4] },
   ];
 
   const cardVariants = {

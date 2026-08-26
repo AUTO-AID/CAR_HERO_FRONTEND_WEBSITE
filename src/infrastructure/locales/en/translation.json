@@ -165,7 +165,6 @@
       "features": [
         "Basic Roadside Services",
         "Standard Reward Points",
-        "Text Chat Only",
         "Distance-based Matching",
         "1 Vehicle",
         "Standard Priority"
@@ -178,7 +177,6 @@
       "features": [
         "Full Services (Maintenance, Wash, etc.)",
         "Double Reward Points",
-        "Text + Voice Chat",
         "Rating & Performance Matching",
         "Unlimited Vehicles",
         "1 Free Annual Service",
@@ -189,7 +187,6 @@
       "rows": [
         "Service scope",
         "Reward points",
-        "Provider communication",
         "Provider matching",
         "Vehicles",
         "Request priority",
