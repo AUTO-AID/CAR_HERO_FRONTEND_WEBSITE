@@ -263,8 +263,9 @@ const StepAccount = ({
     try {
       const phone = formattedPhone();
 
+      let registerResponse;
       try {
-        await registerProvider(formData.fullName, phone, formData.password);
+        registerResponse = await registerProvider(formData.fullName, phone, formData.password);
       } catch (err) {
         const msg = err.message || 'Registration failed';
         if (msg.includes('already exists') || err.status === 409) {
@@ -280,6 +281,17 @@ const StepAccount = ({
         } else {
           throw err;
         }
+      }
+
+      // في التطوير المحلي بلا واتساب، الخادم يتخطّى رمز التحقق (`DEV_SKIP_OTP`)
+      // ويُرجع جلسة كاملة (`accessToken`) مباشرة بدل تحدّي OTP — فلا يوجد رمز
+      // يُرسل أصلاً، ولا معنى لعرض شاشة إدخاله. كانت هذه الحالة تُتجاهَل هنا
+      // فتبقى الشاشة على ستّ خانات فارغة إلى الأبد لأن لا رمز وصل ولا مستخدم
+      // يعرف من أين يجيء.
+      if (registerResponse?.data?.accessToken) {
+        setIsVerified(true);
+        successTimerRef.current = setTimeout(() => nextStep(), 600);
+        return;
       }
 
       setIsOtpSent(true);
