@@ -121,7 +121,24 @@ const StepHours = ({ formData, updateFormData, nextStep, prevStep, lang, t }) =>
       nextStep();
     } catch (err) {
       console.error(err);
-      setError(lang === 'ar' ? 'حدث خطأ أثناء إرسال الطلب، يرجى المحاولة مرة أخرى' : 'Failed to submit application, please try again');
+      const clientErrors = {
+        'Missing provider coordinates': lang === 'ar'
+          ? 'يرجى تحديد موقعك في خطوة الموقع والنشاط'
+          : 'Please set your location in the previous step',
+        'Invalid working hours': lang === 'ar'
+          ? 'يوجد يوم عامل وقت نهاية دوامه قبل وقت بدايته. صحّح الوقت في اليوم المقصود ثم أعد الإرسال'
+          : 'One of your working days has an end time earlier than its start time. Fix that day\'s hours and try again',
+        'Invalid service prices': lang === 'ar'
+          ? 'يرجى إدخال أسعار صحيحة أكبر من صفر لجميع الخدمات المختارة'
+          : 'Please enter a valid price greater than zero for every selected service',
+      };
+      const fallback = lang === 'ar'
+        ? 'حدث خطأ أثناء إرسال الطلب، يرجى المحاولة مرة أخرى'
+        : 'Failed to submit application, please try again';
+      // err.status means apiClient got a real HTTP response — its message is
+      // the backend's own (already Arabic-appropriate) explanation, safe to
+      // show as-is. Otherwise it's one of the client-side throws above.
+      setError(clientErrors[err?.message] || (err?.status ? err.message : null) || fallback);
     } finally {
       setIsSubmitting(false);
     }
