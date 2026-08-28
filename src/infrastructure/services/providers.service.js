@@ -1,4 +1,4 @@
-import { apiClient } from "../api/client";
+import { apiClient, apiBaseUrl } from "../api/client";
 
 // Keep mock mode opt-in so public website data is loaded from the backend by default.
 const MOCK_API = import.meta.env.VITE_MOCK_API === "true";
@@ -40,6 +40,33 @@ export const applyProvider = async (payload) => {
     return { success: true, message: "Mock application submitted successfully" };
   }
   return apiClient.post("/providers/apply", payload);
+};
+
+/**
+ * رفع ملفّ تسجيل (صورة ورشة/وثيقة) إلى الخادم فيعيد رابطاً مطلقاً.
+ *
+ * نموذج التسجيل كان يحتفظ باسم الملفّ فقط، فلا يصل الأدمن أي صورة. نرفع الملفّ
+ * الآن عبر نقطة عامّة (التسجيل بلا توكن) ونخزّن الرابط في `shopPhotos` لتُعرض في
+ * لوحة الأدمن. الفشل غير قاتل: يبقى المرفق باسمه فقط كما كان.
+ */
+export const uploadApplicationDocument = async (file) => {
+  if (MOCK_API) {
+    await delay(400);
+    return URL.createObjectURL(file);
+  }
+  const form = new FormData();
+  form.append("file", file);
+  const res = await fetch(`${apiBaseUrl}/providers/apply/documents/upload`, {
+    method: "POST",
+    body: form,
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    const error = new Error(data.message || "Upload failed");
+    error.status = res.status;
+    throw error;
+  }
+  return data.fileUrl || data?.data?.fileUrl || "";
 };
 
 export const getGovernorates = async () => {

@@ -108,7 +108,7 @@ const StepHours = ({ formData, updateFormData, nextStep, prevStep, lang, t }) =>
         is_emergency: formData.is_emergency,
         facilities: formData.facilities,
         techCount: formData.techCount,
-        shopPhotos: formData.shopPhotos.map(({ name, size, type }) => ({ name, size, type })),
+        shopPhotos: formData.shopPhotos.map(({ name, size, type, url }) => (url ? { name, size, type, url } : { name, size, type })),
         workingHours: workingHoursArray,
         experienceYears: formData.experienceYears,
       };

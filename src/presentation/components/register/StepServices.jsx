@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 import FileUpload from '@/presentation/components/register/FileUpload';
+import { uploadApplicationDocument } from '@/infrastructure/services/providers.service';
 import {
   Check, Zap, Settings, Wifi, Coffee, Package,
   Plus, Minus, Coins, ArrowLeft, ArrowRight, X, Star, User
@@ -248,15 +249,22 @@ const StepServices = ({ formData, updateFormData, nextStep, prevStep, lang, t })
         <FileUpload 
           t={t} 
           description={lang === 'ar' ? 'ارفع شعار الورشة، صور الواجهة، السجل التجاري أو أي وثائق مهنية أخرى' : 'Upload workshop logo, exterior photos, commercial record or any professional documents'} 
-          onUpload={(files) => {
-            const newPhotos = files.map(f => ({
-              name: f.name,
-              size: f.size,
-              type: f.type,
-              previewUrl: URL.createObjectURL(f),
-            }));
-            updateFormData({ shopPhotos: [...formData.shopPhotos, ...newPhotos] });
-          }} 
+          onUpload={async (files) => {
+            // نرفع الملفّ فعليّاً للخادم ونخزّن رابطه؛ الفشل غير قاتل فيبقى
+            // المرفق باسمه فقط. بلا رفع، لا يرى الأدمن أي صورة.
+            const uploaded = await Promise.all(
+              files.map(async (f) => {
+                const base = { name: f.name, size: f.size, type: f.type, previewUrl: URL.createObjectURL(f) };
+                try {
+                  const url = await uploadApplicationDocument(f);
+                  return url ? { ...base, url } : base;
+                } catch {
+                  return base;
+                }
+              }),
+            );
+            updateFormData({ shopPhotos: [...formData.shopPhotos, ...uploaded] });
+          }}
           lang={lang} 
         />
         {formData.shopPhotos.length > 0 && (

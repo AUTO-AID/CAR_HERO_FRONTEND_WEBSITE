@@ -197,7 +197,7 @@ const PricingPlans = () => {
                       fontWeight: 700,
                     }}
                   >
-                    -20%
+                    {t("pricing.best_value")}
                   </Box>
                 </Box>
               </Box>
@@ -249,6 +249,11 @@ const PricingPlans = () => {
                 {isYearly ? t("pricing.premium.price_yearly") : t("pricing.premium.price_monthly")}
                 {isRtl ? " ل.س" : ""}
               </Typography>
+              {isYearly && (
+                <Typography sx={{ color: "var(--status-success)", fontWeight: 700, fontSize: "0.68rem", mt: 0.3 }}>
+                  {t("pricing.yearly_savings")}
+                </Typography>
+              )}
             </Box>
           </Box>
 
@@ -642,6 +647,22 @@ const PricingPlans = () => {
                     </Motion.div>
                   </AnimatePresence>
                 </Box>
+
+                {isYearly && (
+                  <Typography
+                    sx={{
+                      color: "var(--status-success)",
+                      fontWeight: 700,
+                      fontSize: { xs: "0.72rem", md: "0.9rem" },
+                      mb: { xs: 2, md: 3 },
+                      mt: { xs: -1.5, md: -2.5 },
+                      position: "relative",
+                      zIndex: 1,
+                    }}
+                  >
+                    {t("pricing.yearly_savings")}
+                  </Typography>
+                )}
 
                 <Box sx={{ flexGrow: 1, position: "relative", zIndex: 1 }}>
                   {premiumFeatures.map((feature, idx) => (
